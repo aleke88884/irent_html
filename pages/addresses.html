@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Адреса доставки - iRent</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .address-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+            box-shadow: var(--shadow-sm);
+            position: relative;
+        }
+
+        .address-card.default {
+            border: 2px solid var(--primary);
+        }
+
+        .address-default-badge {
+            position: absolute;
+            top: var(--spacing-md);
+            right: var(--spacing-md);
+            padding: 4px 8px;
+            background: var(--primary);
+            color: var(--white);
+            font-size: 0.625rem;
+            font-weight: 600;
+            border-radius: var(--radius-sm);
+            text-transform: uppercase;
+        }
+
+        .address-type {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .address-type-icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(245, 124, 0, 0.1);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+        }
+
+        .address-type-name {
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .address-text {
+            font-size: 0.9375rem;
+            color: var(--gray-700);
+            line-height: 1.5;
+            margin-bottom: var(--spacing-sm);
+            padding-left: 44px;
+        }
+
+        .address-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+            padding-left: 44px;
+        }
+
+        .address-action-btn {
+            padding: var(--spacing-sm) var(--spacing-md);
+            font-size: 0.8125rem;
+            color: var(--gray-600);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .address-action-btn:active {
+            color: var(--primary);
+        }
+
+        .add-address-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            width: 100%;
+            padding: var(--spacing-lg);
+            background: var(--white);
+            border: 2px dashed var(--gray-300);
+            border-radius: var(--radius-md);
+            color: var(--gray-600);
+            font-size: 0.9375rem;
+            font-weight: 500;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .add-address-btn:active {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <div class="app-content">
+            <!-- Header -->
+            <header class="app-header">
+                <a href="profile.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <h1 class="app-header-title">Адреса доставки</h1>
+                <div style="width: 40px;"></div>
+            </header>
+
+            <div class="p-md">
+                <!-- Add Address Button -->
+                <button class="add-address-btn" onclick="openAddressModal()">
+                    <i class="fas fa-plus"></i>
+                    Добавить адрес
+                </button>
+
+                <!-- Address 1 - Default -->
+                <div class="address-card default">
+                    <span class="address-default-badge">Основной</span>
+                    <div class="address-type">
+                        <div class="address-type-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <span class="address-type-name">Дом</span>
+                    </div>
+                    <div class="address-text">
+                        г. Алматы, ул. Абая 150, кв. 42<br>
+                        Подъезд 2, этаж 5, домофон 42
+                    </div>
+                    <div class="address-actions">
+                        <button class="address-action-btn">
+                            <i class="fas fa-edit"></i>
+                            Изменить
+                        </button>
+                        <button class="address-action-btn">
+                            <i class="fas fa-trash"></i>
+                            Удалить
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Address 2 -->
+                <div class="address-card">
+                    <div class="address-type">
+                        <div class="address-type-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <span class="address-type-name">Работа</span>
+                    </div>
+                    <div class="address-text">
+                        г. Алматы, пр. Достык 89, офис 312<br>
+                        Бизнес-центр "Нурлы Тау", блок 4А
+                    </div>
+                    <div class="address-actions">
+                        <button class="address-action-btn">
+                            <i class="fas fa-star"></i>
+                            Основной
+                        </button>
+                        <button class="address-action-btn">
+                            <i class="fas fa-edit"></i>
+                            Изменить
+                        </button>
+                        <button class="address-action-btn">
+                            <i class="fas fa-trash"></i>
+                            Удалить
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Address 3 -->
+                <div class="address-card">
+                    <div class="address-type">
+                        <div class="address-type-icon">
+                            <i class="fas fa-warehouse"></i>
+                        </div>
+                        <span class="address-type-name">Дача</span>
+                    </div>
+                    <div class="address-text">
+                        Алматинская обл., п. Каскелен<br>
+                        СТ "Весна", участок 47
+                    </div>
+                    <div class="address-actions">
+                        <button class="address-action-btn">
+                            <i class="fas fa-star"></i>
+                            Основной
+                        </button>
+                        <button class="address-action-btn">
+                            <i class="fas fa-edit"></i>
+                            Изменить
+                        </button>
+                        <button class="address-action-btn">
+                            <i class="fas fa-trash"></i>
+                            Удалить
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="../index.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Главная</span>
+            </a>
+            <a href="catalog.html" class="nav-item">
+                <i class="fas fa-th-large"></i>
+                <span>Каталог</span>
+            </a>
+            <a href="my-rentals.html" class="nav-item">
+                <i class="fas fa-box"></i>
+                <span>Заказы</span>
+            </a>
+            <a href="favorites.html" class="nav-item">
+                <i class="fas fa-heart"></i>
+                <span>Избранное</span>
+            </a>
+            <a href="profile.html" class="nav-item active">
+                <i class="fas fa-user"></i>
+                <span>Профиль</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Add/Edit Address Modal -->
+    <div class="modal-overlay" id="addressModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Новый адрес</h3>
+                <button class="modal-close" onclick="closeAddressModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Название</label>
+                    <input type="text" class="form-input" placeholder="Например: Дом, Работа">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Город</label>
+                    <input type="text" class="form-input" placeholder="Город" value="Алматы">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Адрес</label>
+                    <input type="text" class="form-input" placeholder="Улица, дом">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Квартира/Офис</label>
+                    <input type="text" class="form-input" placeholder="Квартира или номер офиса">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Комментарий для курьера</label>
+                    <input type="text" class="form-input" placeholder="Подъезд, этаж, домофон...">
+                </div>
+                <div class="form-group">
+                    <label style="display: flex; align-items: center; gap: var(--spacing-sm); cursor: pointer;">
+                        <input type="checkbox" style="width: 20px; height: 20px; accent-color: var(--primary);">
+                        <span style="font-size: 0.9375rem;">Сделать основным адресом</span>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-ghost" onclick="closeAddressModal()">Отмена</button>
+                <button class="btn btn-primary" onclick="closeAddressModal()">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openAddressModal() {
+            document.getElementById('addressModal').classList.add('active');
+        }
+
+        function closeAddressModal() {
+            document.getElementById('addressModal').classList.remove('active');
+        }
+    </script>
+</body>
+
+</html>

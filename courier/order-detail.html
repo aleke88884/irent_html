@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Заказ #1249 - iRent Курьер</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        .courier-app {
+            max-width: 430px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: var(--white);
+            position: relative;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .order-header {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
+            background: var(--white);
+            padding: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .order-header-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .order-header-id {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .order-header-status {
+            font-size: 0.75rem;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .map-container {
+            position: fixed;
+            top: 72px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
+            height: 40vh;
+            z-index: 1;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        .order-details-panel {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
+            background: var(--white);
+            border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            max-height: calc(60vh - 72px);
+            overflow-y: auto;
+            padding-bottom: 100px;
+        }
+
+        .panel-handle {
+            width: 40px;
+            height: 4px;
+            background: var(--gray-300);
+            border-radius: var(--radius-full);
+            margin: var(--spacing-sm) auto var(--spacing-md);
+        }
+
+        .route-section {
+            padding: 0 var(--spacing-md) var(--spacing-md);
+        }
+
+        .route-card {
+            background: var(--gray-50);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+        }
+
+        .route-step {
+            display: flex;
+            gap: var(--spacing-md);
+            position: relative;
+        }
+
+        .route-step:not(:last-child) {
+            padding-bottom: var(--spacing-md);
+        }
+
+        .route-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 36px;
+            bottom: 0;
+            width: 2px;
+            background: var(--gray-300);
+        }
+
+        .route-step-marker {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .route-step-marker.pickup {
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .route-step-marker.delivery {
+            background: var(--danger);
+            color: var(--white);
+        }
+
+        .route-step-marker.completed {
+            background: var(--success-light);
+            color: var(--success);
+        }
+
+        .route-step-content {
+            flex: 1;
+        }
+
+        .route-step-label {
+            font-size: 0.625rem;
+            text-transform: uppercase;
+            color: var(--gray-500);
+            margin-bottom: 2px;
+        }
+
+        .route-step-address {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 4px;
+        }
+
+        .route-step-detail {
+            font-size: 0.8125rem;
+            color: var(--gray-600);
+        }
+
+        .route-step-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-sm);
+        }
+
+        .route-action-btn {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-md);
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .route-action-btn.primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .route-action-btn.secondary {
+            background: var(--gray-100);
+            color: var(--gray-700);
+        }
+
+        .section-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            padding: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+        }
+
+        .order-items {
+            padding: 0 var(--spacing-md);
+        }
+
+        .order-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .order-item-img {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-sm);
+            background: var(--gray-100);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .order-item-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .order-item-info {
+            flex: 1;
+        }
+
+        .order-item-name {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .order-item-serial {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .order-item-check {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--gray-300);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: transparent;
+        }
+
+        .order-item-check.checked {
+            background: var(--success);
+            border-color: var(--success);
+            color: var(--white);
+        }
+
+        .customer-section {
+            padding: var(--spacing-md);
+            background: var(--gray-50);
+            margin: var(--spacing-md);
+            border-radius: var(--radius-md);
+        }
+
+        .customer-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--spacing-sm) 0;
+        }
+
+        .customer-row:not(:last-child) {
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .customer-label {
+            font-size: 0.8125rem;
+            color: var(--gray-500);
+        }
+
+        .customer-value {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--gray-900);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .call-btn {
+            width: 36px;
+            height: 36px;
+            background: var(--success);
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+        }
+
+        .bottom-actions {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
+            background: var(--white);
+            padding: var(--spacing-md);
+            border-top: 1px solid var(--gray-200);
+            display: flex;
+            gap: var(--spacing-md);
+            z-index: 200;
+        }
+
+        .bottom-actions .btn {
+            flex: 1;
+        }
+
+        .earnings-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-md);
+            background: rgba(245, 124, 0, 0.1);
+            border-radius: var(--radius-md);
+            margin: var(--spacing-md);
+        }
+
+        .earnings-badge i {
+            color: var(--primary);
+        }
+
+        .earnings-badge-text {
+            font-size: 0.875rem;
+            color: var(--gray-700);
+        }
+
+        .earnings-badge-value {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Map route line */
+        .leaflet-overlay-pane svg path {
+            stroke: var(--primary);
+            stroke-width: 4;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="courier-app">
+        <!-- Header -->
+        <header class="order-header">
+            <a href="orders.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <div class="order-header-info">
+                <span class="order-header-id">Заказ #1249</span>
+                <span class="order-header-status">В работе • Доставка</span>
+            </div>
+            <a href="tel:+77005551234" class="call-btn" style="width: 40px; height: 40px;">
+                <i class="fas fa-phone"></i>
+            </a>
+        </header>
+
+        <!-- Map -->
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+
+        <!-- Order Details Panel -->
+        <div class="order-details-panel">
+            <div class="panel-handle"></div>
+
+            <!-- Route -->
+            <div class="route-section">
+                <div class="route-card">
+                    <!-- Pickup Point -->
+                    <div class="route-step">
+                        <div class="route-step-marker completed">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="route-step-content">
+                            <div class="route-step-label">Точка А • Забрать</div>
+                            <div class="route-step-address">Склад iRent</div>
+                            <div class="route-step-detail">ул. Тимирязева 42</div>
+                            <div class="route-step-detail" style="color: var(--success);">
+                                <i class="fas fa-check-circle"></i> Инструменты получены
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Delivery Point -->
+                    <div class="route-step">
+                        <div class="route-step-marker delivery">B</div>
+                        <div class="route-step-content">
+                            <div class="route-step-label">Точка Б • Доставить</div>
+                            <div class="route-step-address">ул. Абая 150, кв. 42</div>
+                            <div class="route-step-detail">Подъезд 2, этаж 5, домофон 42</div>
+                            <div class="route-step-actions">
+                                <a href="https://2gis.kz/almaty/geo/9429940000746034" class="route-action-btn primary">
+                                    <i class="fas fa-route"></i>
+                                    Маршрут
+                                </a>
+                                <button class="route-action-btn secondary" onclick="copyAddress()">
+                                    <i class="fas fa-copy"></i>
+                                    Копировать
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Earnings -->
+            <div class="earnings-badge">
+                <i class="fas fa-tenge-sign"></i>
+                <span class="earnings-badge-text">Ваш заработок:</span>
+                <span class="earnings-badge-value">1 200 ₸</span>
+            </div>
+
+            <!-- Items -->
+            <div class="section-title">Инструменты к выдаче (2)</div>
+            <div class="order-items">
+                <div class="order-item" onclick="toggleItemCheck(this)">
+                    <div class="order-item-img">
+                        <img src="https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=96&h=96&fit=crop" alt="">
+                    </div>
+                    <div class="order-item-info">
+                        <div class="order-item-name">Перфоратор Bosch GBH 2-26</div>
+                        <div class="order-item-serial">S/N: BOH-2024-1547</div>
+                    </div>
+                    <div class="order-item-check checked">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+                <div class="order-item" onclick="toggleItemCheck(this)">
+                    <div class="order-item-img">
+                        <img src="https://images.unsplash.com/photo-1504148455328-c376907d081c?w=96&h=96&fit=crop" alt="">
+                    </div>
+                    <div class="order-item-info">
+                        <div class="order-item-name">Болгарка Makita GA5030</div>
+                        <div class="order-item-serial">S/N: MAK-2024-0892</div>
+                    </div>
+                    <div class="order-item-check checked">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer Info -->
+            <div class="section-title">Клиент</div>
+            <div class="customer-section">
+                <div class="customer-row">
+                    <span class="customer-label">Имя</span>
+                    <span class="customer-value">Алексей Иванов</span>
+                </div>
+                <div class="customer-row">
+                    <span class="customer-label">Телефон</span>
+                    <span class="customer-value">
+                        +7 700 123 45 67
+                        <a href="tel:+77001234567" class="call-btn" style="width: 32px; height: 32px; font-size: 0.875rem;">
+                            <i class="fas fa-phone"></i>
+                        </a>
+                    </span>
+                </div>
+                <div class="customer-row">
+                    <span class="customer-label">Комментарий</span>
+                    <span class="customer-value" style="font-size: 0.8125rem;">Позвонить за 10 мин</span>
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="section-title">Информация о заказе</div>
+            <div class="customer-section">
+                <div class="customer-row">
+                    <span class="customer-label">Тип</span>
+                    <span class="customer-value">Доставка</span>
+                </div>
+                <div class="customer-row">
+                    <span class="customer-label">Срок аренды</span>
+                    <span class="customer-value">10 - 12 дек (3 дня)</span>
+                </div>
+                <div class="customer-row">
+                    <span class="customer-label">Сумма заказа</span>
+                    <span class="customer-value">6 900 ₸</span>
+                </div>
+                <div class="customer-row">
+                    <span class="customer-label">Залог</span>
+                    <span class="customer-value">15 000 ₸ (оплачен)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Actions -->
+        <div class="bottom-actions">
+            <button class="btn btn-ghost" onclick="reportProblem()">
+                <i class="fas fa-exclamation-triangle"></i>
+                Проблема
+            </button>
+            <button class="btn btn-primary" onclick="completeDelivery()">
+                <i class="fas fa-check"></i>
+                Доставлено
+            </button>
+        </div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Initialize map
+        const map = L.map('map').setView([43.2400, 76.9200], 13);
+
+        // Add tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+
+        // Warehouse location (Point A)
+        const warehouseIcon = L.divIcon({
+            html: '<div style="background: #28A745; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">A</div>',
+            iconSize: [30, 30],
+            iconAnchor: [15, 15],
+            className: ''
+        });
+
+        const deliveryIcon = L.divIcon({
+            html: '<div style="background: #DC3545; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">B</div>',
+            iconSize: [30, 30],
+            iconAnchor: [15, 15],
+            className: ''
+        });
+
+        const courierIcon = L.divIcon({
+            html: '<div style="background: #F57C00; color: white; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.3);"><i class="fas fa-motorcycle" style="font-size: 14px;"></i></div>',
+            iconSize: [36, 36],
+            iconAnchor: [18, 18],
+            className: ''
+        });
+
+        // Coordinates
+        const warehouse = [43.2567, 76.9286];
+        const delivery = [43.2350, 76.9450];
+        const courier = [43.2450, 76.9350];
+
+        // Add markers
+        L.marker(warehouse, {icon: warehouseIcon}).addTo(map)
+            .bindPopup('Склад iRent<br>ул. Тимирязева 42');
+
+        L.marker(delivery, {icon: deliveryIcon}).addTo(map)
+            .bindPopup('Доставка<br>ул. Абая 150, кв. 42');
+
+        L.marker(courier, {icon: courierIcon}).addTo(map)
+            .bindPopup('Вы здесь');
+
+        // Draw route line
+        const route = L.polyline([warehouse, courier, delivery], {
+            color: '#F57C00',
+            weight: 4,
+            opacity: 0.8,
+            dashArray: '10, 10'
+        }).addTo(map);
+
+        // Fit bounds
+        map.fitBounds(route.getBounds(), {padding: [50, 50]});
+
+        function toggleItemCheck(item) {
+            const check = item.querySelector('.order-item-check');
+            check.classList.toggle('checked');
+        }
+
+        function copyAddress() {
+            navigator.clipboard.writeText('ул. Абая 150, кв. 42, Подъезд 2, этаж 5');
+            alert('Адрес скопирован');
+        }
+
+        function reportProblem() {
+            alert('Открыть форму сообщения о проблеме');
+        }
+
+        function completeDelivery() {
+            if (confirm('Подтвердить доставку заказа?')) {
+                alert('Заказ доставлен!');
+                window.location.href = 'orders.html';
+            }
+        }
+    </script>
+</body>
+
+</html>

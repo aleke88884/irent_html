@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#0077FF">
+    <title>Мои заказы - iRent</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app">
+        <div class="app-content">
+            <!-- Header -->
+            <header class="app-header">
+                <h1 class="app-header-title">Мои заказы</h1>
+                <div style="width: 40px;"></div>
+            </header>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab active" onclick="showTab('active')">Активные</button>
+                <button class="tab" onclick="showTab('completed')">Завершённые</button>
+            </div>
+
+            <!-- Active Orders -->
+            <div id="active-orders" class="p-md">
+                <!-- Order 1 - Active -->
+                <div class="order-card">
+                    <div class="order-header">
+                        <span class="order-id">Заказ #1247</span>
+                        <span class="order-status active">Активен</span>
+                    </div>
+                    <div class="order-items">
+                        <div class="order-item-thumb">
+                            <img src="https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=96&h=96&fit=crop" alt="">
+                        </div>
+                        <div class="order-item-thumb">
+                            <img src="https://images.unsplash.com/photo-1504148455328-c376907d081c?w=96&h=96&fit=crop" alt="">
+                        </div>
+                    </div>
+                    <div style="font-size: 0.875rem; color: var(--gray-600); margin-bottom: var(--spacing-sm); display: flex; align-items: center; gap: 6px;">
+                        <i class="far fa-calendar"></i> 15 - 17 декабря (3 дня)
+                    </div>
+                    <div class="order-footer">
+                        <span class="order-date">Осталось: 2 дня</span>
+                        <span class="order-total">6 900 ₸</span>
+                    </div>
+                    <div style="display: flex; gap: var(--spacing-sm); margin-top: var(--spacing-md);">
+                        <a href="order-detail.html?id=1247" class="btn btn-outline btn-sm" style="flex: 1;">Подробнее</a>
+                        <button class="btn btn-primary btn-sm" style="flex: 1;">Продлить</button>
+                    </div>
+                </div>
+
+                <!-- Order 2 - Pending -->
+                <div class="order-card">
+                    <div class="order-header">
+                        <span class="order-id">Заказ #1248</span>
+                        <span class="order-status pending">Ожидает</span>
+                    </div>
+                    <div class="order-items">
+                        <div class="order-item-thumb">
+                            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=96&h=96&fit=crop" alt="">
+                        </div>
+                    </div>
+                    <div style="font-size: 0.875rem; color: var(--gray-600); margin-bottom: var(--spacing-sm); display: flex; align-items: center; gap: 6px;">
+                        <i class="far fa-calendar"></i> 20 - 22 декабря (3 дня)
+                    </div>
+                    <div class="order-footer">
+                        <span class="order-date">Ожидает получения</span>
+                        <span class="order-total">3 600 ₸</span>
+                    </div>
+                    <div style="display: flex; gap: var(--spacing-sm); margin-top: var(--spacing-md);">
+                        <a href="order-detail.html?id=1248" class="btn btn-outline btn-sm" style="flex: 1;">Подробнее</a>
+                        <button class="btn btn-ghost btn-sm" style="flex: 1; color: var(--danger);">Отменить</button>
+                    </div>
+                </div>
+
+                <!-- Express Delivery Card -->
+                <div style="background: linear-gradient(135deg, var(--primary) 0%, #00C6FF 100%); border-radius: var(--radius-xl); padding: var(--spacing-lg); color: white; margin-top: var(--spacing-md);">
+                    <div style="display: flex; align-items: center; gap: var(--spacing-md); margin-bottom: var(--spacing-sm);">
+                        <i class="fas fa-bolt" style="font-size: 1.5rem;"></i>
+                        <div>
+                            <div style="font-weight: 700; font-size: 1rem;">Экспресс-доставка</div>
+                            <div style="font-size: 0.8125rem; opacity: 0.9;">Получите инструмент за 2 часа</div>
+                        </div>
+                    </div>
+                    <a href="catalog.html" class="btn btn-white btn-sm" style="width: 100%;">Заказать сейчас</a>
+                </div>
+            </div>
+
+            <!-- Completed Orders -->
+            <div id="completed-orders" class="p-md" style="display: none;">
+                <!-- Completed Order 1 -->
+                <div class="order-card">
+                    <div class="order-header">
+                        <span class="order-id">Заказ #1245</span>
+                        <span class="order-status completed">Завершён</span>
+                    </div>
+                    <div class="order-items">
+                        <div class="order-item-thumb">
+                            <img src="https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=96&h=96&fit=crop" alt="">
+                        </div>
+                        <div class="order-item-thumb">
+                            <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=96&h=96&fit=crop" alt="">
+                        </div>
+                    </div>
+                    <div style="font-size: 0.875rem; color: var(--gray-600); margin-bottom: var(--spacing-sm); display: flex; align-items: center; gap: 6px;">
+                        <i class="far fa-calendar"></i> 1 - 5 декабря (5 дней)
+                    </div>
+                    <div class="order-footer">
+                        <span class="order-date">Возвращён 5 дек</span>
+                        <span class="order-total">8 500 ₸</span>
+                    </div>
+                    <div style="display: flex; gap: var(--spacing-sm); margin-top: var(--spacing-md);">
+                        <a href="order-detail.html?id=1245" class="btn btn-outline btn-sm" style="flex: 1;">Подробнее</a>
+                        <button class="btn btn-primary btn-sm" style="flex: 1;">Повторить</button>
+                    </div>
+                </div>
+
+                <!-- Completed Order 2 -->
+                <div class="order-card">
+                    <div class="order-header">
+                        <span class="order-id">Заказ #1240</span>
+                        <span class="order-status completed">Завершён</span>
+                    </div>
+                    <div class="order-items">
+                        <div class="order-item-thumb">
+                            <img src="https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=96&h=96&fit=crop" alt="">
+                        </div>
+                    </div>
+                    <div style="font-size: 0.875rem; color: var(--gray-600); margin-bottom: var(--spacing-sm); display: flex; align-items: center; gap: 6px;">
+                        <i class="far fa-calendar"></i> 20 - 22 ноября (3 дня)
+                    </div>
+                    <div class="order-footer">
+                        <span class="order-date">Возвращён 22 нояб</span>
+                        <span class="order-total">4 500 ₸</span>
+                    </div>
+                    <div style="display: flex; gap: var(--spacing-sm); margin-top: var(--spacing-md);">
+                        <a href="order-detail.html?id=1240" class="btn btn-outline btn-sm" style="flex: 1;">Подробнее</a>
+                        <button class="btn btn-primary btn-sm" style="flex: 1;">Повторить</button>
+                    </div>
+                </div>
+
+                <!-- Cancelled Order -->
+                <div class="order-card">
+                    <div class="order-header">
+                        <span class="order-id">Заказ #1238</span>
+                        <span class="order-status cancelled">Отменён</span>
+                    </div>
+                    <div class="order-items">
+                        <div class="order-item-thumb">
+                            <img src="https://images.unsplash.com/photo-1590212151175-e58edd96185b?w=96&h=96&fit=crop" alt="">
+                        </div>
+                    </div>
+                    <div style="font-size: 0.875rem; color: var(--gray-600); margin-bottom: var(--spacing-sm); display: flex; align-items: center; gap: 6px;">
+                        <i class="far fa-calendar"></i> 15 ноября
+                    </div>
+                    <div class="order-footer">
+                        <span class="order-date">Отменён клиентом</span>
+                        <span class="order-total" style="color: var(--gray-400); text-decoration: line-through;">3 000 ₸</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="../index.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Главная</span>
+            </a>
+            <a href="catalog.html" class="nav-item">
+                <i class="fas fa-th-large"></i>
+                <span>Каталог</span>
+            </a>
+            <a href="my-rentals.html" class="nav-item active">
+                <i class="fas fa-box"></i>
+                <span>Заказы</span>
+            </a>
+            <a href="favorites.html" class="nav-item">
+                <i class="fas fa-heart"></i>
+                <span>Избранное</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <i class="fas fa-user"></i>
+                <span>Профиль</span>
+            </a>
+        </nav>
+    </div>
+
+    <script>
+        function showTab(tab) {
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (tab === 'active') {
+                document.getElementById('active-orders').style.display = 'block';
+                document.getElementById('completed-orders').style.display = 'none';
+            } else {
+                document.getElementById('active-orders').style.display = 'none';
+                document.getElementById('completed-orders').style.display = 'block';
+            }
+        }
+    </script>
+</body>
+
+</html>

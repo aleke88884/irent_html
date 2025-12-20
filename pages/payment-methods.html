@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Способы оплаты - iRent</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .payment-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            position: relative;
+        }
+
+        .payment-card.default {
+            border: 2px solid var(--primary);
+        }
+
+        .payment-default-badge {
+            position: absolute;
+            top: var(--spacing-sm);
+            right: var(--spacing-sm);
+            padding: 4px 8px;
+            background: var(--primary);
+            color: var(--white);
+            font-size: 0.625rem;
+            font-weight: 600;
+            border-radius: var(--radius-sm);
+            text-transform: uppercase;
+        }
+
+        .payment-icon {
+            width: 56px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .payment-icon.visa {
+            background: linear-gradient(135deg, #1A1F71 0%, #0043A4 100%);
+            color: white;
+        }
+
+        .payment-icon.mastercard {
+            background: linear-gradient(135deg, #EB001B 0%, #F79E1B 100%);
+            color: white;
+        }
+
+        .payment-icon.kaspi {
+            background: #F14635;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .payment-icon.cash {
+            background: var(--success-light);
+            color: var(--success);
+        }
+
+        .payment-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .payment-name {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 2px;
+        }
+
+        .payment-details {
+            font-size: 0.8125rem;
+            color: var(--gray-500);
+        }
+
+        .payment-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .payment-action-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-500);
+        }
+
+        .payment-action-btn:active {
+            background: var(--gray-100);
+            color: var(--gray-700);
+        }
+
+        .add-payment-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            width: 100%;
+            padding: var(--spacing-lg);
+            background: var(--white);
+            border: 2px dashed var(--gray-300);
+            border-radius: var(--radius-md);
+            color: var(--gray-600);
+            font-size: 0.9375rem;
+            font-weight: 500;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .add-payment-btn:active {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .section-title-small {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: var(--spacing-md);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .bonus-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            color: var(--white);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .bonus-card-label {
+            font-size: 0.75rem;
+            opacity: 0.9;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .bonus-card-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .bonus-card-hint {
+            font-size: 0.8125rem;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <div class="app-content">
+            <!-- Header -->
+            <header class="app-header">
+                <a href="profile.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <h1 class="app-header-title">Способы оплаты</h1>
+                <div style="width: 40px;"></div>
+            </header>
+
+            <div class="p-md">
+                <!-- Bonus Card -->
+                <div class="bonus-card">
+                    <div class="bonus-card-label">Бонусный счёт</div>
+                    <div class="bonus-card-value">1 250 ₸</div>
+                    <div class="bonus-card-hint">Доступно для оплаты заказов</div>
+                </div>
+
+                <!-- Cards Section -->
+                <div class="section-title-small">Банковские карты</div>
+
+                <!-- Add Card Button -->
+                <button class="add-payment-btn" onclick="openCardModal()">
+                    <i class="fas fa-plus"></i>
+                    Добавить карту
+                </button>
+
+                <!-- Card 1 - Default -->
+                <div class="payment-card default">
+                    <span class="payment-default-badge">Основная</span>
+                    <div class="payment-icon visa">
+                        <i class="fab fa-cc-visa"></i>
+                    </div>
+                    <div class="payment-info">
+                        <div class="payment-name">Visa •••• 4532</div>
+                        <div class="payment-details">Действует до 08/26</div>
+                    </div>
+                    <div class="payment-actions">
+                        <button class="payment-action-btn">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="payment-card">
+                    <div class="payment-icon mastercard">
+                        <i class="fab fa-cc-mastercard"></i>
+                    </div>
+                    <div class="payment-info">
+                        <div class="payment-name">Mastercard •••• 8891</div>
+                        <div class="payment-details">Действует до 12/25</div>
+                    </div>
+                    <div class="payment-actions">
+                        <button class="payment-action-btn" title="Сделать основной">
+                            <i class="fas fa-star"></i>
+                        </button>
+                        <button class="payment-action-btn">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Other Payment Methods -->
+                <div class="section-title-small" style="margin-top: var(--spacing-lg);">Другие способы</div>
+
+                <div class="payment-card">
+                    <div class="payment-icon kaspi">
+                        Kaspi
+                    </div>
+                    <div class="payment-info">
+                        <div class="payment-name">Kaspi QR</div>
+                        <div class="payment-details">Оплата через Kaspi.kz</div>
+                    </div>
+                    <div class="payment-actions">
+                        <i class="fas fa-chevron-right" style="color: var(--gray-400);"></i>
+                    </div>
+                </div>
+
+                <div class="payment-card">
+                    <div class="payment-icon cash">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <div class="payment-info">
+                        <div class="payment-name">Наличные</div>
+                        <div class="payment-details">Оплата при получении</div>
+                    </div>
+                    <div class="payment-actions">
+                        <i class="fas fa-chevron-right" style="color: var(--gray-400);"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="../index.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Главная</span>
+            </a>
+            <a href="catalog.html" class="nav-item">
+                <i class="fas fa-th-large"></i>
+                <span>Каталог</span>
+            </a>
+            <a href="my-rentals.html" class="nav-item">
+                <i class="fas fa-box"></i>
+                <span>Заказы</span>
+            </a>
+            <a href="favorites.html" class="nav-item">
+                <i class="fas fa-heart"></i>
+                <span>Избранное</span>
+            </a>
+            <a href="profile.html" class="nav-item active">
+                <i class="fas fa-user"></i>
+                <span>Профиль</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Add Card Modal -->
+    <div class="modal-overlay" id="cardModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Добавить карту</h3>
+                <button class="modal-close" onclick="closeCardModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Номер карты</label>
+                    <div class="form-input-icon">
+                        <i class="far fa-credit-card"></i>
+                        <input type="text" class="form-input" placeholder="0000 0000 0000 0000" maxlength="19">
+                    </div>
+                </div>
+                <div style="display: flex; gap: var(--spacing-md);">
+                    <div class="form-group" style="flex: 1;">
+                        <label class="form-label">Срок действия</label>
+                        <input type="text" class="form-input" placeholder="ММ/ГГ" maxlength="5">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label class="form-label">CVV</label>
+                        <input type="password" class="form-input" placeholder="•••" maxlength="3">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Имя владельца</label>
+                    <input type="text" class="form-input" placeholder="Как на карте" style="text-transform: uppercase;">
+                </div>
+                <div class="form-group">
+                    <label style="display: flex; align-items: center; gap: var(--spacing-sm); cursor: pointer;">
+                        <input type="checkbox" style="width: 20px; height: 20px; accent-color: var(--primary);">
+                        <span style="font-size: 0.9375rem;">Сделать основной картой</span>
+                    </label>
+                </div>
+                <div style="display: flex; align-items: center; gap: var(--spacing-sm); padding: var(--spacing-md); background: var(--gray-50); border-radius: var(--radius-md); margin-top: var(--spacing-md);">
+                    <i class="fas fa-lock" style="color: var(--success);"></i>
+                    <span style="font-size: 0.8125rem; color: var(--gray-600);">Данные карты защищены шифрованием SSL</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-ghost" onclick="closeCardModal()">Отмена</button>
+                <button class="btn btn-primary" onclick="closeCardModal()">Добавить</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openCardModal() {
+            document.getElementById('cardModal').classList.add('active');
+        }
+
+        function closeCardModal() {
+            document.getElementById('cardModal').classList.remove('active');
+        }
+    </script>
+</body>
+
+</html>

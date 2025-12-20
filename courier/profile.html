@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Профиль - iRent Курьер</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .courier-app {
+            max-width: 430px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: var(--gray-50);
+            position: relative;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: var(--spacing-xl) var(--spacing-md);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: var(--radius-full);
+            background: var(--white);
+            margin: 0 auto var(--spacing-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--primary);
+            border: 3px solid var(--white);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .profile-id {
+            font-size: 0.875rem;
+            opacity: 0.9;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .profile-rating {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            background: rgba(255,255,255,0.2);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-full);
+        }
+
+        .profile-rating i {
+            color: var(--warning);
+        }
+
+        .profile-rating span {
+            font-weight: 600;
+        }
+
+        .profile-stats {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-md);
+        }
+
+        .profile-stat {
+            text-align: center;
+        }
+
+        .profile-stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .profile-stat-label {
+            font-size: 0.75rem;
+            opacity: 0.8;
+        }
+
+        .menu-section {
+            padding: var(--spacing-md);
+        }
+
+        .menu-section-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: var(--spacing-sm);
+            padding-left: var(--spacing-sm);
+        }
+
+        .menu-group {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .menu-item:active {
+            background: var(--gray-50);
+        }
+
+        .menu-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            background: var(--gray-100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-600);
+        }
+
+        .menu-icon.primary {
+            background: rgba(245, 124, 0, 0.1);
+            color: var(--primary);
+        }
+
+        .menu-text {
+            flex: 1;
+        }
+
+        .menu-text h4 {
+            font-size: 0.9375rem;
+            font-weight: 500;
+            color: var(--gray-900);
+        }
+
+        .menu-text p {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .menu-arrow {
+            color: var(--gray-400);
+        }
+
+        .menu-value {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+
+        .badge-new {
+            padding: 2px 6px;
+            background: var(--danger);
+            color: var(--white);
+            font-size: 0.625rem;
+            font-weight: 600;
+            border-radius: var(--radius-sm);
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 28px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--gray-300);
+            transition: 0.3s;
+            border-radius: 28px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .toggle-switch input:checked + .toggle-slider {
+            background-color: var(--primary);
+        }
+
+        .toggle-switch input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+        }
+
+        .logout-item {
+            color: var(--danger);
+        }
+
+        .logout-item .menu-icon {
+            background: var(--danger-light);
+            color: var(--danger);
+        }
+
+        .logout-item h4 {
+            color: var(--danger);
+        }
+
+        /* Courier Bottom Nav */
+        .courier-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
+            height: calc(var(--bottom-nav-height) + var(--safe-area-bottom));
+            padding-bottom: var(--safe-area-bottom);
+            background: var(--white);
+            border-top: 1px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            z-index: 1000;
+        }
+
+        .courier-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: var(--spacing-sm);
+            color: var(--gray-500);
+            min-width: 64px;
+        }
+
+        .courier-nav-item i {
+            font-size: 1.25rem;
+        }
+
+        .courier-nav-item span {
+            font-size: 0.625rem;
+            font-weight: 500;
+        }
+
+        .courier-nav-item.active {
+            color: var(--primary);
+        }
+
+        .page-content {
+            padding-bottom: calc(var(--bottom-nav-height) + var(--safe-area-bottom) + var(--spacing-md));
+        }
+
+        .version-info {
+            text-align: center;
+            padding: var(--spacing-lg);
+            color: var(--gray-500);
+            font-size: 0.75rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="courier-app">
+        <div class="page-content">
+            <!-- Profile Header -->
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h1 class="profile-name">Ерлан Касымов</h1>
+                <p class="profile-id">ID: CRR-2024-0547</p>
+                <div class="profile-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.92</span>
+                    <span style="opacity: 0.8;">(156 отзывов)</span>
+                </div>
+                <div class="profile-stats">
+                    <div class="profile-stat">
+                        <div class="profile-stat-value">847</div>
+                        <div class="profile-stat-label">Доставок</div>
+                    </div>
+                    <div class="profile-stat">
+                        <div class="profile-stat-value">8</div>
+                        <div class="profile-stat-label">Месяцев</div>
+                    </div>
+                    <div class="profile-stat">
+                        <div class="profile-stat-value">98%</div>
+                        <div class="profile-stat-label">Выполнено</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Account Section -->
+            <div class="menu-section">
+                <div class="menu-section-title">Аккаунт</div>
+                <div class="menu-group">
+                    <a href="#" class="menu-item">
+                        <div class="menu-icon primary">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="menu-text">
+                            <h4>Личные данные</h4>
+                            <p>Имя, телефон, документы</p>
+                        </div>
+                        <i class="fas fa-chevron-right menu-arrow"></i>
+                    </a>
+                    <a href="#" class="menu-item">
+                        <div class="menu-icon primary">
+                            <i class="fas fa-motorcycle"></i>
+                        </div>
+                        <div class="menu-text">
+                            <h4>Транспорт</h4>
+                            <p>Мотоцикл • Гос. номер 123АВС</p>
+                        </div>
+                        <i class="fas fa-chevron-right menu-arrow"></i>
+                    </a>
+                    <a href="#" class="menu-item">
+                        <div class="menu-icon primary">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <div class="menu-text">
+                            <h4>Платёжные данные</h4>
+                            <p>Kaspi •••• 4532</p>
+                        </div>
+                        <i class="fas fa-chevron-right menu-arrow"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Work Section -->
+            <div class="menu-section">
+                <div class="menu-section-title">Работа</div>
+                <div class="menu-group">
+                    <a href="#" class="menu-item">
+                        <div class="menu-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="menu-text">
+                            <h4>График работы</h4>
+                            <p>Свободный график</p>
+                        </div>
+                        <i class="fas fa-chevron-right menu-arrow"></i>
+                    </a>
+                    <a href="#" class="menu-item">
+                        <div class="menu-icon">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </div>
+                        <div class="menu-text">
+                            <h4>Зона доставки</h4>
+                            <p>Алматы • Центр, Бостандык</p>
+                        </div>
+                        <i class="fas fa-chevron-right menu-arrow"></i>
+                    </a>
+                    <a href="#" class="menu-item">
+                        <div class="menu-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <div class="menu-text">
+                            <h4>Бонусная программа</h4>
+                            <p>Уровень: Серебряный</p>
+                        </div>
+                        <span class="badge-new">+500 ₸</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <div class="menu-section">
+                <div class="menu-section-title">Настройки</div>
+                <div class="menu-group">
+                    <div class="menu-item">
+                        <div class="menu-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="menu-text">
+                            <h4>Push-уведомления</h4>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-icon">
+                            <i class="fas fa-volume-up"></i>
+                        </div>
+                        <div class="menu-text">
+                            <h4>Звук заказов</h4>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <a href="#" class="menu-item">
+                        <div class="menu-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div class="menu-text">
+                            <h4>Язык</h4>
+                        </div>
+                        <span class="menu-value">Русский</span>
+                        <i class="fas fa-chevron-right menu-arrow"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Support Section -->
+            <div class="menu-section">
+                <div class="menu-section-title">Поддержка</div>
+                <div class="menu-group">
+                    <a href="#" class="menu-item">
+                        <div class="menu-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <div class="menu-text">
+                            <h4>Служба поддержки</h4>
+                            <p>Онлайн 24/7</p>
+                        </div>
+                        <i class="fas fa-chevron-right menu-arrow"></i>
+                    </a>
+                    <a href="#" class="menu-item">
+                        <div class="menu-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="menu-text">
+                            <h4>Справка курьера</h4>
+                            <p>Инструкции и правила</p>
+                        </div>
+                        <i class="fas fa-chevron-right menu-arrow"></i>
+                    </a>
+                    <a href="#" class="menu-item">
+                        <div class="menu-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="menu-text">
+                            <h4>Документы</h4>
+                            <p>Договор, правила</p>
+                        </div>
+                        <i class="fas fa-chevron-right menu-arrow"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Logout -->
+            <div class="menu-section">
+                <div class="menu-group">
+                    <a href="../pages/login.html" class="menu-item logout-item">
+                        <div class="menu-icon">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </div>
+                        <div class="menu-text">
+                            <h4>Выйти</h4>
+                            <p>Выход из аккаунта</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Version -->
+            <div class="version-info">
+                iRent Courier v1.0.0<br>
+                © 2024 iRent
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="courier-nav">
+            <a href="index.html" class="courier-nav-item">
+                <i class="fas fa-home"></i>
+                <span>Главная</span>
+            </a>
+            <a href="orders.html" class="courier-nav-item">
+                <i class="fas fa-list-alt"></i>
+                <span>Заказы</span>
+            </a>
+            <a href="earnings.html" class="courier-nav-item">
+                <i class="fas fa-wallet"></i>
+                <span>Заработок</span>
+            </a>
+            <a href="profile.html" class="courier-nav-item active">
+                <i class="fas fa-user"></i>
+                <span>Профиль</span>
+            </a>
+        </nav>
+    </div>
+</body>
+
+</html>

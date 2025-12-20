@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Категории - iRent Admin</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .category-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+            position: relative;
+        }
+
+        .category-card.inactive {
+            opacity: 0.6;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .category-icon-wrapper {
+            width: 56px;
+            height: 56px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .category-actions {
+            display: flex;
+            gap: var(--spacing-xs);
+        }
+
+        .category-action-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-500);
+            transition: all 0.2s;
+        }
+
+        .category-action-btn:hover {
+            background: var(--gray-100);
+            color: var(--gray-700);
+        }
+
+        .category-name {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .category-description {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+            margin-bottom: var(--spacing-md);
+            line-height: 1.5;
+        }
+
+        .category-stats {
+            display: flex;
+            gap: var(--spacing-lg);
+            padding-top: var(--spacing-md);
+            border-top: 1px solid var(--gray-100);
+        }
+
+        .category-stat {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .category-stat i {
+            color: var(--gray-400);
+        }
+
+        .category-stat-value {
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .category-stat-label {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .category-status {
+            position: absolute;
+            top: var(--spacing-md);
+            right: var(--spacing-md);
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+            font-size: 0.625rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .category-status.active {
+            background: var(--success-light);
+            color: var(--success);
+        }
+
+        .category-status.inactive {
+            background: var(--gray-200);
+            color: var(--gray-600);
+        }
+
+        .add-category-card {
+            background: var(--white);
+            border: 2px dashed var(--gray-300);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .add-category-card:hover {
+            border-color: var(--primary);
+            background: rgba(245, 124, 0, 0.02);
+        }
+
+        .add-category-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--gray-100);
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-400);
+            font-size: 1.5rem;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .add-category-text {
+            font-size: 0.9375rem;
+            font-weight: 500;
+            color: var(--gray-600);
+        }
+
+        /* Icon picker */
+        .icon-picker {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: var(--spacing-sm);
+            padding: var(--spacing-md);
+            background: var(--gray-50);
+            border-radius: var(--radius-md);
+            margin-top: var(--spacing-sm);
+        }
+
+        .icon-option {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 2px solid transparent;
+            background: var(--white);
+        }
+
+        .icon-option:hover,
+        .icon-option.selected {
+            border-color: var(--primary);
+            background: rgba(245, 124, 0, 0.1);
+        }
+
+        /* Color picker */
+        .color-picker {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-sm);
+        }
+
+        .color-option {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            border: 3px solid transparent;
+        }
+
+        .color-option:hover,
+        .color-option.selected {
+            border-color: var(--gray-900);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="admin-sidebar-logo">
+                <div class="logo-icon">
+                    <i class="fas fa-tools"></i>
+                </div>
+                iRent Admin
+            </div>
+
+            <nav class="admin-nav">
+                <a href="index.html" class="admin-nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    Дашборд
+                </a>
+                <a href="orders.html" class="admin-nav-item">
+                    <i class="fas fa-shopping-cart"></i>
+                    Заказы
+                </a>
+                <a href="tools.html" class="admin-nav-item">
+                    <i class="fas fa-tools"></i>
+                    Инструменты
+                </a>
+                <a href="users.html" class="admin-nav-item">
+                    <i class="fas fa-users"></i>
+                    Пользователи
+                </a>
+                <a href="categories.html" class="admin-nav-item active">
+                    <i class="fas fa-th-large"></i>
+                    Категории
+                </a>
+                <a href="couriers.html" class="admin-nav-item">
+                    <i class="fas fa-motorcycle"></i>
+                    Курьеры
+                </a>
+                <a href="reports.html" class="admin-nav-item">
+                    <i class="fas fa-chart-bar"></i>
+                    Отчёты
+                </a>
+                <a href="settings.html" class="admin-nav-item">
+                    <i class="fas fa-cog"></i>
+                    Настройки
+                </a>
+            </nav>
+
+            <div style="margin-top: auto; padding: var(--spacing-md);">
+                <a href="../pages/login.html" class="admin-nav-item" style="color: var(--danger);">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Выход
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Header -->
+            <header class="admin-header">
+                <h1 class="admin-header-title">Категории</h1>
+                <div style="display: flex; align-items: center; gap: var(--spacing-md);">
+                    <button class="btn btn-primary" onclick="openModal('categoryModal')">
+                        <i class="fas fa-plus"></i>
+                        Добавить категорию
+                    </button>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <div class="admin-content">
+                <div class="categories-grid">
+                    <!-- Category 1 -->
+                    <div class="category-card">
+                        <div class="category-header">
+                            <div class="category-icon-wrapper" style="background: rgba(245, 124, 0, 0.1); color: var(--primary);">
+                                <i class="fas fa-hammer"></i>
+                            </div>
+                            <div class="category-actions">
+                                <button class="category-action-btn" onclick="editCategory(1)">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="category-action-btn" onclick="deleteCategory(1)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <span class="category-status active">Активна</span>
+                        <h3 class="category-name">Перфораторы</h3>
+                        <p class="category-description">Профессиональные перфораторы для бурения и долбления</p>
+                        <div class="category-stats">
+                            <div class="category-stat">
+                                <i class="fas fa-tools"></i>
+                                <span class="category-stat-value">24</span>
+                                <span class="category-stat-label">товаров</span>
+                            </div>
+                            <div class="category-stat">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="category-stat-value">156</span>
+                                <span class="category-stat-label">заказов</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category 2 -->
+                    <div class="category-card">
+                        <div class="category-header">
+                            <div class="category-icon-wrapper" style="background: rgba(23, 162, 184, 0.1); color: var(--info);">
+                                <i class="fas fa-compact-disc"></i>
+                            </div>
+                            <div class="category-actions">
+                                <button class="category-action-btn" onclick="editCategory(2)">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="category-action-btn" onclick="deleteCategory(2)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <span class="category-status active">Активна</span>
+                        <h3 class="category-name">Болгарки</h3>
+                        <p class="category-description">Угловые шлифовальные машины для резки и шлифовки</p>
+                        <div class="category-stats">
+                            <div class="category-stat">
+                                <i class="fas fa-tools"></i>
+                                <span class="category-stat-value">18</span>
+                                <span class="category-stat-label">товаров</span>
+                            </div>
+                            <div class="category-stat">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="category-stat-value">134</span>
+                                <span class="category-stat-label">заказов</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category 3 -->
+                    <div class="category-card">
+                        <div class="category-header">
+                            <div class="category-icon-wrapper" style="background: rgba(40, 167, 69, 0.1); color: var(--success);">
+                                <i class="fas fa-screwdriver"></i>
+                            </div>
+                            <div class="category-actions">
+                                <button class="category-action-btn" onclick="editCategory(3)">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="category-action-btn" onclick="deleteCategory(3)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <span class="category-status active">Активна</span>
+                        <h3 class="category-name">Шуруповёрты</h3>
+                        <p class="category-description">Аккумуляторные и сетевые шуруповёрты</p>
+                        <div class="category-stats">
+                            <div class="category-stat">
+                                <i class="fas fa-tools"></i>
+                                <span class="category-stat-value">32</span>
+                                <span class="category-stat-label">товаров</span>
+                            </div>
+                            <div class="category-stat">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="category-stat-value">201</span>
+                                <span class="category-stat-label">заказов</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category 4 -->
+                    <div class="category-card">
+                        <div class="category-header">
+                            <div class="category-icon-wrapper" style="background: rgba(255, 193, 7, 0.1); color: #856404;">
+                                <i class="fas fa-circle-notch"></i>
+                            </div>
+                            <div class="category-actions">
+                                <button class="category-action-btn" onclick="editCategory(4)">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="category-action-btn" onclick="deleteCategory(4)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <span class="category-status active">Активна</span>
+                        <h3 class="category-name">Пилы</h3>
+                        <p class="category-description">Циркулярные, лобзиковые и сабельные пилы</p>
+                        <div class="category-stats">
+                            <div class="category-stat">
+                                <i class="fas fa-tools"></i>
+                                <span class="category-stat-value">27</span>
+                                <span class="category-stat-label">товаров</span>
+                            </div>
+                            <div class="category-stat">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="category-stat-value">89</span>
+                                <span class="category-stat-label">заказов</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category 5 -->
+                    <div class="category-card">
+                        <div class="category-header">
+                            <div class="category-icon-wrapper" style="background: rgba(220, 53, 69, 0.1); color: var(--danger);">
+                                <i class="fas fa-fire"></i>
+                            </div>
+                            <div class="category-actions">
+                                <button class="category-action-btn" onclick="editCategory(5)">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="category-action-btn" onclick="deleteCategory(5)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <span class="category-status active">Активна</span>
+                        <h3 class="category-name">Сварочное</h3>
+                        <p class="category-description">Сварочные аппараты и инверторы</p>
+                        <div class="category-stats">
+                            <div class="category-stat">
+                                <i class="fas fa-tools"></i>
+                                <span class="category-stat-value">15</span>
+                                <span class="category-stat-label">товаров</span>
+                            </div>
+                            <div class="category-stat">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="category-stat-value">67</span>
+                                <span class="category-stat-label">заказов</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category 6 - Inactive -->
+                    <div class="category-card inactive">
+                        <div class="category-header">
+                            <div class="category-icon-wrapper" style="background: var(--gray-200); color: var(--gray-500);">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <div class="category-actions">
+                                <button class="category-action-btn" onclick="editCategory(6)">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="category-action-btn" onclick="deleteCategory(6)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <span class="category-status inactive">Скрыта</span>
+                        <h3 class="category-name">Генераторы</h3>
+                        <p class="category-description">Бензиновые и дизельные генераторы</p>
+                        <div class="category-stats">
+                            <div class="category-stat">
+                                <i class="fas fa-tools"></i>
+                                <span class="category-stat-value">8</span>
+                                <span class="category-stat-label">товаров</span>
+                            </div>
+                            <div class="category-stat">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="category-stat-value">23</span>
+                                <span class="category-stat-label">заказов</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Add Category Card -->
+                    <div class="add-category-card" onclick="openModal('categoryModal')">
+                        <div class="add-category-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <span class="add-category-text">Добавить категорию</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add/Edit Category Modal -->
+    <div class="modal-overlay" id="categoryModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Новая категория</h3>
+                <button class="modal-close" onclick="closeModal('categoryModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Название категории</label>
+                    <input type="text" class="form-input" placeholder="Введите название">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Описание</label>
+                    <textarea class="form-input" rows="3" placeholder="Описание категории"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Иконка</label>
+                    <div class="icon-picker">
+                        <div class="icon-option selected"><i class="fas fa-hammer"></i></div>
+                        <div class="icon-option"><i class="fas fa-screwdriver"></i></div>
+                        <div class="icon-option"><i class="fas fa-wrench"></i></div>
+                        <div class="icon-option"><i class="fas fa-compact-disc"></i></div>
+                        <div class="icon-option"><i class="fas fa-fire"></i></div>
+                        <div class="icon-option"><i class="fas fa-bolt"></i></div>
+                        <div class="icon-option"><i class="fas fa-fan"></i></div>
+                        <div class="icon-option"><i class="fas fa-spray-can"></i></div>
+                        <div class="icon-option"><i class="fas fa-circle-notch"></i></div>
+                        <div class="icon-option"><i class="fas fa-ruler"></i></div>
+                        <div class="icon-option"><i class="fas fa-tape"></i></div>
+                        <div class="icon-option"><i class="fas fa-toolbox"></i></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Цвет</label>
+                    <div class="color-picker">
+                        <div class="color-option selected" style="background: #F57C00;"></div>
+                        <div class="color-option" style="background: #17A2B8;"></div>
+                        <div class="color-option" style="background: #28A745;"></div>
+                        <div class="color-option" style="background: #FFC107;"></div>
+                        <div class="color-option" style="background: #DC3545;"></div>
+                        <div class="color-option" style="background: #6F42C1;"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label style="display: flex; align-items: center; gap: var(--spacing-sm); cursor: pointer;">
+                        <input type="checkbox" checked style="width: 18px; height: 18px; accent-color: var(--primary);">
+                        <span>Активная категория</span>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-ghost" onclick="closeModal('categoryModal')">Отмена</button>
+                <button class="btn btn-primary" onclick="saveCategory()">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+
+        function editCategory(id) {
+            openModal('categoryModal');
+            document.querySelector('.modal-title').textContent = 'Редактировать категорию';
+        }
+
+        function deleteCategory(id) {
+            if (confirm('Удалить эту категорию?')) {
+                alert('Категория удалена');
+            }
+        }
+
+        function saveCategory() {
+            closeModal('categoryModal');
+            alert('Категория сохранена');
+        }
+
+        // Icon picker
+        document.querySelectorAll('.icon-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.icon-option').forEach(o => o.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+
+        // Color picker
+        document.querySelectorAll('.color-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.color-option').forEach(o => o.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+    </script>
+</body>
+
+</html>

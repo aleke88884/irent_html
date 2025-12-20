@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отчёты - iRent Admin</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .report-filters {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .filter-group label {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            white-space: nowrap;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            background: var(--white);
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .report-stat-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .report-stat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .report-stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .report-stat-change {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+        }
+
+        .report-stat-change.positive {
+            background: var(--success-light);
+            color: var(--success);
+        }
+
+        .report-stat-change.negative {
+            background: var(--danger-light);
+            color: var(--danger);
+        }
+
+        .report-stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 4px;
+        }
+
+        .report-stat-label {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .chart-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .chart-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .chart-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .chart-period {
+            display: flex;
+            gap: var(--spacing-xs);
+        }
+
+        .chart-period button {
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--gray-600);
+            background: var(--gray-100);
+        }
+
+        .chart-period button.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        /* Simple Bar Chart */
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            height: 200px;
+            padding-bottom: var(--spacing-md);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .bar-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+
+        .bar {
+            width: 32px;
+            background: var(--primary);
+            border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+            transition: height 0.3s;
+        }
+
+        .bar-label {
+            font-size: 0.625rem;
+            color: var(--gray-500);
+            margin-top: var(--spacing-sm);
+        }
+
+        .bar-value {
+            font-size: 0.625rem;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 4px;
+        }
+
+        /* Donut Chart */
+        .donut-chart {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-lg);
+        }
+
+        .donut {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: conic-gradient(
+                var(--primary) 0deg 144deg,
+                var(--info) 144deg 234deg,
+                var(--success) 234deg 306deg,
+                var(--warning) 306deg 360deg
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .donut::before {
+            content: '';
+            width: 100px;
+            height: 100px;
+            background: var(--white);
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .donut-center {
+            position: relative;
+            text-align: center;
+        }
+
+        .donut-center-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .donut-center-label {
+            font-size: 0.625rem;
+            color: var(--gray-500);
+        }
+
+        .donut-legend {
+            flex: 1;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+
+        .legend-label {
+            font-size: 0.8125rem;
+            color: var(--gray-600);
+            flex: 1;
+        }
+
+        .legend-value {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        /* Top Items */
+        .top-items-list {
+            margin-top: var(--spacing-md);
+        }
+
+        .top-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .top-item:last-child {
+            border-bottom: none;
+        }
+
+        .top-item-rank {
+            width: 24px;
+            height: 24px;
+            background: var(--gray-100);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--gray-600);
+        }
+
+        .top-item-rank.gold {
+            background: #FFE082;
+            color: #F57F17;
+        }
+
+        .top-item-rank.silver {
+            background: #E0E0E0;
+            color: #616161;
+        }
+
+        .top-item-rank.bronze {
+            background: #FFCCBC;
+            color: #E64A19;
+        }
+
+        .top-item-info {
+            flex: 1;
+        }
+
+        .top-item-name {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--gray-900);
+        }
+
+        .top-item-meta {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .top-item-value {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        /* Export buttons */
+        .export-buttons {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .export-btn {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            color: var(--gray-700);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            background: var(--white);
+        }
+
+        .export-btn:hover {
+            background: var(--gray-50);
+        }
+
+        @media (max-width: 1200px) {
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="admin-sidebar-logo">
+                <div class="logo-icon">
+                    <i class="fas fa-tools"></i>
+                </div>
+                iRent Admin
+            </div>
+
+            <nav class="admin-nav">
+                <a href="index.html" class="admin-nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    Дашборд
+                </a>
+                <a href="orders.html" class="admin-nav-item">
+                    <i class="fas fa-shopping-cart"></i>
+                    Заказы
+                </a>
+                <a href="tools.html" class="admin-nav-item">
+                    <i class="fas fa-tools"></i>
+                    Инструменты
+                </a>
+                <a href="users.html" class="admin-nav-item">
+                    <i class="fas fa-users"></i>
+                    Пользователи
+                </a>
+                <a href="categories.html" class="admin-nav-item">
+                    <i class="fas fa-th-large"></i>
+                    Категории
+                </a>
+                <a href="couriers.html" class="admin-nav-item">
+                    <i class="fas fa-motorcycle"></i>
+                    Курьеры
+                </a>
+                <a href="reports.html" class="admin-nav-item active">
+                    <i class="fas fa-chart-bar"></i>
+                    Отчёты
+                </a>
+                <a href="settings.html" class="admin-nav-item">
+                    <i class="fas fa-cog"></i>
+                    Настройки
+                </a>
+            </nav>
+
+            <div style="margin-top: auto; padding: var(--spacing-md);">
+                <a href="../pages/login.html" class="admin-nav-item" style="color: var(--danger);">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Выход
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Header -->
+            <header class="admin-header">
+                <h1 class="admin-header-title">Отчёты и аналитика</h1>
+                <div class="export-buttons">
+                    <button class="export-btn">
+                        <i class="fas fa-file-pdf"></i>
+                        PDF
+                    </button>
+                    <button class="export-btn">
+                        <i class="fas fa-file-excel"></i>
+                        Excel
+                    </button>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <div class="admin-content">
+                <!-- Filters -->
+                <div class="report-filters">
+                    <div class="filter-group">
+                        <label>Период:</label>
+                        <select>
+                            <option>Последние 7 дней</option>
+                            <option selected>Последние 30 дней</option>
+                            <option>Последние 90 дней</option>
+                            <option>Этот год</option>
+                            <option>Произвольный</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>С:</label>
+                        <input type="date" value="2024-11-10">
+                    </div>
+                    <div class="filter-group">
+                        <label>По:</label>
+                        <input type="date" value="2024-12-10">
+                    </div>
+                    <button class="btn btn-primary btn-sm">
+                        <i class="fas fa-sync"></i>
+                        Обновить
+                    </button>
+                </div>
+
+                <!-- Stats Row -->
+                <div class="stats-row">
+                    <div class="report-stat-card">
+                        <div class="report-stat-header">
+                            <div class="report-stat-icon" style="background: rgba(245, 124, 0, 0.1); color: var(--primary);">
+                                <i class="fas fa-tenge-sign"></i>
+                            </div>
+                            <span class="report-stat-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                +12.5%
+                            </span>
+                        </div>
+                        <div class="report-stat-value">2.4М ₸</div>
+                        <div class="report-stat-label">Общий доход</div>
+                    </div>
+                    <div class="report-stat-card">
+                        <div class="report-stat-header">
+                            <div class="report-stat-icon" style="background: var(--info-light); color: var(--info);">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <span class="report-stat-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                +8.3%
+                            </span>
+                        </div>
+                        <div class="report-stat-value">487</div>
+                        <div class="report-stat-label">Заказов</div>
+                    </div>
+                    <div class="report-stat-card">
+                        <div class="report-stat-header">
+                            <div class="report-stat-icon" style="background: var(--success-light); color: var(--success);">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <span class="report-stat-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                +15.2%
+                            </span>
+                        </div>
+                        <div class="report-stat-value">156</div>
+                        <div class="report-stat-label">Новых клиентов</div>
+                    </div>
+                    <div class="report-stat-card">
+                        <div class="report-stat-header">
+                            <div class="report-stat-icon" style="background: var(--warning-light); color: #856404;">
+                                <i class="fas fa-undo"></i>
+                            </div>
+                            <span class="report-stat-change negative">
+                                <i class="fas fa-arrow-down"></i>
+                                -2.1%
+                            </span>
+                        </div>
+                        <div class="report-stat-value">3.2%</div>
+                        <div class="report-stat-label">Возвраты</div>
+                    </div>
+                </div>
+
+                <!-- Charts -->
+                <div class="charts-grid">
+                    <!-- Revenue Chart -->
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3 class="chart-title">Динамика дохода</h3>
+                            <div class="chart-period">
+                                <button>День</button>
+                                <button class="active">Неделя</button>
+                                <button>Месяц</button>
+                            </div>
+                        </div>
+                        <div class="bar-chart">
+                            <div class="bar-wrapper">
+                                <div class="bar-value">280K</div>
+                                <div class="bar" style="height: 56%;"></div>
+                                <div class="bar-label">Нояб 11</div>
+                            </div>
+                            <div class="bar-wrapper">
+                                <div class="bar-value">350K</div>
+                                <div class="bar" style="height: 70%;"></div>
+                                <div class="bar-label">Нояб 18</div>
+                            </div>
+                            <div class="bar-wrapper">
+                                <div class="bar-value">420K</div>
+                                <div class="bar" style="height: 84%;"></div>
+                                <div class="bar-label">Нояб 25</div>
+                            </div>
+                            <div class="bar-wrapper">
+                                <div class="bar-value">380K</div>
+                                <div class="bar" style="height: 76%;"></div>
+                                <div class="bar-label">Дек 2</div>
+                            </div>
+                            <div class="bar-wrapper">
+                                <div class="bar-value">500K</div>
+                                <div class="bar" style="height: 100%;"></div>
+                                <div class="bar-label">Дек 9</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category Distribution -->
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3 class="chart-title">Заказы по категориям</h3>
+                        </div>
+                        <div class="donut-chart">
+                            <div class="donut">
+                                <div class="donut-center">
+                                    <div class="donut-center-value">487</div>
+                                    <div class="donut-center-label">заказов</div>
+                                </div>
+                            </div>
+                            <div class="donut-legend">
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: var(--primary);"></div>
+                                    <span class="legend-label">Перфораторы</span>
+                                    <span class="legend-value">40%</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: var(--info);"></div>
+                                    <span class="legend-label">Болгарки</span>
+                                    <span class="legend-value">25%</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: var(--success);"></div>
+                                    <span class="legend-label">Шуруповёрты</span>
+                                    <span class="legend-value">20%</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: var(--warning);"></div>
+                                    <span class="legend-label">Прочее</span>
+                                    <span class="legend-value">15%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top Items -->
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3 class="chart-title">Топ инструментов</h3>
+                            <a href="tools.html" class="section-link">Все инструменты</a>
+                        </div>
+                        <div class="top-items-list">
+                            <div class="top-item">
+                                <div class="top-item-rank gold">1</div>
+                                <div class="top-item-info">
+                                    <div class="top-item-name">Перфоратор Bosch GBH 2-26</div>
+                                    <div class="top-item-meta">67 заказов</div>
+                                </div>
+                                <div class="top-item-value">100 500 ₸</div>
+                            </div>
+                            <div class="top-item">
+                                <div class="top-item-rank silver">2</div>
+                                <div class="top-item-info">
+                                    <div class="top-item-name">Шуруповёрт DeWalt DCD791</div>
+                                    <div class="top-item-meta">54 заказов</div>
+                                </div>
+                                <div class="top-item-value">64 800 ₸</div>
+                            </div>
+                            <div class="top-item">
+                                <div class="top-item-rank bronze">3</div>
+                                <div class="top-item-info">
+                                    <div class="top-item-name">Болгарка Makita GA5030</div>
+                                    <div class="top-item-meta">48 заказов</div>
+                                </div>
+                                <div class="top-item-value">38 400 ₸</div>
+                            </div>
+                            <div class="top-item">
+                                <div class="top-item-rank">4</div>
+                                <div class="top-item-info">
+                                    <div class="top-item-name">Генератор бензиновый 3кВт</div>
+                                    <div class="top-item-meta">32 заказов</div>
+                                </div>
+                                <div class="top-item-value">160 000 ₸</div>
+                            </div>
+                            <div class="top-item">
+                                <div class="top-item-rank">5</div>
+                                <div class="top-item-info">
+                                    <div class="top-item-name">Циркулярная пила Bosch</div>
+                                    <div class="top-item-meta">28 заказов</div>
+                                </div>
+                                <div class="top-item-value">50 400 ₸</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3 class="chart-title">Топ клиентов</h3>
+                            <a href="users.html" class="section-link">Все клиенты</a>
+                        </div>
+                        <div class="top-items-list">
+                            <div class="top-item">
+                                <div class="top-item-rank gold">1</div>
+                                <div class="top-item-info">
+                                    <div class="top-item-name">Строй-Мастер ТОО</div>
+                                    <div class="top-item-meta">23 заказа</div>
+                                </div>
+                                <div class="top-item-value">245 000 ₸</div>
+                            </div>
+                            <div class="top-item">
+                                <div class="top-item-rank silver">2</div>
+                                <div class="top-item-info">
+                                    <div class="top-item-name">Алексей Иванов</div>
+                                    <div class="top-item-meta">15 заказов</div>
+                                </div>
+                                <div class="top-item-value">89 500 ₸</div>
+                            </div>
+                            <div class="top-item">
+                                <div class="top-item-rank bronze">3</div>
+                                <div class="top-item-info">
+                                    <div class="top-item-name">РемСтрой Компани</div>
+                                    <div class="top-item-meta">12 заказов</div>
+                                </div>
+                                <div class="top-item-value">78 200 ₸</div>
+                            </div>
+                            <div class="top-item">
+                                <div class="top-item-rank">4</div>
+                                <div class="top-item-info">
+                                    <div class="top-item-name">Марат Касымов</div>
+                                    <div class="top-item-meta">10 заказов</div>
+                                </div>
+                                <div class="top-item-value">56 800 ₸</div>
+                            </div>
+                            <div class="top-item">
+                                <div class="top-item-rank">5</div>
+                                <div class="top-item-info">
+                                    <div class="top-item-name">Дмитрий Волков</div>
+                                    <div class="top-item-meta">8 заказов</div>
+                                </div>
+                                <div class="top-item-value">42 300 ₸</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Chart period toggle
+        document.querySelectorAll('.chart-period button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+
+</html>

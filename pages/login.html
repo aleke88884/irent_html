@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#0077FF">
+    <title>Вход - iRent</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app">
+        <div class="auth-page">
+            <!-- Header -->
+            <div class="auth-header">
+                <div class="auth-logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    iRent
+                </div>
+                <h1 class="auth-title">Добро пожаловать!</h1>
+                <p class="auth-subtitle">Войдите, чтобы продолжить</p>
+            </div>
+
+            <!-- Form -->
+            <div class="auth-form">
+                <div class="form-group">
+                    <label class="form-label">Телефон или email</label>
+                    <div class="form-input-icon">
+                        <i class="fas fa-user"></i>
+                        <input type="text" class="form-input" placeholder="+7 (___) ___-__-__">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Пароль</label>
+                    <div class="form-input-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" class="form-input" placeholder="Введите пароль" id="password">
+                        <button class="toggle-password" onclick="togglePassword()">
+                            <i class="far fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; margin-bottom: var(--spacing-xl);">
+                    <a href="forgot-password.html" style="font-size: 0.875rem; color: var(--primary); font-weight: 600;">
+                        Забыли пароль?
+                    </a>
+                </div>
+
+                <button class="btn btn-primary btn-lg btn-block" onclick="window.location.href='../index.html'">
+                    Войти
+                </button>
+
+                <!-- Social Login -->
+                <div class="social-login">
+                    <div class="social-divider">
+                        <span>или войдите через</span>
+                    </div>
+                    <div class="social-buttons">
+                        <button class="social-btn">
+                            <i class="fab fa-google" style="color: #DB4437;"></i>
+                        </button>
+                        <button class="social-btn">
+                            <i class="fab fa-apple" style="color: #000;"></i>
+                        </button>
+                        <button class="social-btn" style="position: relative;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z" fill="#00B2FF"/>
+                                <path d="M15.5 8.5H13.5C13.22 8.5 13 8.72 13 9V10.5H15.5L15 12.5H13V18H10.5V12.5H8.5V10.5H10.5V9C10.5 7.34 11.84 6 13.5 6H15.5V8.5Z" fill="white"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="auth-footer">
+                <p>
+                    Нет аккаунта? <a href="register.html">Зарегистрироваться</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const input = document.getElementById('password');
+            const icon = document.querySelector('.toggle-password i');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+    </script>
+</body>
+
+</html>

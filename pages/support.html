@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Поддержка - iRent</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .support-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: var(--spacing-xl) var(--spacing-md);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .support-header-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--spacing-md);
+            font-size: 1.5rem;
+        }
+
+        .support-header h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .support-header p {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        .contact-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            margin-top: -30px;
+        }
+
+        .contact-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            text-align: center;
+            box-shadow: var(--shadow-md);
+        }
+
+        .contact-card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--spacing-sm);
+            font-size: 1.25rem;
+        }
+
+        .contact-card-icon.phone {
+            background: var(--success-light);
+            color: var(--success);
+        }
+
+        .contact-card-icon.chat {
+            background: var(--info-light);
+            color: var(--info);
+        }
+
+        .contact-card-icon.whatsapp {
+            background: #DCF8C6;
+            color: #25D366;
+        }
+
+        .contact-card-icon.telegram {
+            background: #E3F2FD;
+            color: #0088cc;
+        }
+
+        .contact-card-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 2px;
+        }
+
+        .contact-card-subtitle {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .faq-section {
+            padding: var(--spacing-md);
+        }
+
+        .faq-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .faq-item {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-sm);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--spacing-md);
+            font-size: 0.9375rem;
+            font-weight: 500;
+            color: var(--gray-800);
+            width: 100%;
+            text-align: left;
+        }
+
+        .faq-question i {
+            color: var(--gray-400);
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+            color: var(--primary);
+        }
+
+        .faq-answer {
+            padding: 0 var(--spacing-md) var(--spacing-md);
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            line-height: 1.6;
+            display: none;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .help-topics {
+            padding: 0 var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .help-topic {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            background: var(--white);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-sm);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .help-topic-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            background: rgba(245, 124, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+        }
+
+        .help-topic-text {
+            flex: 1;
+        }
+
+        .help-topic-text h4 {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .help-topic-text p {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .help-topic-arrow {
+            color: var(--gray-400);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <div class="app-content">
+            <!-- Header -->
+            <header class="app-header" style="background: transparent; position: absolute; border: none;">
+                <a href="profile.html" class="back-btn" style="color: white;">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <h1 class="app-header-title" style="color: white;">Поддержка</h1>
+                <div style="width: 40px;"></div>
+            </header>
+
+            <!-- Support Header -->
+            <div class="support-header" style="padding-top: calc(var(--spacing-xl) + 56px);">
+                <div class="support-header-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h1>Чем можем помочь?</h1>
+                <p>Мы на связи 24/7</p>
+            </div>
+
+            <!-- Contact Cards -->
+            <div class="contact-cards">
+                <a href="tel:+77001234567" class="contact-card">
+                    <div class="contact-card-icon phone">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="contact-card-title">Позвонить</div>
+                    <div class="contact-card-subtitle">+7 700 123 45 67</div>
+                </a>
+                <button class="contact-card" onclick="openChat()">
+                    <div class="contact-card-icon chat">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="contact-card-title">Онлайн чат</div>
+                    <div class="contact-card-subtitle">Быстрый ответ</div>
+                </button>
+                <a href="https://wa.me/77001234567" class="contact-card">
+                    <div class="contact-card-icon whatsapp">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <div class="contact-card-title">WhatsApp</div>
+                    <div class="contact-card-subtitle">Написать</div>
+                </a>
+                <a href="https://t.me/irent_support" class="contact-card">
+                    <div class="contact-card-icon telegram">
+                        <i class="fab fa-telegram-plane"></i>
+                    </div>
+                    <div class="contact-card-title">Telegram</div>
+                    <div class="contact-card-subtitle">@irent_support</div>
+                </a>
+            </div>
+
+            <!-- Help Topics -->
+            <div class="faq-section">
+                <div class="faq-title">Темы помощи</div>
+            </div>
+            <div class="help-topics">
+                <a href="#" class="help-topic">
+                    <div class="help-topic-icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <div class="help-topic-text">
+                        <h4>Заказы и доставка</h4>
+                        <p>Статус, отмена, изменение</p>
+                    </div>
+                    <i class="fas fa-chevron-right help-topic-arrow"></i>
+                </a>
+                <a href="#" class="help-topic">
+                    <div class="help-topic-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <div class="help-topic-text">
+                        <h4>Оплата и возврат</h4>
+                        <p>Способы оплаты, возврат средств</p>
+                    </div>
+                    <i class="fas fa-chevron-right help-topic-arrow"></i>
+                </a>
+                <a href="#" class="help-topic">
+                    <div class="help-topic-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div class="help-topic-text">
+                        <h4>Инструменты</h4>
+                        <p>Состояние, поломки, залог</p>
+                    </div>
+                    <i class="fas fa-chevron-right help-topic-arrow"></i>
+                </a>
+                <a href="#" class="help-topic">
+                    <div class="help-topic-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="help-topic-text">
+                        <h4>Аккаунт</h4>
+                        <p>Настройки, безопасность</p>
+                    </div>
+                    <i class="fas fa-chevron-right help-topic-arrow"></i>
+                </a>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="faq-section">
+                <div class="faq-title">Частые вопросы</div>
+
+                <div class="faq-item active">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Как арендовать инструмент?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        Выберите нужный инструмент в каталоге, укажите даты аренды и оформите заказ. После подтверждения заказа вы можете забрать инструмент самовывозом или заказать доставку.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Какой залог нужен для аренды?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        Размер залога зависит от стоимости инструмента и указан на странице каждого товара. Залог возвращается полностью при возврате инструмента в исходном состоянии.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Что делать если инструмент сломался?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        Немедленно свяжитесь с нашей службой поддержки. Если поломка произошла не по вашей вине, мы заменим инструмент бесплатно. В случае повреждения по вине арендатора, ремонт оплачивается из залога.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Можно ли продлить аренду?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        Да, вы можете продлить аренду в разделе "Мои заказы" или связавшись с поддержкой. Продление возможно, если инструмент не забронирован другим клиентом.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Как отменить заказ?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        Отменить заказ можно в разделе "Мои заказы" до момента его получения. При отмене более чем за 24 часа до начала аренды - возврат 100%. При отмене менее чем за 24 часа - удерживается 20% от стоимости.
+                    </div>
+                </div>
+            </div>
+
+            <div style="padding: var(--spacing-md); padding-bottom: calc(var(--spacing-md) + 80px);">
+                <div style="text-align: center; padding: var(--spacing-lg); background: var(--gray-50); border-radius: var(--radius-md);">
+                    <p style="font-size: 0.875rem; color: var(--gray-600); margin-bottom: var(--spacing-sm);">
+                        Не нашли ответ на свой вопрос?
+                    </p>
+                    <button class="btn btn-primary" onclick="openChat()">
+                        <i class="fas fa-comment"></i>
+                        Написать в чат
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="../index.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Главная</span>
+            </a>
+            <a href="catalog.html" class="nav-item">
+                <i class="fas fa-th-large"></i>
+                <span>Каталог</span>
+            </a>
+            <a href="my-rentals.html" class="nav-item">
+                <i class="fas fa-box"></i>
+                <span>Заказы</span>
+            </a>
+            <a href="favorites.html" class="nav-item">
+                <i class="fas fa-heart"></i>
+                <span>Избранное</span>
+            </a>
+            <a href="profile.html" class="nav-item active">
+                <i class="fas fa-user"></i>
+                <span>Профиль</span>
+            </a>
+        </nav>
+    </div>
+
+    <script>
+        function toggleFaq(btn) {
+            const item = btn.closest('.faq-item');
+            const allItems = document.querySelectorAll('.faq-item');
+
+            allItems.forEach(i => {
+                if (i !== item) {
+                    i.classList.remove('active');
+                }
+            });
+
+            item.classList.toggle('active');
+        }
+
+        function openChat() {
+            alert('Чат поддержки откроется здесь');
+        }
+    </script>
+</body>
+
+</html>

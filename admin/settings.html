@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Настройки - iRent Admin</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .settings-tabs {
+            display: flex;
+            gap: var(--spacing-xs);
+            border-bottom: 1px solid var(--gray-200);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .settings-tab {
+            padding: var(--spacing-md) var(--spacing-lg);
+            font-size: 0.9375rem;
+            font-weight: 500;
+            color: var(--gray-600);
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1px;
+        }
+
+        .settings-tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .settings-tab:hover {
+            color: var(--gray-900);
+        }
+
+        .settings-section {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .settings-section-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+            padding-bottom: var(--spacing-md);
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .settings-section-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(245, 124, 0, 0.1);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+        }
+
+        .settings-section-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .settings-section-subtitle {
+            font-size: 0.8125rem;
+            color: var(--gray-500);
+        }
+
+        .settings-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--spacing-md) 0;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .settings-row:last-child {
+            border-bottom: none;
+        }
+
+        .settings-row-info {
+            flex: 1;
+        }
+
+        .settings-row-label {
+            font-size: 0.9375rem;
+            font-weight: 500;
+            color: var(--gray-900);
+            margin-bottom: 2px;
+        }
+
+        .settings-row-description {
+            font-size: 0.8125rem;
+            color: var(--gray-500);
+        }
+
+        .settings-row-control {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 28px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--gray-300);
+            transition: 0.3s;
+            border-radius: 28px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .toggle-switch input:checked + .toggle-slider {
+            background-color: var(--primary);
+        }
+
+        .toggle-switch input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+        }
+
+        .settings-input {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-md);
+            font-size: 0.9375rem;
+            min-width: 200px;
+        }
+
+        .settings-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .settings-select {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-md);
+            font-size: 0.9375rem;
+            background: var(--white);
+            min-width: 200px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .form-row .form-group {
+            margin-bottom: 0;
+        }
+
+        .upload-logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-lg);
+        }
+
+        .logo-preview {
+            width: 80px;
+            height: 80px;
+            background: var(--gray-100);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .logo-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .logo-preview i {
+            font-size: 2rem;
+            color: var(--gray-400);
+        }
+
+        .admin-list {
+            margin-top: var(--spacing-md);
+        }
+
+        .admin-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            background: var(--gray-50);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .admin-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        .admin-info {
+            flex: 1;
+        }
+
+        .admin-name {
+            font-weight: 500;
+            color: var(--gray-900);
+        }
+
+        .admin-email {
+            font-size: 0.8125rem;
+            color: var(--gray-500);
+        }
+
+        .admin-role {
+            padding: 4px 8px;
+            background: rgba(245, 124, 0, 0.1);
+            color: var(--primary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: var(--radius-sm);
+        }
+
+        .admin-actions button {
+            padding: var(--spacing-sm);
+            color: var(--gray-500);
+        }
+
+        .admin-actions button:hover {
+            color: var(--gray-700);
+        }
+
+        .danger-zone {
+            border: 1px solid var(--danger-light);
+            background: rgba(220, 53, 69, 0.02);
+        }
+
+        .danger-zone .settings-section-icon {
+            background: var(--danger-light);
+            color: var(--danger);
+        }
+
+        @media (max-width: 900px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="admin-sidebar-logo">
+                <div class="logo-icon">
+                    <i class="fas fa-tools"></i>
+                </div>
+                iRent Admin
+            </div>
+
+            <nav class="admin-nav">
+                <a href="index.html" class="admin-nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    Дашборд
+                </a>
+                <a href="orders.html" class="admin-nav-item">
+                    <i class="fas fa-shopping-cart"></i>
+                    Заказы
+                </a>
+                <a href="tools.html" class="admin-nav-item">
+                    <i class="fas fa-tools"></i>
+                    Инструменты
+                </a>
+                <a href="users.html" class="admin-nav-item">
+                    <i class="fas fa-users"></i>
+                    Пользователи
+                </a>
+                <a href="categories.html" class="admin-nav-item">
+                    <i class="fas fa-th-large"></i>
+                    Категории
+                </a>
+                <a href="couriers.html" class="admin-nav-item">
+                    <i class="fas fa-motorcycle"></i>
+                    Курьеры
+                </a>
+                <a href="reports.html" class="admin-nav-item">
+                    <i class="fas fa-chart-bar"></i>
+                    Отчёты
+                </a>
+                <a href="settings.html" class="admin-nav-item active">
+                    <i class="fas fa-cog"></i>
+                    Настройки
+                </a>
+            </nav>
+
+            <div style="margin-top: auto; padding: var(--spacing-md);">
+                <a href="../pages/login.html" class="admin-nav-item" style="color: var(--danger);">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Выход
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Header -->
+            <header class="admin-header">
+                <h1 class="admin-header-title">Настройки</h1>
+                <button class="btn btn-primary">
+                    <i class="fas fa-save"></i>
+                    Сохранить изменения
+                </button>
+            </header>
+
+            <!-- Content -->
+            <div class="admin-content">
+                <!-- Tabs -->
+                <div class="settings-tabs">
+                    <button class="settings-tab active">Основные</button>
+                    <button class="settings-tab">Оплата</button>
+                    <button class="settings-tab">Доставка</button>
+                    <button class="settings-tab">Уведомления</button>
+                    <button class="settings-tab">Безопасность</button>
+                </div>
+
+                <!-- General Settings -->
+                <div class="settings-section">
+                    <div class="settings-section-header">
+                        <div class="settings-section-icon">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <div>
+                            <h3 class="settings-section-title">Информация о компании</h3>
+                            <p class="settings-section-subtitle">Основные данные вашего бизнеса</p>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Название компании</label>
+                            <input type="text" class="form-input" value="iRent - Аренда инструментов">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Юридическое название</label>
+                            <input type="text" class="form-input" value="ТОО «iRent Kazakhstan»">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-input" value="info@irent.kz">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Телефон</label>
+                            <input type="tel" class="form-input" value="+7 (700) 123-45-67">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Адрес</label>
+                        <input type="text" class="form-input" value="г. Алматы, ул. Тимирязева 42">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Логотип</label>
+                        <div class="upload-logo">
+                            <div class="logo-preview">
+                                <i class="fas fa-tools"></i>
+                            </div>
+                            <div>
+                                <button class="btn btn-outline btn-sm">
+                                    <i class="fas fa-upload"></i>
+                                    Загрузить
+                                </button>
+                                <p style="font-size: 0.75rem; color: var(--gray-500); margin-top: var(--spacing-xs);">
+                                    PNG, JPG до 2MB. Рекомендуемый размер: 200x200px
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Business Settings -->
+                <div class="settings-section">
+                    <div class="settings-section-header">
+                        <div class="settings-section-icon">
+                            <i class="fas fa-sliders-h"></i>
+                        </div>
+                        <div>
+                            <h3 class="settings-section-title">Настройки аренды</h3>
+                            <p class="settings-section-subtitle">Параметры работы сервиса</p>
+                        </div>
+                    </div>
+
+                    <div class="settings-row">
+                        <div class="settings-row-info">
+                            <div class="settings-row-label">Минимальный срок аренды</div>
+                            <div class="settings-row-description">Минимальное количество дней аренды</div>
+                        </div>
+                        <div class="settings-row-control">
+                            <input type="number" class="settings-input" value="1" style="width: 80px;">
+                            <span style="color: var(--gray-500);">дней</span>
+                        </div>
+                    </div>
+
+                    <div class="settings-row">
+                        <div class="settings-row-info">
+                            <div class="settings-row-label">Максимальный срок аренды</div>
+                            <div class="settings-row-description">Максимальное количество дней аренды</div>
+                        </div>
+                        <div class="settings-row-control">
+                            <input type="number" class="settings-input" value="30" style="width: 80px;">
+                            <span style="color: var(--gray-500);">дней</span>
+                        </div>
+                    </div>
+
+                    <div class="settings-row">
+                        <div class="settings-row-info">
+                            <div class="settings-row-label">Размер залога по умолчанию</div>
+                            <div class="settings-row-description">Процент от стоимости инструмента</div>
+                        </div>
+                        <div class="settings-row-control">
+                            <input type="number" class="settings-input" value="50" style="width: 80px;">
+                            <span style="color: var(--gray-500);">%</span>
+                        </div>
+                    </div>
+
+                    <div class="settings-row">
+                        <div class="settings-row-info">
+                            <div class="settings-row-label">Автоматическое подтверждение</div>
+                            <div class="settings-row-description">Подтверждать заказы автоматически</div>
+                        </div>
+                        <div class="settings-row-control">
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="settings-row">
+                        <div class="settings-row-info">
+                            <div class="settings-row-label">Режим обслуживания</div>
+                            <div class="settings-row-description">Временно отключить приём заказов</div>
+                        </div>
+                        <div class="settings-row-control">
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admins -->
+                <div class="settings-section">
+                    <div class="settings-section-header">
+                        <div class="settings-section-icon">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                        <div>
+                            <h3 class="settings-section-title">Администраторы</h3>
+                            <p class="settings-section-subtitle">Управление доступом к панели</p>
+                        </div>
+                        <button class="btn btn-outline btn-sm" style="margin-left: auto;">
+                            <i class="fas fa-plus"></i>
+                            Добавить
+                        </button>
+                    </div>
+
+                    <div class="admin-list">
+                        <div class="admin-item">
+                            <div class="admin-avatar">АИ</div>
+                            <div class="admin-info">
+                                <div class="admin-name">Админ Иванов</div>
+                                <div class="admin-email">admin@irent.kz</div>
+                            </div>
+                            <span class="admin-role">Суперадмин</span>
+                            <div class="admin-actions">
+                                <button><i class="fas fa-edit"></i></button>
+                            </div>
+                        </div>
+                        <div class="admin-item">
+                            <div class="admin-avatar" style="background: var(--info);">МК</div>
+                            <div class="admin-info">
+                                <div class="admin-name">Мария Козлова</div>
+                                <div class="admin-email">maria@irent.kz</div>
+                            </div>
+                            <span class="admin-role" style="background: var(--info-light); color: var(--info);">Менеджер</span>
+                            <div class="admin-actions">
+                                <button><i class="fas fa-edit"></i></button>
+                                <button><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="admin-item">
+                            <div class="admin-avatar" style="background: var(--success);">ЕП</div>
+                            <div class="admin-info">
+                                <div class="admin-name">Ерлан Петров</div>
+                                <div class="admin-email">erlan@irent.kz</div>
+                            </div>
+                            <span class="admin-role" style="background: var(--success-light); color: var(--success);">Оператор</span>
+                            <div class="admin-actions">
+                                <button><i class="fas fa-edit"></i></button>
+                                <button><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Danger Zone -->
+                <div class="settings-section danger-zone">
+                    <div class="settings-section-header">
+                        <div class="settings-section-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div>
+                            <h3 class="settings-section-title" style="color: var(--danger);">Опасная зона</h3>
+                            <p class="settings-section-subtitle">Необратимые действия</p>
+                        </div>
+                    </div>
+
+                    <div class="settings-row">
+                        <div class="settings-row-info">
+                            <div class="settings-row-label">Очистить кэш</div>
+                            <div class="settings-row-description">Удалить временные файлы системы</div>
+                        </div>
+                        <div class="settings-row-control">
+                            <button class="btn btn-outline btn-sm">Очистить</button>
+                        </div>
+                    </div>
+
+                    <div class="settings-row">
+                        <div class="settings-row-info">
+                            <div class="settings-row-label">Экспорт данных</div>
+                            <div class="settings-row-description">Скачать все данные системы</div>
+                        </div>
+                        <div class="settings-row-control">
+                            <button class="btn btn-outline btn-sm">Экспорт</button>
+                        </div>
+                    </div>
+
+                    <div class="settings-row">
+                        <div class="settings-row-info">
+                            <div class="settings-row-label" style="color: var(--danger);">Удалить все данные</div>
+                            <div class="settings-row-description">Полностью очистить базу данных</div>
+                        </div>
+                        <div class="settings-row-control">
+                            <button class="btn btn-sm" style="background: var(--danger); color: white;">Удалить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Tab switching
+        document.querySelectorAll('.settings-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+
+</html>

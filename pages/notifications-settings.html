@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Настройки уведомлений - iRent</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .settings-section {
+            padding: var(--spacing-md);
+        }
+
+        .settings-section-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: var(--spacing-sm);
+            padding-left: var(--spacing-sm);
+        }
+
+        .settings-group {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .settings-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .settings-item:last-child {
+            border-bottom: none;
+        }
+
+        .settings-item-left {
+            flex: 1;
+        }
+
+        .settings-item-text {
+            font-size: 0.9375rem;
+            font-weight: 500;
+            color: var(--gray-900);
+        }
+
+        .settings-item-subtitle {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            margin-top: 2px;
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 28px;
+            flex-shrink: 0;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--gray-300);
+            transition: 0.3s;
+            border-radius: 28px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .toggle-switch input:checked + .toggle-slider {
+            background-color: var(--primary);
+        }
+
+        .toggle-switch input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+        }
+
+        .notification-preview {
+            background: var(--gray-50);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            margin: var(--spacing-md);
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-md);
+        }
+
+        .preview-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .preview-content {
+            flex: 1;
+        }
+
+        .preview-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 2px;
+        }
+
+        .preview-text {
+            font-size: 0.8125rem;
+            color: var(--gray-600);
+        }
+
+        .preview-time {
+            font-size: 0.75rem;
+            color: var(--gray-400);
+            margin-top: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <div class="app-content">
+            <!-- Header -->
+            <header class="app-header">
+                <a href="profile.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <h1 class="app-header-title">Уведомления</h1>
+                <div style="width: 40px;"></div>
+            </header>
+
+            <!-- Preview -->
+            <div class="notification-preview">
+                <div class="preview-icon">
+                    <i class="fas fa-bell"></i>
+                </div>
+                <div class="preview-content">
+                    <div class="preview-title">Пример уведомления</div>
+                    <div class="preview-text">Ваш заказ #1248 готов к выдаче</div>
+                    <div class="preview-time">Сейчас</div>
+                </div>
+            </div>
+
+            <!-- Settings -->
+            <div class="settings-section">
+                <!-- Channels -->
+                <div class="settings-section-title">Каналы уведомлений</div>
+                <div class="settings-group">
+                    <div class="settings-item">
+                        <div class="settings-item-left">
+                            <div class="settings-item-text">Push-уведомления</div>
+                            <div class="settings-item-subtitle">Мгновенные уведомления на устройство</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-item-left">
+                            <div class="settings-item-text">SMS-уведомления</div>
+                            <div class="settings-item-subtitle">Важные уведомления по SMS</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-item-left">
+                            <div class="settings-item-text">Email-уведомления</div>
+                            <div class="settings-item-subtitle">Уведомления на почту</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Order Notifications -->
+                <div class="settings-section-title">Заказы</div>
+                <div class="settings-group">
+                    <div class="settings-item">
+                        <div class="settings-item-left">
+                            <div class="settings-item-text">Статус заказа</div>
+                            <div class="settings-item-subtitle">Подтверждение, доставка, возврат</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-item-left">
+                            <div class="settings-item-text">Напоминание о возврате</div>
+                            <div class="settings-item-subtitle">За 1 день до окончания аренды</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-item-left">
+                            <div class="settings-item-text">Просрочка аренды</div>
+                            <div class="settings-item-subtitle">Уведомления о просроченных заказах</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Promotions -->
+                <div class="settings-section-title">Акции и предложения</div>
+                <div class="settings-group">
+                    <div class="settings-item">
+                        <div class="settings-item-left">
+                            <div class="settings-item-text">Скидки и акции</div>
+                            <div class="settings-item-subtitle">Специальные предложения</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-item-left">
+                            <div class="settings-item-text">Персональные рекомендации</div>
+                            <div class="settings-item-subtitle">Подборки на основе ваших заказов</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-item-left">
+                            <div class="settings-item-text">Новинки каталога</div>
+                            <div class="settings-item-subtitle">Новые инструменты в аренду</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Other -->
+                <div class="settings-section-title">Прочее</div>
+                <div class="settings-group">
+                    <div class="settings-item">
+                        <div class="settings-item-left">
+                            <div class="settings-item-text">Бонусы и баллы</div>
+                            <div class="settings-item-subtitle">Начисление и сгорание бонусов</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-item-left">
+                            <div class="settings-item-text">Отзывы</div>
+                            <div class="settings-item-subtitle">Напоминания оставить отзыв</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-item-left">
+                            <div class="settings-item-text">Безопасность</div>
+                            <div class="settings-item-subtitle">Вход в аккаунт, смена пароля</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="../index.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Главная</span>
+            </a>
+            <a href="catalog.html" class="nav-item">
+                <i class="fas fa-th-large"></i>
+                <span>Каталог</span>
+            </a>
+            <a href="my-rentals.html" class="nav-item">
+                <i class="fas fa-box"></i>
+                <span>Заказы</span>
+            </a>
+            <a href="favorites.html" class="nav-item">
+                <i class="fas fa-heart"></i>
+                <span>Избранное</span>
+            </a>
+            <a href="profile.html" class="nav-item active">
+                <i class="fas fa-user"></i>
+                <span>Профиль</span>
+            </a>
+        </nav>
+    </div>
+</body>
+
+</html>

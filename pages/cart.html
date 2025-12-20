@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#0077FF">
+    <title>Корзина - iRent</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app">
+        <div class="app-content" style="padding-bottom: 180px;">
+            <!-- Header -->
+            <header class="app-header">
+                <a href="javascript:history.back()" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <h1 class="app-header-title">Корзина</h1>
+                <button class="header-btn" style="opacity: 0;">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </header>
+
+            <!-- Cart Items -->
+            <div class="p-md">
+                <!-- Cart Item 1 -->
+                <div class="cart-item">
+                    <div class="cart-item-img">
+                        <img src="https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=160&h=160&fit=crop" alt="Перфоратор">
+                    </div>
+                    <div class="cart-item-info">
+                        <h3 class="cart-item-title">Перфоратор Bosch GBH 2-26 DRE</h3>
+                        <div class="cart-item-dates">
+                            <i class="far fa-calendar"></i> 15 - 17 дек (3 дня)
+                        </div>
+                        <div class="cart-item-price">4 500 ₸</div>
+                    </div>
+                    <button class="cart-item-remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <!-- Cart Item 2 -->
+                <div class="cart-item">
+                    <div class="cart-item-img">
+                        <img src="https://images.unsplash.com/photo-1504148455328-c376907d081c?w=160&h=160&fit=crop" alt="Болгарка">
+                    </div>
+                    <div class="cart-item-info">
+                        <h3 class="cart-item-title">Болгарка Makita GA5030</h3>
+                        <div class="cart-item-dates">
+                            <i class="far fa-calendar"></i> 15 - 17 дек (3 дня)
+                        </div>
+                        <div class="cart-item-price">2 400 ₸</div>
+                    </div>
+                    <button class="cart-item-remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Promo Code -->
+            <div class="p-md" style="padding-top: 0;">
+                <div style="display: flex; gap: var(--spacing-sm);">
+                    <input type="text" class="form-input" placeholder="Промокод" style="flex: 1;">
+                    <button class="btn btn-outline">Применить</button>
+                </div>
+            </div>
+
+            <!-- Cart Summary -->
+            <div class="cart-summary">
+                <div class="cart-summary-row">
+                    <span>Аренда (6 дней)</span>
+                    <span>6 900 ₸</span>
+                </div>
+                <div class="cart-summary-row">
+                    <span>Доставка</span>
+                    <span>1 500 ₸</span>
+                </div>
+                <div class="cart-summary-row">
+                    <span>Залог</span>
+                    <span style="color: var(--gray-500);">40 000 ₸</span>
+                </div>
+                <div class="cart-summary-row total">
+                    <span>Итого к оплате</span>
+                    <span class="value">8 400 ₸</span>
+                </div>
+            </div>
+
+            <!-- Deposit Notice -->
+            <div class="p-md">
+                <div class="info-box info">
+                    <i class="fas fa-info-circle"></i>
+                    <div class="info-box-content">
+                        <h4>Залог 40 000 ₸</h4>
+                        <p>Вносится при получении и возвращается после сдачи инструмента</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Delivery Info -->
+            <div class="p-md" style="padding-top: 0;">
+                <div style="background: var(--gray-50); border-radius: var(--radius-lg); padding: var(--spacing-md);">
+                    <div style="display: flex; align-items: center; gap: var(--spacing-md); margin-bottom: var(--spacing-sm);">
+                        <div style="width: 40px; height: 40px; background: var(--primary-light); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; color: var(--primary);">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: var(--gray-900); font-size: 0.9375rem;">Доставка курьером</div>
+                            <div style="font-size: 0.8125rem; color: var(--gray-500);">Завтра, 10:00 - 14:00</div>
+                        </div>
+                    </div>
+                    <div style="font-size: 0.8125rem; color: var(--gray-600); margin-left: 56px;">
+                        г. Алматы, ул. Абая 150, кв. 25
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Action Bar -->
+        <div class="bottom-action-bar" style="flex-direction: column; gap: var(--spacing-sm);">
+            <a href="checkout.html" class="btn btn-primary btn-lg btn-block">
+                Оформить заказ
+            </a>
+            <a href="catalog.html" class="btn btn-ghost btn-block">
+                Продолжить выбор
+            </a>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+
+</html>

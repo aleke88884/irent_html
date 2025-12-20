@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#0077FF">
+    <title>Оформление заказа - iRent</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app">
+        <div class="app-content" style="padding-bottom: 140px;">
+            <!-- Header -->
+            <header class="app-header">
+                <a href="javascript:history.back()" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <h1 class="app-header-title">Оформление</h1>
+                <div style="width: 40px;"></div>
+            </header>
+
+            <div class="p-md">
+                <!-- Delivery Address -->
+                <div style="margin-bottom: var(--spacing-xl);">
+                    <div class="section-header">
+                        <h3 style="font-size: 1.125rem; font-weight: 700; color: var(--gray-900);">Адрес доставки</h3>
+                        <a href="addresses.html" class="section-link">Изменить</a>
+                    </div>
+                    <div style="background: var(--gray-50); border-radius: var(--radius-lg); padding: var(--spacing-md);">
+                        <div style="display: flex; align-items: center; gap: var(--spacing-md);">
+                            <div style="width: 48px; height: 48px; background: var(--primary-light); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; color: var(--primary);">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div style="flex: 1;">
+                                <div style="font-weight: 600; color: var(--gray-900); font-size: 0.9375rem;">Дом</div>
+                                <div style="font-size: 0.8125rem; color: var(--gray-500);">г. Алматы, ул. Абая 150, кв. 25</div>
+                            </div>
+                            <i class="fas fa-check-circle" style="color: var(--success); font-size: 1.25rem;"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Delivery Time -->
+                <div style="margin-bottom: var(--spacing-xl);">
+                    <h3 style="font-size: 1.125rem; font-weight: 700; color: var(--gray-900); margin-bottom: var(--spacing-md);">Время доставки</h3>
+                    <div style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap;">
+                        <button class="filter-pill active">10:00 - 14:00</button>
+                        <button class="filter-pill">14:00 - 18:00</button>
+                        <button class="filter-pill">18:00 - 22:00</button>
+                    </div>
+                </div>
+
+                <!-- Payment Method -->
+                <div style="margin-bottom: var(--spacing-xl);">
+                    <div class="section-header">
+                        <h3 style="font-size: 1.125rem; font-weight: 700; color: var(--gray-900);">Способ оплаты</h3>
+                        <a href="payment-methods.html" class="section-link">Изменить</a>
+                    </div>
+
+                    <!-- Kaspi Option -->
+                    <div style="background: var(--gray-50); border-radius: var(--radius-lg); padding: var(--spacing-md); margin-bottom: var(--spacing-sm); border: 2px solid var(--primary);">
+                        <div style="display: flex; align-items: center; gap: var(--spacing-md);">
+                            <div style="width: 48px; height: 48px; background: #F14635; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 0.75rem;">
+                                KASPI
+                            </div>
+                            <div style="flex: 1;">
+                                <div style="font-weight: 600; color: var(--gray-900); font-size: 0.9375rem;">Kaspi QR</div>
+                                <div style="font-size: 0.8125rem; color: var(--gray-500);">Быстрая оплата через приложение</div>
+                            </div>
+                            <i class="fas fa-check-circle" style="color: var(--primary); font-size: 1.25rem;"></i>
+                        </div>
+                    </div>
+
+                    <!-- Card Option -->
+                    <div style="background: var(--gray-50); border-radius: var(--radius-lg); padding: var(--spacing-md); border: 2px solid transparent;">
+                        <div style="display: flex; align-items: center; gap: var(--spacing-md);">
+                            <div style="width: 48px; height: 48px; background: var(--gray-200); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; color: var(--gray-600);">
+                                <i class="fas fa-credit-card"></i>
+                            </div>
+                            <div style="flex: 1;">
+                                <div style="font-weight: 600; color: var(--gray-900); font-size: 0.9375rem;">Банковская карта</div>
+                                <div style="font-size: 0.8125rem; color: var(--gray-500);">**** 4567</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Summary -->
+                <div style="margin-bottom: var(--spacing-lg);">
+                    <h3 style="font-size: 1.125rem; font-weight: 700; color: var(--gray-900); margin-bottom: var(--spacing-md);">Ваш заказ</h3>
+                    <div style="display: flex; gap: var(--spacing-sm); margin-bottom: var(--spacing-md);">
+                        <div style="width: 64px; height: 64px; border-radius: var(--radius-md); overflow: hidden; background: var(--gray-100);">
+                            <img src="https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=128&h=128&fit=crop" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div style="width: 64px; height: 64px; border-radius: var(--radius-md); overflow: hidden; background: var(--gray-100);">
+                            <img src="https://images.unsplash.com/photo-1504148455328-c376907d081c?w=128&h=128&fit=crop" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cart Summary -->
+                <div class="cart-summary" style="margin: 0;">
+                    <div class="cart-summary-row">
+                        <span>Аренда (6 дней)</span>
+                        <span>6 900 ₸</span>
+                    </div>
+                    <div class="cart-summary-row">
+                        <span>Доставка</span>
+                        <span>1 500 ₸</span>
+                    </div>
+                    <div class="cart-summary-row">
+                        <span>Залог (при получении)</span>
+                        <span style="color: var(--gray-500);">40 000 ₸</span>
+                    </div>
+                    <div class="cart-summary-row total">
+                        <span>Итого к оплате</span>
+                        <span class="value">8 400 ₸</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Action Bar -->
+        <div class="bottom-action-bar">
+            <div class="price-info">
+                <div class="price-label">К оплате:</div>
+                <div class="price-value">8 400 ₸</div>
+            </div>
+            <button class="btn btn-primary btn-lg" onclick="showSuccess()">
+                Оплатить
+            </button>
+        </div>
+
+        <!-- Success Modal -->
+        <div class="modal-overlay" id="successModal">
+            <div class="modal" style="text-align: center; padding: var(--spacing-xl);">
+                <div style="width: 80px; height: 80px; margin: 0 auto var(--spacing-lg); background: var(--success-light); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-check" style="font-size: 2rem; color: var(--success);"></i>
+                </div>
+                <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: var(--spacing-sm); color: var(--gray-900);">Заказ оформлен!</h2>
+                <p style="color: var(--gray-600); margin-bottom: var(--spacing-lg); font-size: 0.9375rem;">
+                    Заказ #1249 успешно создан. Мы свяжемся с вами для подтверждения.
+                </p>
+                <a href="my-rentals.html" class="btn btn-primary btn-lg btn-block">
+                    Мои заказы
+                </a>
+                <a href="../index.html" class="btn btn-ghost btn-block" style="margin-top: var(--spacing-sm);">
+                    На главную
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showSuccess() {
+            document.getElementById('successModal').classList.add('active');
+        }
+    </script>
+</body>
+
+</html>

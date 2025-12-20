@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Заработок - iRent Курьер</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .courier-app {
+            max-width: 430px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: var(--gray-50);
+            position: relative;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .earnings-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: var(--spacing-xl) var(--spacing-md);
+            padding-top: calc(var(--spacing-xl) + 20px);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .earnings-header-title {
+            font-size: 0.875rem;
+            opacity: 0.9;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .earnings-amount {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .earnings-period {
+            font-size: 0.8125rem;
+            opacity: 0.8;
+        }
+
+        .period-tabs {
+            display: flex;
+            background: rgba(255,255,255,0.15);
+            border-radius: var(--radius-lg);
+            padding: 4px;
+            margin-top: var(--spacing-md);
+        }
+
+        .period-tab {
+            flex: 1;
+            padding: var(--spacing-sm);
+            border-radius: var(--radius-md);
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.8);
+            text-align: center;
+        }
+
+        .period-tab.active {
+            background: var(--white);
+            color: var(--primary);
+        }
+
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-sm);
+            padding: var(--spacing-md);
+            margin-top: -30px;
+        }
+
+        .stats-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            text-align: center;
+            box-shadow: var(--shadow-md);
+        }
+
+        .stats-card-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--spacing-sm);
+        }
+
+        .stats-card-icon.orders {
+            background: var(--info-light);
+            color: var(--info);
+        }
+
+        .stats-card-icon.distance {
+            background: var(--warning-light);
+            color: #856404;
+        }
+
+        .stats-card-icon.hours {
+            background: var(--success-light);
+            color: var(--success);
+        }
+
+        .stats-card-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .stats-card-label {
+            font-size: 0.625rem;
+            color: var(--gray-500);
+            text-transform: uppercase;
+        }
+
+        .section {
+            padding: var(--spacing-md);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .section-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .section-link {
+            font-size: 0.875rem;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .earnings-chart {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .chart-bars {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            height: 120px;
+            padding: var(--spacing-md) 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .chart-bar-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .chart-bar {
+            width: 32px;
+            background: var(--gray-200);
+            border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+            transition: all 0.3s;
+        }
+
+        .chart-bar.active {
+            background: var(--primary);
+        }
+
+        .chart-label {
+            font-size: 0.625rem;
+            color: var(--gray-500);
+        }
+
+        .chart-summary {
+            display: flex;
+            justify-content: space-around;
+            padding-top: var(--spacing-md);
+        }
+
+        .chart-summary-item {
+            text-align: center;
+        }
+
+        .chart-summary-value {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .chart-summary-label {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .transaction-list {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        .transaction-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .transaction-item:last-child {
+            border-bottom: none;
+        }
+
+        .transaction-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .transaction-icon.earning {
+            background: var(--success-light);
+            color: var(--success);
+        }
+
+        .transaction-icon.bonus {
+            background: var(--warning-light);
+            color: #856404;
+        }
+
+        .transaction-icon.withdrawal {
+            background: var(--gray-200);
+            color: var(--gray-600);
+        }
+
+        .transaction-info {
+            flex: 1;
+        }
+
+        .transaction-title {
+            font-size: 0.9375rem;
+            font-weight: 500;
+            color: var(--gray-900);
+        }
+
+        .transaction-subtitle {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .transaction-amount {
+            font-size: 0.9375rem;
+            font-weight: 700;
+        }
+
+        .transaction-amount.positive {
+            color: var(--success);
+        }
+
+        .transaction-amount.negative {
+            color: var(--gray-600);
+        }
+
+        .withdraw-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            width: calc(100% - var(--spacing-md) * 2);
+            margin: var(--spacing-md);
+            padding: var(--spacing-md);
+            background: var(--primary);
+            color: var(--white);
+            border-radius: var(--radius-md);
+            font-size: 0.9375rem;
+            font-weight: 600;
+        }
+
+        /* Courier Bottom Nav */
+        .courier-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
+            height: calc(var(--bottom-nav-height) + var(--safe-area-bottom));
+            padding-bottom: var(--safe-area-bottom);
+            background: var(--white);
+            border-top: 1px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            z-index: 1000;
+        }
+
+        .courier-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: var(--spacing-sm);
+            color: var(--gray-500);
+            min-width: 64px;
+        }
+
+        .courier-nav-item i {
+            font-size: 1.25rem;
+        }
+
+        .courier-nav-item span {
+            font-size: 0.625rem;
+            font-weight: 500;
+        }
+
+        .courier-nav-item.active {
+            color: var(--primary);
+        }
+
+        .page-content {
+            padding-bottom: calc(var(--bottom-nav-height) + var(--safe-area-bottom) + var(--spacing-md));
+        }
+    </style>
+</head>
+
+<body>
+    <div class="courier-app">
+        <div class="page-content">
+            <!-- Earnings Header -->
+            <div class="earnings-header">
+                <div class="earnings-header-title">Баланс</div>
+                <div class="earnings-amount">45 800 ₸</div>
+                <div class="earnings-period">Доступно к выводу</div>
+
+                <div class="period-tabs">
+                    <button class="period-tab" onclick="changePeriod('day')">День</button>
+                    <button class="period-tab active" onclick="changePeriod('week')">Неделя</button>
+                    <button class="period-tab" onclick="changePeriod('month')">Месяц</button>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-cards">
+                <div class="stats-card">
+                    <div class="stats-card-icon orders">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <div class="stats-card-value">42</div>
+                    <div class="stats-card-label">Заказов</div>
+                </div>
+                <div class="stats-card">
+                    <div class="stats-card-icon distance">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <div class="stats-card-value">187</div>
+                    <div class="stats-card-label">Км</div>
+                </div>
+                <div class="stats-card">
+                    <div class="stats-card-icon hours">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stats-card-value">38</div>
+                    <div class="stats-card-label">Часов</div>
+                </div>
+            </div>
+
+            <!-- Chart Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Статистика</span>
+                </div>
+                <div class="earnings-chart">
+                    <div class="chart-bars">
+                        <div class="chart-bar-wrapper">
+                            <div class="chart-bar" style="height: 45%;"></div>
+                            <span class="chart-label">Пн</span>
+                        </div>
+                        <div class="chart-bar-wrapper">
+                            <div class="chart-bar" style="height: 70%;"></div>
+                            <span class="chart-label">Вт</span>
+                        </div>
+                        <div class="chart-bar-wrapper">
+                            <div class="chart-bar" style="height: 55%;"></div>
+                            <span class="chart-label">Ср</span>
+                        </div>
+                        <div class="chart-bar-wrapper">
+                            <div class="chart-bar" style="height: 85%;"></div>
+                            <span class="chart-label">Чт</span>
+                        </div>
+                        <div class="chart-bar-wrapper">
+                            <div class="chart-bar" style="height: 100%;"></div>
+                            <span class="chart-label">Пт</span>
+                        </div>
+                        <div class="chart-bar-wrapper">
+                            <div class="chart-bar active" style="height: 60%;"></div>
+                            <span class="chart-label">Сб</span>
+                        </div>
+                        <div class="chart-bar-wrapper">
+                            <div class="chart-bar" style="height: 30%;"></div>
+                            <span class="chart-label">Вс</span>
+                        </div>
+                    </div>
+                    <div class="chart-summary">
+                        <div class="chart-summary-item">
+                            <div class="chart-summary-value">6 830 ₸</div>
+                            <div class="chart-summary-label">Средний/день</div>
+                        </div>
+                        <div class="chart-summary-item">
+                            <div class="chart-summary-value">47 800 ₸</div>
+                            <div class="chart-summary-label">За неделю</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Withdraw Button -->
+            <button class="withdraw-btn" onclick="withdraw()">
+                <i class="fas fa-wallet"></i>
+                Вывести средства
+            </button>
+
+            <!-- Transactions -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">История операций</span>
+                    <a href="#" class="section-link">Все</a>
+                </div>
+                <div class="transaction-list">
+                    <div class="transaction-item">
+                        <div class="transaction-icon earning">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <div class="transaction-info">
+                            <div class="transaction-title">Заказ #1249</div>
+                            <div class="transaction-subtitle">Сегодня, 14:45</div>
+                        </div>
+                        <div class="transaction-amount positive">+1 200 ₸</div>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="transaction-icon earning">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <div class="transaction-info">
+                            <div class="transaction-title">Заказ #1247</div>
+                            <div class="transaction-subtitle">Сегодня, 11:50</div>
+                        </div>
+                        <div class="transaction-amount positive">+900 ₸</div>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="transaction-icon bonus">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <div class="transaction-info">
+                            <div class="transaction-title">Бонус за 40 заказов</div>
+                            <div class="transaction-subtitle">Вчера, 23:00</div>
+                        </div>
+                        <div class="transaction-amount positive">+2 000 ₸</div>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="transaction-icon withdrawal">
+                            <i class="fas fa-arrow-up"></i>
+                        </div>
+                        <div class="transaction-info">
+                            <div class="transaction-title">Вывод на Kaspi</div>
+                            <div class="transaction-subtitle">5 дек, 18:30</div>
+                        </div>
+                        <div class="transaction-amount negative">-35 000 ₸</div>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="transaction-icon earning">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <div class="transaction-info">
+                            <div class="transaction-title">Заказ #1240</div>
+                            <div class="transaction-subtitle">5 дек, 16:20</div>
+                        </div>
+                        <div class="transaction-amount positive">+1 500 ₸</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="courier-nav">
+            <a href="index.html" class="courier-nav-item">
+                <i class="fas fa-home"></i>
+                <span>Главная</span>
+            </a>
+            <a href="orders.html" class="courier-nav-item">
+                <i class="fas fa-list-alt"></i>
+                <span>Заказы</span>
+            </a>
+            <a href="earnings.html" class="courier-nav-item active">
+                <i class="fas fa-wallet"></i>
+                <span>Заработок</span>
+            </a>
+            <a href="profile.html" class="courier-nav-item">
+                <i class="fas fa-user"></i>
+                <span>Профиль</span>
+            </a>
+        </nav>
+    </div>
+
+    <script>
+        function changePeriod(period) {
+            const tabs = document.querySelectorAll('.period-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            // Update data based on period
+        }
+
+        function withdraw() {
+            alert('Открыть форму вывода средств');
+        }
+    </script>
+</body>
+
+</html>

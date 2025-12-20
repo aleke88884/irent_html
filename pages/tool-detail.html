@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#0077FF">
+    <title>Перфоратор Bosch - iRent</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app">
+        <div class="app-content" style="padding-bottom: 120px;">
+            <!-- Tool Image -->
+            <div class="tool-detail-img">
+                <img src="https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=600&h=600&fit=crop" alt="Перфоратор Bosch">
+                <div class="tool-detail-actions">
+                    <a href="javascript:history.back()" class="header-btn" style="background: var(--white); box-shadow: var(--shadow-md);">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                    <div style="display: flex; gap: 8px;">
+                        <button class="header-btn" style="background: var(--white); box-shadow: var(--shadow-md);" onclick="toggleFavorite(this)">
+                            <i class="far fa-heart"></i>
+                        </button>
+                        <button class="header-btn" style="background: var(--white); box-shadow: var(--shadow-md);">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tool Info -->
+            <div class="tool-detail-body">
+                <div class="tool-detail-category">Перфораторы</div>
+                <h1 class="tool-detail-title">Перфоратор Bosch GBH 2-26 DRE Professional</h1>
+
+                <div class="tool-detail-rating">
+                    <div class="tool-detail-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <span class="tool-detail-reviews">4.8 (48 отзывов)</span>
+                </div>
+
+                <div class="tool-detail-price">
+                    <span class="price">1 500 ₸</span>
+                    <span class="period">/ день</span>
+                </div>
+
+                <!-- Date Picker -->
+                <div class="date-picker">
+                    <div class="date-picker-label">Выберите даты аренды</div>
+                    <div class="date-picker-row">
+                        <div class="date-picker-field">
+                            <label>Начало</label>
+                            <input type="date" id="start-date" value="2024-12-15">
+                        </div>
+                        <div class="date-picker-field">
+                            <label>Конец</label>
+                            <input type="date" id="end-date" value="2024-12-17">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Specifications -->
+                <div class="tool-specs">
+                    <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: var(--spacing-sm); color: var(--gray-900);">Характеристики</h3>
+                    <div class="tool-spec">
+                        <span class="tool-spec-label">Мощность</span>
+                        <span class="tool-spec-value">800 Вт</span>
+                    </div>
+                    <div class="tool-spec">
+                        <span class="tool-spec-label">Энергия удара</span>
+                        <span class="tool-spec-value">2.7 Дж</span>
+                    </div>
+                    <div class="tool-spec">
+                        <span class="tool-spec-label">Макс. диаметр</span>
+                        <span class="tool-spec-value">26 мм</span>
+                    </div>
+                    <div class="tool-spec">
+                        <span class="tool-spec-label">Вес</span>
+                        <span class="tool-spec-value">2.7 кг</span>
+                    </div>
+                    <div class="tool-spec">
+                        <span class="tool-spec-label">Патрон</span>
+                        <span class="tool-spec-value">SDS-plus</span>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="tool-description">
+                    <h3>Описание</h3>
+                    <p>
+                        Профессиональный перфоратор Bosch GBH 2-26 DRE — надёжный инструмент для сверления отверстий
+                        в бетоне, кирпиче и камне. Три режима работы: сверление, сверление с ударом и долбление.
+                        Идеально подходит для установки креплений, электромонтажных работ и ремонта.
+                    </p>
+                </div>
+
+                <!-- What's Included -->
+                <div style="margin-bottom: var(--spacing-xl);">
+                    <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: var(--spacing-md); color: var(--gray-900);">В комплекте</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: var(--spacing-sm);">
+                        <span class="badge badge-primary">Кейс</span>
+                        <span class="badge badge-primary">Доп. рукоятка</span>
+                        <span class="badge badge-primary">Ограничитель</span>
+                        <span class="badge badge-primary">Набор буров</span>
+                    </div>
+                </div>
+
+                <!-- Deposit Info -->
+                <div class="info-box warning" style="margin-bottom: var(--spacing-lg);">
+                    <i class="fas fa-info-circle"></i>
+                    <div class="info-box-content">
+                        <h4>Залог: 30 000 ₸</h4>
+                        <p>Возвращается при сдаче инструмента в исправном состоянии</p>
+                    </div>
+                </div>
+
+                <!-- Reviews Preview -->
+                <div>
+                    <div class="section-header">
+                        <h3 style="font-size: 1.125rem; font-weight: 700; color: var(--gray-900);">Отзывы</h3>
+                        <a href="reviews.html" class="section-link">Все 48</a>
+                    </div>
+                    <div style="background: var(--gray-50); padding: var(--spacing-md); border-radius: var(--radius-lg);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-sm);">
+                            <div style="display: flex; align-items: center; gap: var(--spacing-sm);">
+                                <div style="width: 36px; height: 36px; background: var(--primary-light); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; color: var(--primary); font-weight: 700; font-size: 0.875rem;">АК</div>
+                                <span style="font-weight: 600; color: var(--gray-900);">Алексей К.</span>
+                            </div>
+                            <div style="color: var(--accent); font-size: 0.75rem;">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p style="font-size: 0.9375rem; color: var(--gray-600); margin: 0; line-height: 1.6;">
+                            Отличный перфоратор, брал на неделю для ремонта. Работает как часы, мощности хватает.
+                            Рекомендую!
+                        </p>
+                        <div style="margin-top: var(--spacing-sm); font-size: 0.75rem; color: var(--gray-400);">3 дня назад</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Action Bar -->
+        <div class="bottom-action-bar">
+            <div class="price-info">
+                <div class="price-label">Итого за 3 дня:</div>
+                <div class="price-value">4 500 ₸</div>
+            </div>
+            <a href="cart.html" class="btn btn-primary btn-lg">
+                <i class="fas fa-shopping-bag"></i>
+                В корзину
+            </a>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+
+</html>

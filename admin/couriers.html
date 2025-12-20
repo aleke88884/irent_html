@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Курьеры - iRent Admin</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .courier-filters {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .courier-filters .search-box {
+            flex: 1;
+            margin: 0;
+        }
+
+        .courier-filters select {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            background: var(--white);
+        }
+
+        .couriers-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .courier-stat-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .courier-stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .courier-stat-info {
+            flex: 1;
+        }
+
+        .courier-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .courier-stat-label {
+            font-size: 0.8125rem;
+            color: var(--gray-500);
+        }
+
+        .courier-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .courier-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: var(--radius-full);
+            background: var(--gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            color: var(--gray-500);
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .courier-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .courier-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .courier-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 2px;
+        }
+
+        .courier-id {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .courier-meta {
+            display: flex;
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-sm);
+        }
+
+        .courier-meta-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            font-size: 0.8125rem;
+            color: var(--gray-600);
+        }
+
+        .courier-meta-item i {
+            color: var(--gray-400);
+        }
+
+        .courier-status {
+            padding: 6px 12px;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .courier-status.online {
+            background: var(--success-light);
+            color: var(--success);
+        }
+
+        .courier-status.offline {
+            background: var(--gray-200);
+            color: var(--gray-600);
+        }
+
+        .courier-status.busy {
+            background: var(--warning-light);
+            color: #856404;
+        }
+
+        .courier-status .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        .courier-rating {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: var(--gray-50);
+            border-radius: var(--radius-md);
+        }
+
+        .courier-rating i {
+            color: var(--warning);
+        }
+
+        .courier-rating-value {
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .courier-rating-count {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .courier-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .courier-action-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-500);
+            transition: all 0.2s;
+        }
+
+        .courier-action-btn:hover {
+            background: var(--gray-100);
+            color: var(--gray-700);
+        }
+
+        /* Map preview */
+        .couriers-map {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            height: 300px;
+            margin-bottom: var(--spacing-lg);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .couriers-map iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .map-overlay {
+            position: absolute;
+            top: var(--spacing-md);
+            left: var(--spacing-md);
+            background: var(--white);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .map-overlay span {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .courier-list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .courier-list-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        @media (max-width: 1200px) {
+            .couriers-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="admin-sidebar-logo">
+                <div class="logo-icon">
+                    <i class="fas fa-tools"></i>
+                </div>
+                iRent Admin
+            </div>
+
+            <nav class="admin-nav">
+                <a href="index.html" class="admin-nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    Дашборд
+                </a>
+                <a href="orders.html" class="admin-nav-item">
+                    <i class="fas fa-shopping-cart"></i>
+                    Заказы
+                </a>
+                <a href="tools.html" class="admin-nav-item">
+                    <i class="fas fa-tools"></i>
+                    Инструменты
+                </a>
+                <a href="users.html" class="admin-nav-item">
+                    <i class="fas fa-users"></i>
+                    Пользователи
+                </a>
+                <a href="categories.html" class="admin-nav-item">
+                    <i class="fas fa-th-large"></i>
+                    Категории
+                </a>
+                <a href="couriers.html" class="admin-nav-item active">
+                    <i class="fas fa-motorcycle"></i>
+                    Курьеры
+                </a>
+                <a href="reports.html" class="admin-nav-item">
+                    <i class="fas fa-chart-bar"></i>
+                    Отчёты
+                </a>
+                <a href="settings.html" class="admin-nav-item">
+                    <i class="fas fa-cog"></i>
+                    Настройки
+                </a>
+            </nav>
+
+            <div style="margin-top: auto; padding: var(--spacing-md);">
+                <a href="../pages/login.html" class="admin-nav-item" style="color: var(--danger);">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Выход
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Header -->
+            <header class="admin-header">
+                <h1 class="admin-header-title">Управление курьерами</h1>
+                <button class="btn btn-primary" onclick="openModal('courierModal')">
+                    <i class="fas fa-plus"></i>
+                    Добавить курьера
+                </button>
+            </header>
+
+            <!-- Content -->
+            <div class="admin-content">
+                <!-- Stats -->
+                <div class="couriers-stats">
+                    <div class="courier-stat-card">
+                        <div class="courier-stat-icon" style="background: var(--success-light); color: var(--success);">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                        <div class="courier-stat-info">
+                            <div class="courier-stat-value">12</div>
+                            <div class="courier-stat-label">На линии</div>
+                        </div>
+                    </div>
+                    <div class="courier-stat-card">
+                        <div class="courier-stat-icon" style="background: var(--warning-light); color: #856404;">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <div class="courier-stat-info">
+                            <div class="courier-stat-value">8</div>
+                            <div class="courier-stat-label">На доставке</div>
+                        </div>
+                    </div>
+                    <div class="courier-stat-card">
+                        <div class="courier-stat-icon" style="background: var(--gray-200); color: var(--gray-600);">
+                            <i class="fas fa-user-clock"></i>
+                        </div>
+                        <div class="courier-stat-info">
+                            <div class="courier-stat-value">5</div>
+                            <div class="courier-stat-label">Не на линии</div>
+                        </div>
+                    </div>
+                    <div class="courier-stat-card">
+                        <div class="courier-stat-icon" style="background: rgba(245, 124, 0, 0.1); color: var(--primary);">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="courier-stat-info">
+                            <div class="courier-stat-value">25</div>
+                            <div class="courier-stat-label">Всего курьеров</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Map -->
+                <div class="couriers-map">
+                    <div class="map-overlay">
+                        <i class="fas fa-map-marker-alt" style="color: var(--primary);"></i>
+                        Курьеров на карте: <span>12</span>
+                    </div>
+                    <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=76.85%2C43.2%2C77.05%2C43.3&layer=mapnik"></iframe>
+                </div>
+
+                <!-- Filters -->
+                <div class="courier-filters">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Поиск курьера...">
+                    </div>
+                    <select>
+                        <option>Все статусы</option>
+                        <option>На линии</option>
+                        <option>На доставке</option>
+                        <option>Не на линии</option>
+                    </select>
+                    <select>
+                        <option>По рейтингу</option>
+                        <option>По имени</option>
+                        <option>По заказам</option>
+                        <option>По дате регистрации</option>
+                    </select>
+                </div>
+
+                <!-- Courier List -->
+                <div class="courier-list-header">
+                    <span class="courier-list-title">Список курьеров (25)</span>
+                </div>
+
+                <!-- Courier 1 - Online -->
+                <div class="courier-card">
+                    <div class="courier-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="courier-info">
+                        <div class="courier-name">Ерлан Касымов</div>
+                        <div class="courier-id">ID: CRR-2024-0547</div>
+                        <div class="courier-meta">
+                            <div class="courier-meta-item">
+                                <i class="fas fa-box"></i>
+                                847 доставок
+                            </div>
+                            <div class="courier-meta-item">
+                                <i class="fas fa-phone"></i>
+                                +7 700 555 12 34
+                            </div>
+                            <div class="courier-meta-item">
+                                <i class="fas fa-motorcycle"></i>
+                                Мотоцикл
+                            </div>
+                        </div>
+                    </div>
+                    <div class="courier-rating">
+                        <i class="fas fa-star"></i>
+                        <span class="courier-rating-value">4.92</span>
+                        <span class="courier-rating-count">(156)</span>
+                    </div>
+                    <span class="courier-status online">
+                        <span class="status-dot"></span>
+                        На линии
+                    </span>
+                    <div class="courier-actions">
+                        <button class="courier-action-btn" title="Просмотр">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="courier-action-btn" title="Редактировать">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="courier-action-btn" title="Позвонить">
+                            <i class="fas fa-phone"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Courier 2 - Busy -->
+                <div class="courier-card">
+                    <div class="courier-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="courier-info">
+                        <div class="courier-name">Асхат Нурланов</div>
+                        <div class="courier-id">ID: CRR-2024-0312</div>
+                        <div class="courier-meta">
+                            <div class="courier-meta-item">
+                                <i class="fas fa-box"></i>
+                                1,234 доставок
+                            </div>
+                            <div class="courier-meta-item">
+                                <i class="fas fa-phone"></i>
+                                +7 701 234 56 78
+                            </div>
+                            <div class="courier-meta-item">
+                                <i class="fas fa-car"></i>
+                                Авто
+                            </div>
+                        </div>
+                    </div>
+                    <div class="courier-rating">
+                        <i class="fas fa-star"></i>
+                        <span class="courier-rating-value">4.88</span>
+                        <span class="courier-rating-count">(312)</span>
+                    </div>
+                    <span class="courier-status busy">
+                        <span class="status-dot"></span>
+                        На доставке
+                    </span>
+                    <div class="courier-actions">
+                        <button class="courier-action-btn" title="Просмотр">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="courier-action-btn" title="Редактировать">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="courier-action-btn" title="Позвонить">
+                            <i class="fas fa-phone"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Courier 3 - Offline -->
+                <div class="courier-card">
+                    <div class="courier-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="courier-info">
+                        <div class="courier-name">Данияр Сериков</div>
+                        <div class="courier-id">ID: CRR-2024-0189</div>
+                        <div class="courier-meta">
+                            <div class="courier-meta-item">
+                                <i class="fas fa-box"></i>
+                                567 доставок
+                            </div>
+                            <div class="courier-meta-item">
+                                <i class="fas fa-phone"></i>
+                                +7 702 345 67 89
+                            </div>
+                            <div class="courier-meta-item">
+                                <i class="fas fa-motorcycle"></i>
+                                Мотоцикл
+                            </div>
+                        </div>
+                    </div>
+                    <div class="courier-rating">
+                        <i class="fas fa-star"></i>
+                        <span class="courier-rating-value">4.75</span>
+                        <span class="courier-rating-count">(89)</span>
+                    </div>
+                    <span class="courier-status offline">
+                        <span class="status-dot"></span>
+                        Не на линии
+                    </span>
+                    <div class="courier-actions">
+                        <button class="courier-action-btn" title="Просмотр">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="courier-action-btn" title="Редактировать">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="courier-action-btn" title="Позвонить">
+                            <i class="fas fa-phone"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Courier 4 -->
+                <div class="courier-card">
+                    <div class="courier-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="courier-info">
+                        <div class="courier-name">Бауыржан Омаров</div>
+                        <div class="courier-id">ID: CRR-2024-0421</div>
+                        <div class="courier-meta">
+                            <div class="courier-meta-item">
+                                <i class="fas fa-box"></i>
+                                432 доставок
+                            </div>
+                            <div class="courier-meta-item">
+                                <i class="fas fa-phone"></i>
+                                +7 705 456 78 90
+                            </div>
+                            <div class="courier-meta-item">
+                                <i class="fas fa-car"></i>
+                                Авто
+                            </div>
+                        </div>
+                    </div>
+                    <div class="courier-rating">
+                        <i class="fas fa-star"></i>
+                        <span class="courier-rating-value">4.95</span>
+                        <span class="courier-rating-count">(78)</span>
+                    </div>
+                    <span class="courier-status online">
+                        <span class="status-dot"></span>
+                        На линии
+                    </span>
+                    <div class="courier-actions">
+                        <button class="courier-action-btn" title="Просмотр">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="courier-action-btn" title="Редактировать">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="courier-action-btn" title="Позвонить">
+                            <i class="fas fa-phone"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Courier 5 -->
+                <div class="courier-card">
+                    <div class="courier-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="courier-info">
+                        <div class="courier-name">Алмас Жумабаев</div>
+                        <div class="courier-id">ID: CRR-2024-0598</div>
+                        <div class="courier-meta">
+                            <div class="courier-meta-item">
+                                <i class="fas fa-box"></i>
+                                156 доставок
+                            </div>
+                            <div class="courier-meta-item">
+                                <i class="fas fa-phone"></i>
+                                +7 707 567 89 01
+                            </div>
+                            <div class="courier-meta-item">
+                                <i class="fas fa-motorcycle"></i>
+                                Мотоцикл
+                            </div>
+                        </div>
+                    </div>
+                    <div class="courier-rating">
+                        <i class="fas fa-star"></i>
+                        <span class="courier-rating-value">4.82</span>
+                        <span class="courier-rating-count">(34)</span>
+                    </div>
+                    <span class="courier-status busy">
+                        <span class="status-dot"></span>
+                        На доставке
+                    </span>
+                    <div class="courier-actions">
+                        <button class="courier-action-btn" title="Просмотр">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="courier-action-btn" title="Редактировать">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="courier-action-btn" title="Позвонить">
+                            <i class="fas fa-phone"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add Courier Modal -->
+    <div class="modal-overlay" id="courierModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Добавить курьера</h3>
+                <button class="modal-close" onclick="closeModal('courierModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">ФИО</label>
+                    <input type="text" class="form-input" placeholder="Полное имя курьера">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Телефон</label>
+                    <input type="tel" class="form-input" placeholder="+7 (___) ___-__-__">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" placeholder="email@example.com">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Транспорт</label>
+                    <select class="form-input">
+                        <option>Мотоцикл</option>
+                        <option>Автомобиль</option>
+                        <option>Велосипед</option>
+                        <option>Пешком</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Зона доставки</label>
+                    <select class="form-input">
+                        <option>Алматы - Центр</option>
+                        <option>Алматы - Бостандык</option>
+                        <option>Алматы - Медеу</option>
+                        <option>Алматы - Все районы</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">ИИН</label>
+                    <input type="text" class="form-input" placeholder="000000000000" maxlength="12">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-ghost" onclick="closeModal('courierModal')">Отмена</button>
+                <button class="btn btn-primary" onclick="saveCourier()">Добавить</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+
+        function saveCourier() {
+            closeModal('courierModal');
+            alert('Курьер добавлен');
+        }
+    </script>
+</body>
+
+</html>

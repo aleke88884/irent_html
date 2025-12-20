@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Заказы - iRent Курьер</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .courier-app {
+            max-width: 430px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: var(--gray-50);
+            position: relative;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .page-header {
+            position: sticky;
+            top: 0;
+            background: var(--white);
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--gray-200);
+            z-index: 100;
+        }
+
+        .page-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: var(--spacing-sm);
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .filter-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-tab {
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: var(--gray-100);
+            border-radius: var(--radius-full);
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--gray-600);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .filter-tab.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .filter-tab .count {
+            padding: 2px 6px;
+            background: rgba(0,0,0,0.1);
+            border-radius: var(--radius-full);
+            font-size: 0.625rem;
+        }
+
+        .filter-tab.active .count {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .orders-list {
+            padding: var(--spacing-md);
+            padding-bottom: calc(var(--bottom-nav-height) + var(--safe-area-bottom) + var(--spacing-md));
+        }
+
+        .date-group {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            margin-bottom: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+
+        .date-group:first-child {
+            margin-top: 0;
+        }
+
+        .order-card-courier {
+            padding: var(--spacing-md);
+            background: var(--white);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-sm);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .order-card-courier.active {
+            border-left: 3px solid var(--primary);
+        }
+
+        .order-card-courier.completed {
+            opacity: 0.8;
+        }
+
+        .order-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .order-info {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .order-type-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .order-type-icon.delivery {
+            background: var(--info-light);
+            color: var(--info);
+        }
+
+        .order-type-icon.pickup {
+            background: var(--warning-light);
+            color: #856404;
+        }
+
+        .order-number {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .order-time {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .order-status-badge {
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+            font-size: 0.625rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .order-status-badge.in-progress {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .order-status-badge.completed {
+            background: var(--success-light);
+            color: var(--success);
+        }
+
+        .order-status-badge.cancelled {
+            background: var(--danger-light);
+            color: var(--danger);
+        }
+
+        .order-route {
+            display: flex;
+            align-items: stretch;
+            gap: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+            padding: var(--spacing-md) 0;
+            border-top: 1px solid var(--gray-100);
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .route-line {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .route-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--success);
+        }
+
+        .route-dot.end {
+            background: var(--danger);
+        }
+
+        .route-dash {
+            flex: 1;
+            width: 2px;
+            background: repeating-linear-gradient(
+                to bottom,
+                var(--gray-300) 0,
+                var(--gray-300) 4px,
+                transparent 4px,
+                transparent 8px
+            );
+            min-height: 24px;
+        }
+
+        .route-points {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .route-point {
+            font-size: 0.8125rem;
+            color: var(--gray-700);
+        }
+
+        .route-point-label {
+            font-size: 0.625rem;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+        .order-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .order-meta {
+            display: flex;
+            gap: var(--spacing-md);
+        }
+
+        .order-meta-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .order-earning {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .order-earning.pending {
+            color: var(--primary);
+        }
+
+        /* Courier Bottom Nav */
+        .courier-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
+            height: calc(var(--bottom-nav-height) + var(--safe-area-bottom));
+            padding-bottom: var(--safe-area-bottom);
+            background: var(--white);
+            border-top: 1px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            z-index: 1000;
+        }
+
+        .courier-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: var(--spacing-sm);
+            color: var(--gray-500);
+            min-width: 64px;
+        }
+
+        .courier-nav-item i {
+            font-size: 1.25rem;
+        }
+
+        .courier-nav-item span {
+            font-size: 0.625rem;
+            font-weight: 500;
+        }
+
+        .courier-nav-item.active {
+            color: var(--primary);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: var(--spacing-2xl);
+        }
+
+        .empty-state-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gray-100);
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--spacing-md);
+            font-size: 2rem;
+            color: var(--gray-400);
+        }
+
+        .empty-state-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .empty-state-text {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="courier-app">
+        <!-- Header -->
+        <header class="page-header">
+            <h1 class="page-title">Мои заказы</h1>
+            <div class="filter-tabs">
+                <button class="filter-tab active" onclick="filterOrders('all')">
+                    Все <span class="count">8</span>
+                </button>
+                <button class="filter-tab" onclick="filterOrders('active')">
+                    Активные <span class="count">2</span>
+                </button>
+                <button class="filter-tab" onclick="filterOrders('completed')">
+                    Выполненные <span class="count">5</span>
+                </button>
+                <button class="filter-tab" onclick="filterOrders('cancelled')">
+                    Отменённые <span class="count">1</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Orders List -->
+        <div class="orders-list">
+            <!-- Today -->
+            <div class="date-group">Сегодня</div>
+
+            <!-- Active Order -->
+            <a href="order-detail.html" class="order-card-courier active">
+                <div class="order-card-header">
+                    <div class="order-info">
+                        <div class="order-type-icon delivery">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <div>
+                            <div class="order-number">Заказ #1249</div>
+                            <div class="order-time">14:30</div>
+                        </div>
+                    </div>
+                    <span class="order-status-badge in-progress">В работе</span>
+                </div>
+
+                <div class="order-route">
+                    <div class="route-line">
+                        <div class="route-dot"></div>
+                        <div class="route-dash"></div>
+                        <div class="route-dot end"></div>
+                    </div>
+                    <div class="route-points">
+                        <div class="route-point">
+                            <div class="route-point-label">Забрать</div>
+                            Склад iRent, ул. Тимирязева 42
+                        </div>
+                        <div class="route-point">
+                            <div class="route-point-label">Доставить</div>
+                            ул. Абая 150, кв. 42
+                        </div>
+                    </div>
+                </div>
+
+                <div class="order-footer">
+                    <div class="order-meta">
+                        <div class="order-meta-item">
+                            <i class="fas fa-route"></i>
+                            4.2 км
+                        </div>
+                        <div class="order-meta-item">
+                            <i class="fas fa-box"></i>
+                            2 шт
+                        </div>
+                    </div>
+                    <div class="order-earning pending">+1 200 ₸</div>
+                </div>
+            </a>
+
+            <!-- Another Active Order -->
+            <a href="order-detail.html" class="order-card-courier active">
+                <div class="order-card-header">
+                    <div class="order-info">
+                        <div class="order-type-icon pickup">
+                            <i class="fas fa-hand-holding"></i>
+                        </div>
+                        <div>
+                            <div class="order-number">Заказ #1250</div>
+                            <div class="order-time">15:00</div>
+                        </div>
+                    </div>
+                    <span class="order-status-badge in-progress">В работе</span>
+                </div>
+
+                <div class="order-route">
+                    <div class="route-line">
+                        <div class="route-dot"></div>
+                        <div class="route-dash"></div>
+                        <div class="route-dot end"></div>
+                    </div>
+                    <div class="route-points">
+                        <div class="route-point">
+                            <div class="route-point-label">Забрать</div>
+                            пр. Достык 89, офис 312
+                        </div>
+                        <div class="route-point">
+                            <div class="route-point-label">Вернуть на склад</div>
+                            Склад iRent, ул. Тимирязева 42
+                        </div>
+                    </div>
+                </div>
+
+                <div class="order-footer">
+                    <div class="order-meta">
+                        <div class="order-meta-item">
+                            <i class="fas fa-route"></i>
+                            5.8 км
+                        </div>
+                        <div class="order-meta-item">
+                            <i class="fas fa-box"></i>
+                            3 шт
+                        </div>
+                    </div>
+                    <div class="order-earning pending">+1 500 ₸</div>
+                </div>
+            </a>
+
+            <!-- Completed Today -->
+            <div class="order-card-courier completed">
+                <div class="order-card-header">
+                    <div class="order-info">
+                        <div class="order-type-icon delivery">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <div>
+                            <div class="order-number">Заказ #1247</div>
+                            <div class="order-time">11:45</div>
+                        </div>
+                    </div>
+                    <span class="order-status-badge completed">Выполнен</span>
+                </div>
+
+                <div class="order-route">
+                    <div class="route-line">
+                        <div class="route-dot"></div>
+                        <div class="route-dash"></div>
+                        <div class="route-dot end"></div>
+                    </div>
+                    <div class="route-points">
+                        <div class="route-point">
+                            <div class="route-point-label">Забрал</div>
+                            Склад iRent
+                        </div>
+                        <div class="route-point">
+                            <div class="route-point-label">Доставил</div>
+                            ул. Жандосова 58
+                        </div>
+                    </div>
+                </div>
+
+                <div class="order-footer">
+                    <div class="order-meta">
+                        <div class="order-meta-item">
+                            <i class="fas fa-route"></i>
+                            3.1 км
+                        </div>
+                        <div class="order-meta-item">
+                            <i class="fas fa-box"></i>
+                            1 шт
+                        </div>
+                    </div>
+                    <div class="order-earning">+900 ₸</div>
+                </div>
+            </div>
+
+            <!-- Yesterday -->
+            <div class="date-group">Вчера</div>
+
+            <div class="order-card-courier completed">
+                <div class="order-card-header">
+                    <div class="order-info">
+                        <div class="order-type-icon delivery">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <div>
+                            <div class="order-number">Заказ #1245</div>
+                            <div class="order-time">16:20</div>
+                        </div>
+                    </div>
+                    <span class="order-status-badge completed">Выполнен</span>
+                </div>
+
+                <div class="order-route">
+                    <div class="route-line">
+                        <div class="route-dot"></div>
+                        <div class="route-dash"></div>
+                        <div class="route-dot end"></div>
+                    </div>
+                    <div class="route-points">
+                        <div class="route-point">
+                            <div class="route-point-label">Забрал</div>
+                            Склад iRent
+                        </div>
+                        <div class="route-point">
+                            <div class="route-point-label">Доставил</div>
+                            мкр. Самал-2, д. 33
+                        </div>
+                    </div>
+                </div>
+
+                <div class="order-footer">
+                    <div class="order-meta">
+                        <div class="order-meta-item">
+                            <i class="fas fa-route"></i>
+                            6.5 км
+                        </div>
+                        <div class="order-meta-item">
+                            <i class="fas fa-box"></i>
+                            4 шт
+                        </div>
+                    </div>
+                    <div class="order-earning">+1 800 ₸</div>
+                </div>
+            </div>
+
+            <div class="order-card-courier">
+                <div class="order-card-header">
+                    <div class="order-info">
+                        <div class="order-type-icon pickup">
+                            <i class="fas fa-hand-holding"></i>
+                        </div>
+                        <div>
+                            <div class="order-number">Заказ #1243</div>
+                            <div class="order-time">10:15</div>
+                        </div>
+                    </div>
+                    <span class="order-status-badge cancelled">Отменён</span>
+                </div>
+
+                <div class="order-route">
+                    <div class="route-line">
+                        <div class="route-dot"></div>
+                        <div class="route-dash"></div>
+                        <div class="route-dot end"></div>
+                    </div>
+                    <div class="route-points">
+                        <div class="route-point">
+                            <div class="route-point-label">Адрес</div>
+                            ул. Байтурсынова 17
+                        </div>
+                        <div class="route-point">
+                            <div class="route-point-label">Причина</div>
+                            Клиент отменил заказ
+                        </div>
+                    </div>
+                </div>
+
+                <div class="order-footer">
+                    <div class="order-meta">
+                        <div class="order-meta-item">
+                            <i class="fas fa-route"></i>
+                            2.3 км
+                        </div>
+                    </div>
+                    <div class="order-earning" style="color: var(--gray-400); text-decoration: line-through;">+700 ₸</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="courier-nav">
+            <a href="index.html" class="courier-nav-item">
+                <i class="fas fa-home"></i>
+                <span>Главная</span>
+            </a>
+            <a href="orders.html" class="courier-nav-item active">
+                <i class="fas fa-list-alt"></i>
+                <span>Заказы</span>
+            </a>
+            <a href="earnings.html" class="courier-nav-item">
+                <i class="fas fa-wallet"></i>
+                <span>Заработок</span>
+            </a>
+            <a href="profile.html" class="courier-nav-item">
+                <i class="fas fa-user"></i>
+                <span>Профиль</span>
+            </a>
+        </nav>
+    </div>
+
+    <script>
+        function filterOrders(filter) {
+            const tabs = document.querySelectorAll('.filter-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.target.closest('.filter-tab').classList.add('active');
+            // In real app, filter the orders
+        }
+    </script>
+</body>
+
+</html>

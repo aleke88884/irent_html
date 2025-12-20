@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#0077FF">
+    <title>Избранное - iRent</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app">
+        <div class="app-content">
+            <!-- Header -->
+            <header class="app-header">
+                <h1 class="app-header-title">Избранное</h1>
+                <div style="width: 40px;"></div>
+            </header>
+
+            <!-- Tools Grid -->
+            <div class="tools-grid" style="padding: var(--spacing-md);">
+                <!-- Tool 1 -->
+                <a href="tool-detail.html?id=1" class="tool-card">
+                    <div class="tool-card-img">
+                        <img src="https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=300&h=300&fit=crop" alt="Перфоратор">
+                        <span class="tool-card-badge">Хит</span>
+                        <button class="tool-card-favorite active" onclick="event.preventDefault(); toggleFavorite(this)">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="tool-card-body">
+                        <div class="tool-card-category">Перфораторы</div>
+                        <h3 class="tool-card-title">Перфоратор Bosch GBH 2-26</h3>
+                        <div class="tool-card-rating">
+                            <div class="tool-card-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="tool-card-reviews">(48)</span>
+                        </div>
+                        <div class="tool-card-price">1 500 ₸ <span>/день</span></div>
+                    </div>
+                </a>
+
+                <!-- Tool 2 -->
+                <a href="tool-detail.html?id=2" class="tool-card">
+                    <div class="tool-card-img">
+                        <img src="https://images.unsplash.com/photo-1504148455328-c376907d081c?w=300&h=300&fit=crop" alt="Болгарка">
+                        <button class="tool-card-favorite active" onclick="event.preventDefault(); toggleFavorite(this)">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="tool-card-body">
+                        <div class="tool-card-category">Шлифмашины</div>
+                        <h3 class="tool-card-title">Болгарка Makita GA5030</h3>
+                        <div class="tool-card-rating">
+                            <div class="tool-card-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="tool-card-reviews">(62)</span>
+                        </div>
+                        <div class="tool-card-price">800 ₸ <span>/день</span></div>
+                    </div>
+                </a>
+
+                <!-- Tool 3 -->
+                <a href="tool-detail.html?id=3" class="tool-card">
+                    <div class="tool-card-img">
+                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=300&fit=crop" alt="Шуруповёрт">
+                        <span class="tool-card-badge new">Новинка</span>
+                        <button class="tool-card-favorite active" onclick="event.preventDefault(); toggleFavorite(this)">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="tool-card-body">
+                        <div class="tool-card-category">Дрели</div>
+                        <h3 class="tool-card-title">Шуруповёрт DeWalt DCD791</h3>
+                        <div class="tool-card-rating">
+                            <div class="tool-card-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="tool-card-reviews">(35)</span>
+                        </div>
+                        <div class="tool-card-price">1 200 ₸ <span>/день</span></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="../index.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Главная</span>
+            </a>
+            <a href="catalog.html" class="nav-item">
+                <i class="fas fa-th-large"></i>
+                <span>Каталог</span>
+            </a>
+            <a href="my-rentals.html" class="nav-item">
+                <i class="fas fa-box"></i>
+                <span>Заказы</span>
+            </a>
+            <a href="favorites.html" class="nav-item active">
+                <i class="fas fa-heart"></i>
+                <span>Избранное</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <i class="fas fa-user"></i>
+                <span>Профиль</span>
+            </a>
+        </nav>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+
+</html>

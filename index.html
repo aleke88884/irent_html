@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0077FF">
+    <title>iRent - Аренда инструментов в Казахстане</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app">
+        <div class="app-content">
+            <!-- Header -->
+            <header class="app-header">
+                <div class="app-header-logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    iRent
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <a href="pages/notifications.html" class="header-btn">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge badge-pulse">3</span>
+                    </a>
+                    <a href="pages/cart.html" class="header-btn">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="badge">2</span>
+                    </a>
+                </div>
+            </header>
+
+            <!-- Search -->
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Найти инструмент...">
+                <button style="background: none; border: none; color: var(--gray-500); padding: 4px;">
+                    <i class="fas fa-sliders-h"></i>
+                </button>
+            </div>
+
+            <!-- Hero Banner -->
+            <div class="hero-banner">
+                <h2>Арендуй легко!</h2>
+                <p>Скидка 15% на первый заказ по промокоду FIRST15</p>
+                <a href="pages/catalog.html" class="btn btn-white btn-sm">
+                    <i class="fas fa-arrow-right"></i>
+                    В каталог
+                </a>
+            </div>
+
+            <!-- Categories -->
+            <div class="page-section" style="padding-bottom: 0;">
+                <div class="section-header">
+                    <h2 class="section-title">Категории</h2>
+                    <a href="pages/catalog.html" class="section-link">Все</a>
+                </div>
+            </div>
+
+            <div class="categories-scroll">
+                <a href="pages/catalog.html?category=drills" class="category-item">
+                    <div class="category-icon">
+                        <i class="fas fa-compact-disc"></i>
+                    </div>
+                    <span class="category-name">Дрели</span>
+                </a>
+                <a href="pages/catalog.html?category=saws" class="category-item">
+                    <div class="category-icon">
+                        <i class="fas fa-cut"></i>
+                    </div>
+                    <span class="category-name">Пилы</span>
+                </a>
+                <a href="pages/catalog.html?category=grinders" class="category-item">
+                    <div class="category-icon">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <span class="category-name">Болгарки</span>
+                </a>
+                <a href="pages/catalog.html?category=hammers" class="category-item">
+                    <div class="category-icon">
+                        <i class="fas fa-hammer"></i>
+                    </div>
+                    <span class="category-name">Перфораторы</span>
+                </a>
+                <a href="pages/catalog.html?category=welding" class="category-item">
+                    <div class="category-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <span class="category-name">Сварка</span>
+                </a>
+                <a href="pages/catalog.html?category=compressors" class="category-item">
+                    <div class="category-icon">
+                        <i class="fas fa-wind"></i>
+                    </div>
+                    <span class="category-name">Компрессоры</span>
+                </a>
+                <a href="pages/catalog.html?category=generators" class="category-item">
+                    <div class="category-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <span class="category-name">Генераторы</span>
+                </a>
+            </div>
+
+            <!-- Popular Tools -->
+            <div class="page-section" style="padding-bottom: 0;">
+                <div class="section-header">
+                    <h2 class="section-title">Популярное</h2>
+                    <a href="pages/catalog.html" class="section-link">Все</a>
+                </div>
+            </div>
+
+            <div class="tools-grid" style="padding-bottom: var(--spacing-lg);">
+                <!-- Tool 1 -->
+                <a href="pages/tool-detail.html?id=1" class="tool-card">
+                    <div class="tool-card-img">
+                        <img src="https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=300&h=300&fit=crop" alt="Перфоратор">
+                        <span class="tool-card-badge">Хит</span>
+                        <button class="tool-card-favorite" onclick="event.preventDefault(); toggleFavorite(this)">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="tool-card-body">
+                        <div class="tool-card-category">Перфораторы</div>
+                        <h3 class="tool-card-title">Перфоратор Bosch GBH 2-26</h3>
+                        <div class="tool-card-rating">
+                            <div class="tool-card-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="tool-card-reviews">(48)</span>
+                        </div>
+                        <div class="tool-card-price">1 500 ₸ <span>/день</span></div>
+                    </div>
+                </a>
+
+                <!-- Tool 2 -->
+                <a href="pages/tool-detail.html?id=2" class="tool-card">
+                    <div class="tool-card-img">
+                        <img src="https://images.unsplash.com/photo-1504148455328-c376907d081c?w=300&h=300&fit=crop" alt="Болгарка">
+                        <button class="tool-card-favorite" onclick="event.preventDefault(); toggleFavorite(this)">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="tool-card-body">
+                        <div class="tool-card-category">Шлифмашины</div>
+                        <h3 class="tool-card-title">Болгарка Makita GA5030</h3>
+                        <div class="tool-card-rating">
+                            <div class="tool-card-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="tool-card-reviews">(62)</span>
+                        </div>
+                        <div class="tool-card-price">800 ₸ <span>/день</span></div>
+                    </div>
+                </a>
+
+                <!-- Tool 3 -->
+                <a href="pages/tool-detail.html?id=3" class="tool-card">
+                    <div class="tool-card-img">
+                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=300&fit=crop" alt="Шуруповёрт">
+                        <span class="tool-card-badge new">Новинка</span>
+                        <button class="tool-card-favorite" onclick="event.preventDefault(); toggleFavorite(this)">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="tool-card-body">
+                        <div class="tool-card-category">Дрели</div>
+                        <h3 class="tool-card-title">Шуруповёрт DeWalt DCD791</h3>
+                        <div class="tool-card-rating">
+                            <div class="tool-card-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="tool-card-reviews">(35)</span>
+                        </div>
+                        <div class="tool-card-price">1 200 ₸ <span>/день</span></div>
+                    </div>
+                </a>
+
+                <!-- Tool 4 -->
+                <a href="pages/tool-detail.html?id=4" class="tool-card">
+                    <div class="tool-card-img">
+                        <img src="https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=300&h=300&fit=crop" alt="Циркулярная пила">
+                        <span class="tool-card-badge sale">-15%</span>
+                        <button class="tool-card-favorite" onclick="event.preventDefault(); toggleFavorite(this)">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="tool-card-body">
+                        <div class="tool-card-category">Пилы</div>
+                        <h3 class="tool-card-title">Циркулярная пила Bosch GKS 190</h3>
+                        <div class="tool-card-rating">
+                            <div class="tool-card-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="tool-card-reviews">(29)</span>
+                        </div>
+                        <div class="tool-card-price">1 800 ₸ <span>/день</span></div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Special Offers -->
+            <div class="page-section" style="padding-bottom: 0;">
+                <div class="section-header">
+                    <h2 class="section-title">Акции</h2>
+                    <a href="pages/catalog.html?sale=true" class="section-link">Все</a>
+                </div>
+            </div>
+
+            <div class="promo-scroll">
+                <div class="promo-card green">
+                    <div class="promo-card-label">Акция выходного дня</div>
+                    <div class="promo-card-title">-20% на все пилы</div>
+                    <div class="promo-card-date">До 15 декабря</div>
+                </div>
+                <div class="promo-card purple">
+                    <div class="promo-card-label">Для новых клиентов</div>
+                    <div class="promo-card-title">Бесплатная доставка</div>
+                    <div class="promo-card-date">При заказе от 5000 ₸</div>
+                </div>
+                <div class="promo-card gold">
+                    <div class="promo-card-label">Только в Алматы</div>
+                    <div class="promo-card-title">Доставка за 2 часа</div>
+                    <div class="promo-card-date">Экспресс-сервис</div>
+                </div>
+            </div>
+
+            <!-- Why Us Section -->
+            <div class="page-section">
+                <div class="section-header">
+                    <h2 class="section-title">Почему мы?</h2>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--spacing-md);">
+                    <div style="background: var(--gray-50); padding: var(--spacing-md); border-radius: var(--radius-lg); text-align: center;">
+                        <div style="width: 48px; height: 48px; background: var(--primary-light); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--spacing-sm); color: var(--primary); font-size: 1.25rem;">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <div style="font-weight: 700; font-size: 0.875rem; color: var(--gray-900); margin-bottom: 4px;">Быстрая доставка</div>
+                        <div style="font-size: 0.75rem; color: var(--gray-500);">По всему Казахстану</div>
+                    </div>
+                    <div style="background: var(--gray-50); padding: var(--spacing-md); border-radius: var(--radius-lg); text-align: center;">
+                        <div style="width: 48px; height: 48px; background: var(--success-light); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--spacing-sm); color: var(--success); font-size: 1.25rem;">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div style="font-weight: 700; font-size: 0.875rem; color: var(--gray-900); margin-bottom: 4px;">Гарантия качества</div>
+                        <div style="font-size: 0.75rem; color: var(--gray-500);">Проверенный инструмент</div>
+                    </div>
+                    <div style="background: var(--gray-50); padding: var(--spacing-md); border-radius: var(--radius-lg); text-align: center;">
+                        <div style="width: 48px; height: 48px; background: var(--warning-light); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--spacing-sm); color: var(--warning); font-size: 1.25rem;">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
+                        <div style="font-weight: 700; font-size: 0.875rem; color: var(--gray-900); margin-bottom: 4px;">Выгодные цены</div>
+                        <div style="font-size: 0.75rem; color: var(--gray-500);">Дешевле чем покупать</div>
+                    </div>
+                    <div style="background: var(--gray-50); padding: var(--spacing-md); border-radius: var(--radius-lg); text-align: center;">
+                        <div style="width: 48px; height: 48px; background: var(--info-light); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--spacing-sm); color: var(--info); font-size: 1.25rem;">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <div style="font-weight: 700; font-size: 0.875rem; color: var(--gray-900); margin-bottom: 4px;">Поддержка 24/7</div>
+                        <div style="font-size: 0.75rem; color: var(--gray-500);">Всегда на связи</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="index.html" class="nav-item active">
+                <i class="fas fa-home"></i>
+                <span>Главная</span>
+            </a>
+            <a href="pages/catalog.html" class="nav-item">
+                <i class="fas fa-th-large"></i>
+                <span>Каталог</span>
+            </a>
+            <a href="pages/my-rentals.html" class="nav-item">
+                <i class="fas fa-box"></i>
+                <span>Заказы</span>
+            </a>
+            <a href="pages/favorites.html" class="nav-item">
+                <i class="fas fa-heart"></i>
+                <span>Избранное</span>
+            </a>
+            <a href="pages/profile.html" class="nav-item">
+                <i class="fas fa-user"></i>
+                <span>Профиль</span>
+            </a>
+        </nav>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

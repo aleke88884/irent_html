@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Заказ #1249 - iRent Admin</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .order-detail-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: var(--spacing-lg);
+        }
+
+        .detail-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        .detail-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .detail-card-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .detail-card-body {
+            padding: var(--spacing-md);
+        }
+
+        .order-header-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--spacing-lg);
+            background: var(--white);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .order-header-info {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-lg);
+        }
+
+        .order-header-id {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .order-header-date {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+
+        .order-header-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        /* Timeline */
+        .order-timeline {
+            padding: var(--spacing-md) 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: var(--spacing-md);
+            padding-bottom: var(--spacing-md);
+            position: relative;
+        }
+
+        .timeline-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 32px;
+            bottom: 0;
+            width: 2px;
+            background: var(--gray-200);
+        }
+
+        .timeline-dot {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            flex-shrink: 0;
+            z-index: 1;
+        }
+
+        .timeline-dot.completed {
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .timeline-dot.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .timeline-dot.pending {
+            background: var(--gray-200);
+            color: var(--gray-400);
+        }
+
+        .timeline-content {
+            flex: 1;
+        }
+
+        .timeline-title {
+            font-weight: 500;
+            color: var(--gray-900);
+        }
+
+        .timeline-title.pending {
+            color: var(--gray-400);
+        }
+
+        .timeline-time {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        /* Items table */
+        .items-table {
+            width: 100%;
+        }
+
+        .items-table th {
+            text-align: left;
+            padding: var(--spacing-sm);
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .items-table td {
+            padding: var(--spacing-md) var(--spacing-sm);
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .item-info {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .item-img {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-sm);
+            background: var(--gray-100);
+            overflow: hidden;
+        }
+
+        .item-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .item-name {
+            font-weight: 500;
+            color: var(--gray-900);
+        }
+
+        .item-serial {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        /* Info rows */
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: var(--gray-600);
+            font-size: 0.875rem;
+        }
+
+        .info-value {
+            font-weight: 500;
+            color: var(--gray-900);
+            font-size: 0.875rem;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: var(--spacing-md) 0;
+            border-top: 2px solid var(--gray-200);
+            margin-top: var(--spacing-sm);
+        }
+
+        .total-label {
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .total-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Customer card */
+        .customer-info {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding-bottom: var(--spacing-md);
+            border-bottom: 1px solid var(--gray-100);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .customer-avatar {
+            width: 48px;
+            height: 48px;
+            background: var(--gray-200);
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-500);
+        }
+
+        .customer-name {
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .customer-email {
+            font-size: 0.8125rem;
+            color: var(--gray-500);
+        }
+
+        .customer-contact {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+
+        /* Address */
+        .address-box {
+            background: var(--gray-50);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+        }
+
+        .address-type {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .address-text {
+            font-size: 0.9375rem;
+            color: var(--gray-900);
+            line-height: 1.5;
+        }
+
+        /* Courier card */
+        .courier-info {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            background: var(--gray-50);
+            border-radius: var(--radius-md);
+        }
+
+        .courier-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+        }
+
+        .courier-name {
+            font-weight: 500;
+            color: var(--gray-900);
+        }
+
+        .courier-phone {
+            font-size: 0.8125rem;
+            color: var(--gray-500);
+        }
+
+        .courier-status {
+            margin-left: auto;
+            padding: 4px 8px;
+            background: var(--success-light);
+            color: var(--success);
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: var(--radius-sm);
+        }
+
+        /* Status select */
+        .status-select {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            font-weight: 500;
+            background: var(--white);
+            width: 100%;
+        }
+
+        .status-select.active {
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        .status-select.pending {
+            border-color: var(--warning);
+            color: #856404;
+        }
+
+        /* Notes */
+        .order-notes {
+            background: var(--warning-light);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+        }
+
+        .order-notes-title {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-weight: 600;
+            color: #856404;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .order-notes-text {
+            font-size: 0.875rem;
+            color: var(--gray-700);
+        }
+
+        @media (max-width: 1200px) {
+            .order-detail-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="admin-sidebar-logo">
+                <div class="logo-icon">
+                    <i class="fas fa-tools"></i>
+                </div>
+                iRent Admin
+            </div>
+
+            <nav class="admin-nav">
+                <a href="index.html" class="admin-nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    Дашборд
+                </a>
+                <a href="orders.html" class="admin-nav-item active">
+                    <i class="fas fa-shopping-cart"></i>
+                    Заказы
+                </a>
+                <a href="tools.html" class="admin-nav-item">
+                    <i class="fas fa-tools"></i>
+                    Инструменты
+                </a>
+                <a href="users.html" class="admin-nav-item">
+                    <i class="fas fa-users"></i>
+                    Пользователи
+                </a>
+                <a href="categories.html" class="admin-nav-item">
+                    <i class="fas fa-th-large"></i>
+                    Категории
+                </a>
+                <a href="couriers.html" class="admin-nav-item">
+                    <i class="fas fa-motorcycle"></i>
+                    Курьеры
+                </a>
+                <a href="reports.html" class="admin-nav-item">
+                    <i class="fas fa-chart-bar"></i>
+                    Отчёты
+                </a>
+                <a href="settings.html" class="admin-nav-item">
+                    <i class="fas fa-cog"></i>
+                    Настройки
+                </a>
+            </nav>
+
+            <div style="margin-top: auto; padding: var(--spacing-md);">
+                <a href="../pages/login.html" class="admin-nav-item" style="color: var(--danger);">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Выход
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Header -->
+            <header class="admin-header">
+                <div style="display: flex; align-items: center; gap: var(--spacing-md);">
+                    <a href="orders.html" class="back-btn">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                    <h1 class="admin-header-title">Детали заказа</h1>
+                </div>
+                <div style="display: flex; gap: var(--spacing-sm);">
+                    <button class="btn btn-outline">
+                        <i class="fas fa-print"></i>
+                        Печать
+                    </button>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-save"></i>
+                        Сохранить
+                    </button>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <div class="admin-content">
+                <!-- Order Header -->
+                <div class="order-header-card">
+                    <div class="order-header-info">
+                        <div>
+                            <div class="order-header-id">Заказ #1249</div>
+                            <div class="order-header-date">Создан: 10 декабря 2024, 09:30</div>
+                        </div>
+                        <span class="order-status active" style="font-size: 0.875rem; padding: 6px 12px;">Активен</span>
+                    </div>
+                    <div class="order-header-actions">
+                        <select class="status-select active">
+                            <option>Новый</option>
+                            <option>Подтверждён</option>
+                            <option selected>Активен</option>
+                            <option>На доставке</option>
+                            <option>Доставлен</option>
+                            <option>Возвращён</option>
+                            <option>Завершён</option>
+                            <option>Отменён</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="order-detail-grid">
+                    <!-- Left Column -->
+                    <div>
+                        <!-- Timeline -->
+                        <div class="detail-card" style="margin-bottom: var(--spacing-lg);">
+                            <div class="detail-card-header">
+                                <h3 class="detail-card-title">История заказа</h3>
+                            </div>
+                            <div class="detail-card-body">
+                                <div class="order-timeline">
+                                    <div class="timeline-item">
+                                        <div class="timeline-dot completed">
+                                            <i class="fas fa-check"></i>
+                                        </div>
+                                        <div class="timeline-content">
+                                            <div class="timeline-title">Заказ создан</div>
+                                            <div class="timeline-time">10 дек 2024, 09:30</div>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-dot completed">
+                                            <i class="fas fa-check"></i>
+                                        </div>
+                                        <div class="timeline-content">
+                                            <div class="timeline-title">Оплата подтверждена</div>
+                                            <div class="timeline-time">10 дек 2024, 09:32 • Visa ****4532</div>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-dot completed">
+                                            <i class="fas fa-check"></i>
+                                        </div>
+                                        <div class="timeline-content">
+                                            <div class="timeline-title">Заказ собран</div>
+                                            <div class="timeline-time">10 дек 2024, 10:15 • Оператор: Мария К.</div>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-dot active">
+                                            <i class="fas fa-truck"></i>
+                                        </div>
+                                        <div class="timeline-content">
+                                            <div class="timeline-title">В пути к клиенту</div>
+                                            <div class="timeline-time">10 дек 2024, 10:45 • Курьер: Ерлан К.</div>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-dot pending">
+                                            <i class="fas fa-box"></i>
+                                        </div>
+                                        <div class="timeline-content">
+                                            <div class="timeline-title pending">Доставлен клиенту</div>
+                                            <div class="timeline-time">Ожидается</div>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-dot pending">
+                                            <i class="fas fa-undo"></i>
+                                        </div>
+                                        <div class="timeline-content">
+                                            <div class="timeline-title pending">Возврат инструментов</div>
+                                            <div class="timeline-time">12 дек 2024</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Items -->
+                        <div class="detail-card" style="margin-bottom: var(--spacing-lg);">
+                            <div class="detail-card-header">
+                                <h3 class="detail-card-title">Инструменты (2)</h3>
+                            </div>
+                            <div class="detail-card-body" style="padding: 0;">
+                                <table class="items-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Инструмент</th>
+                                            <th>Период</th>
+                                            <th>Цена/день</th>
+                                            <th>Сумма</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="item-info">
+                                                    <div class="item-img">
+                                                        <img src="https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=96&h=96&fit=crop" alt="">
+                                                    </div>
+                                                    <div>
+                                                        <div class="item-name">Перфоратор Bosch GBH 2-26</div>
+                                                        <div class="item-serial">S/N: BOH-2024-1547</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>3 дня</td>
+                                            <td>1 500 ₸</td>
+                                            <td style="font-weight: 600;">4 500 ₸</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="item-info">
+                                                    <div class="item-img">
+                                                        <img src="https://images.unsplash.com/photo-1504148455328-c376907d081c?w=96&h=96&fit=crop" alt="">
+                                                    </div>
+                                                    <div>
+                                                        <div class="item-name">Болгарка Makita GA5030</div>
+                                                        <div class="item-serial">S/N: MAK-2024-0892</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>3 дня</td>
+                                            <td>800 ₸</td>
+                                            <td style="font-weight: 600;">2 400 ₸</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Notes -->
+                        <div class="order-notes">
+                            <div class="order-notes-title">
+                                <i class="fas fa-sticky-note"></i>
+                                Комментарий клиента
+                            </div>
+                            <div class="order-notes-text">
+                                Позвонить за 10 минут до приезда. Подъезд открыт.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div>
+                        <!-- Customer -->
+                        <div class="detail-card" style="margin-bottom: var(--spacing-lg);">
+                            <div class="detail-card-header">
+                                <h3 class="detail-card-title">Клиент</h3>
+                                <a href="users.html" class="section-link">Профиль</a>
+                            </div>
+                            <div class="detail-card-body">
+                                <div class="customer-info">
+                                    <div class="customer-avatar">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div>
+                                        <div class="customer-name">Алексей Иванов</div>
+                                        <div class="customer-email">alexey@example.com</div>
+                                    </div>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Телефон</span>
+                                    <span class="info-value">+7 700 123 45 67</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Всего заказов</span>
+                                    <span class="info-value">12</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Клиент с</span>
+                                    <span class="info-value">Март 2024</span>
+                                </div>
+                                <div class="customer-contact">
+                                    <a href="tel:+77001234567" class="btn btn-outline btn-sm" style="flex: 1;">
+                                        <i class="fas fa-phone"></i>
+                                        Позвонить
+                                    </a>
+                                    <a href="mailto:alexey@example.com" class="btn btn-outline btn-sm" style="flex: 1;">
+                                        <i class="fas fa-envelope"></i>
+                                        Написать
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Delivery -->
+                        <div class="detail-card" style="margin-bottom: var(--spacing-lg);">
+                            <div class="detail-card-header">
+                                <h3 class="detail-card-title">Доставка</h3>
+                            </div>
+                            <div class="detail-card-body">
+                                <div class="address-box" style="margin-bottom: var(--spacing-md);">
+                                    <div class="address-type">Адрес доставки</div>
+                                    <div class="address-text">
+                                        г. Алматы, ул. Абая 150, кв. 42<br>
+                                        Подъезд 2, этаж 5, домофон 42
+                                    </div>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Способ</span>
+                                    <span class="info-value">Доставка курьером</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Стоимость</span>
+                                    <span class="info-value">500 ₸</span>
+                                </div>
+                                <div style="margin-top: var(--spacing-md);">
+                                    <div class="info-label" style="margin-bottom: var(--spacing-sm);">Курьер</div>
+                                    <div class="courier-info">
+                                        <div class="courier-avatar">
+                                            <i class="fas fa-motorcycle"></i>
+                                        </div>
+                                        <div>
+                                            <div class="courier-name">Ерлан Касымов</div>
+                                            <div class="courier-phone">+7 700 555 12 34</div>
+                                        </div>
+                                        <span class="courier-status">В пути</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Payment -->
+                        <div class="detail-card">
+                            <div class="detail-card-header">
+                                <h3 class="detail-card-title">Оплата</h3>
+                            </div>
+                            <div class="detail-card-body">
+                                <div class="info-row">
+                                    <span class="info-label">Аренда</span>
+                                    <span class="info-value">6 900 ₸</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Доставка</span>
+                                    <span class="info-value">500 ₸</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Скидка (15%)</span>
+                                    <span class="info-value" style="color: var(--success);">-1 110 ₸</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Залог</span>
+                                    <span class="info-value">15 000 ₸</span>
+                                </div>
+                                <div class="total-row">
+                                    <span class="total-label">Итого оплачено</span>
+                                    <span class="total-value">21 290 ₸</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: var(--spacing-sm); margin-top: var(--spacing-md); padding: var(--spacing-sm); background: var(--success-light); border-radius: var(--radius-sm);">
+                                    <i class="fas fa-check-circle" style="color: var(--success);"></i>
+                                    <span style="font-size: 0.8125rem; color: var(--success); font-weight: 500;">Оплачено • Visa ****4532</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

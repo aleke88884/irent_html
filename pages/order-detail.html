@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Детали заказа - iRent</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .order-detail-header {
+            padding: var(--spacing-md);
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .order-detail-id {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .order-detail-date {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+
+        .order-timeline {
+            padding: var(--spacing-md);
+            background: var(--white);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: var(--spacing-md);
+            position: relative;
+            padding-bottom: var(--spacing-md);
+        }
+
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 32px;
+            bottom: 0;
+            width: 2px;
+            background: var(--gray-200);
+        }
+
+        .timeline-item:last-child::before {
+            display: none;
+        }
+
+        .timeline-dot {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-full);
+            background: var(--gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            z-index: 1;
+        }
+
+        .timeline-dot.completed {
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .timeline-dot.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .timeline-dot.pending {
+            background: var(--gray-200);
+            color: var(--gray-400);
+        }
+
+        .timeline-content {
+            flex: 1;
+            padding-top: 4px;
+        }
+
+        .timeline-title {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .timeline-title.pending {
+            color: var(--gray-400);
+        }
+
+        .timeline-time {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            margin-top: 2px;
+        }
+
+        .order-section {
+            background: var(--white);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .order-section-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .order-item {
+            display: flex;
+            gap: var(--spacing-md);
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .order-item-img {
+            width: 64px;
+            height: 64px;
+            border-radius: var(--radius-sm);
+            background: var(--gray-100);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .order-item-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .order-item-info {
+            flex: 1;
+        }
+
+        .order-item-name {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 4px;
+        }
+
+        .order-item-dates {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .order-item-price {
+            font-size: 0.9375rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-align: right;
+        }
+
+        .order-item-daily {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            text-align: right;
+        }
+
+        .order-info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .order-info-row:last-child {
+            border-bottom: none;
+        }
+
+        .order-info-label {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        .order-info-value {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--gray-900);
+            text-align: right;
+        }
+
+        .order-total-row {
+            display: flex;
+            justify-content: space-between;
+            padding-top: var(--spacing-md);
+            border-top: 2px solid var(--gray-200);
+            margin-top: var(--spacing-sm);
+        }
+
+        .order-total-label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .order-total-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .address-card {
+            display: flex;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            background: var(--gray-50);
+            border-radius: var(--radius-md);
+        }
+
+        .address-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            flex-shrink: 0;
+        }
+
+        .address-info {
+            flex: 1;
+        }
+
+        .address-type {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            margin-bottom: 2px;
+        }
+
+        .address-text {
+            font-size: 0.9375rem;
+            color: var(--gray-900);
+            line-height: 1.4;
+        }
+
+        .contact-row {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md) 0;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .contact-row:last-child {
+            border-bottom: none;
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gray-100);
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-600);
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-label {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .contact-value {
+            font-size: 0.9375rem;
+            color: var(--gray-900);
+        }
+
+        .contact-action {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            background: var(--white);
+            border-top: 1px solid var(--gray-200);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <div class="app-content" style="padding-bottom: 140px;">
+            <!-- Header -->
+            <header class="app-header">
+                <a href="my-rentals.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <h1 class="app-header-title">Детали заказа</h1>
+                <button class="header-btn">
+                    <i class="fas fa-ellipsis-v"></i>
+                </button>
+            </header>
+
+            <!-- Order Header -->
+            <div class="order-detail-header">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <div>
+                        <div class="order-detail-id">Заказ #1247</div>
+                        <div class="order-detail-date">Создан 10 декабря 2024</div>
+                    </div>
+                    <span class="order-status active">Активен</span>
+                </div>
+            </div>
+
+            <!-- Timeline -->
+            <div class="order-section">
+                <div class="order-section-title">Статус заказа</div>
+                <div class="order-timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot completed">
+                            <i class="fas fa-check" style="font-size: 0.75rem;"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Заказ создан</div>
+                            <div class="timeline-time">10 дек, 09:30</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot completed">
+                            <i class="fas fa-check" style="font-size: 0.75rem;"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Оплата подтверждена</div>
+                            <div class="timeline-time">10 дек, 09:32</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot completed">
+                            <i class="fas fa-check" style="font-size: 0.75rem;"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Заказ собран</div>
+                            <div class="timeline-time">10 дек, 10:15</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot active">
+                            <i class="fas fa-truck" style="font-size: 0.625rem;"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">В пути</div>
+                            <div class="timeline-time">Курьер выехал к вам</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot pending">
+                            <i class="fas fa-box" style="font-size: 0.625rem;"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="timeline-title pending">Доставлен</div>
+                            <div class="timeline-time">Ожидается</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Items -->
+            <div class="order-section">
+                <div class="order-section-title">Инструменты (2)</div>
+                <div class="order-item">
+                    <div class="order-item-img">
+                        <img src="https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=128&h=128&fit=crop" alt="">
+                    </div>
+                    <div class="order-item-info">
+                        <div class="order-item-name">Перфоратор Bosch GBH 2-26</div>
+                        <div class="order-item-dates">10 - 12 дек (3 дня)</div>
+                    </div>
+                    <div>
+                        <div class="order-item-price">4 500 ₸</div>
+                        <div class="order-item-daily">1 500 ₸/день</div>
+                    </div>
+                </div>
+                <div class="order-item">
+                    <div class="order-item-img">
+                        <img src="https://images.unsplash.com/photo-1504148455328-c376907d081c?w=128&h=128&fit=crop" alt="">
+                    </div>
+                    <div class="order-item-info">
+                        <div class="order-item-name">Болгарка Makita GA5030</div>
+                        <div class="order-item-dates">10 - 12 дек (3 дня)</div>
+                    </div>
+                    <div>
+                        <div class="order-item-price">2 400 ₸</div>
+                        <div class="order-item-daily">800 ₸/день</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Delivery Address -->
+            <div class="order-section">
+                <div class="order-section-title">Адрес доставки</div>
+                <div class="address-card">
+                    <div class="address-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="address-info">
+                        <div class="address-type">Дом</div>
+                        <div class="address-text">
+                            г. Алматы, ул. Абая 150, кв. 42<br>
+                            Подъезд 2, этаж 5
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact -->
+            <div class="order-section">
+                <div class="order-section-title">Курьер</div>
+                <div class="contact-row">
+                    <div class="contact-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="contact-info">
+                        <div class="contact-label">Имя</div>
+                        <div class="contact-value">Ерлан К.</div>
+                    </div>
+                </div>
+                <div class="contact-row">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="contact-info">
+                        <div class="contact-label">Телефон</div>
+                        <div class="contact-value">+7 700 555 12 34</div>
+                    </div>
+                    <a href="tel:+77005551234" class="contact-action">
+                        <i class="fas fa-phone"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Payment Summary -->
+            <div class="order-section">
+                <div class="order-section-title">Оплата</div>
+                <div class="order-info-row">
+                    <span class="order-info-label">Аренда инструментов</span>
+                    <span class="order-info-value">6 900 ₸</span>
+                </div>
+                <div class="order-info-row">
+                    <span class="order-info-label">Доставка</span>
+                    <span class="order-info-value">500 ₸</span>
+                </div>
+                <div class="order-info-row">
+                    <span class="order-info-label">Скидка (15%)</span>
+                    <span class="order-info-value" style="color: var(--success);">-1 110 ₸</span>
+                </div>
+                <div class="order-info-row">
+                    <span class="order-info-label">Залог (возвратный)</span>
+                    <span class="order-info-value">15 000 ₸</span>
+                </div>
+                <div class="order-total-row">
+                    <span class="order-total-label">Итого оплачено</span>
+                    <span class="order-total-value">21 290 ₸</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: var(--spacing-sm); margin-top: var(--spacing-md); padding: var(--spacing-sm); background: var(--gray-50); border-radius: var(--radius-sm);">
+                    <i class="fab fa-cc-visa" style="font-size: 1.5rem; color: #1A1F71;"></i>
+                    <span style="font-size: 0.875rem; color: var(--gray-600);">Visa •••• 4532</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons" style="position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); max-width: 430px; width: 100%;">
+            <button class="btn btn-outline" style="flex: 1;">
+                <i class="fas fa-headset"></i>
+                Поддержка
+            </button>
+            <button class="btn btn-primary" style="flex: 1;">
+                <i class="fas fa-calendar-plus"></i>
+                Продлить
+            </button>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+
+</html>

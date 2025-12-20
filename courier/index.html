@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Главная - iRent Курьер</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Leaflet CSS for Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        .courier-app {
+            max-width: 430px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: var(--white);
+            position: relative;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .courier-header {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
+            z-index: 1000;
+            background: var(--white);
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .courier-header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .courier-logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: var(--primary);
+        }
+
+        .courier-logo .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--primary);
+            color: white;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .status-toggle {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-full);
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .status-toggle.online {
+            background: var(--success-light);
+            color: var(--success);
+        }
+
+        .status-toggle.offline {
+            background: var(--gray-200);
+            color: var(--gray-600);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        .stats-row {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .stat-badge {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: var(--gray-50);
+            border-radius: var(--radius-md);
+        }
+
+        .stat-badge i {
+            color: var(--primary);
+        }
+
+        .stat-badge-value {
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .stat-badge-label {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .map-container {
+            position: fixed;
+            top: 140px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
+            height: calc(100vh - 140px - 200px);
+            z-index: 1;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        .orders-panel {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
+            background: var(--white);
+            border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            padding-bottom: calc(var(--bottom-nav-height) + var(--safe-area-bottom));
+        }
+
+        .panel-handle {
+            width: 40px;
+            height: 4px;
+            background: var(--gray-300);
+            border-radius: var(--radius-full);
+            margin: var(--spacing-sm) auto var(--spacing-md);
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 var(--spacing-md) var(--spacing-md);
+        }
+
+        .panel-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .panel-badge {
+            background: var(--primary);
+            color: var(--white);
+            padding: 2px 8px;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .order-card-courier {
+            margin: 0 var(--spacing-md) var(--spacing-md);
+            padding: var(--spacing-md);
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-md);
+        }
+
+        .order-card-courier.new {
+            border-color: var(--primary);
+            background: rgba(245, 124, 0, 0.02);
+        }
+
+        .order-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .order-type {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .order-type-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .order-type-icon.delivery {
+            background: var(--info-light);
+            color: var(--info);
+        }
+
+        .order-type-icon.pickup {
+            background: var(--warning-light);
+            color: #856404;
+        }
+
+        .order-type-text {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .order-type-time {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .order-price {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .order-route {
+            display: flex;
+            align-items: stretch;
+            gap: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+        }
+
+        .route-line {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .route-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--success);
+        }
+
+        .route-dot.end {
+            background: var(--danger);
+        }
+
+        .route-dash {
+            flex: 1;
+            width: 2px;
+            background: repeating-linear-gradient(
+                to bottom,
+                var(--gray-300) 0,
+                var(--gray-300) 4px,
+                transparent 4px,
+                transparent 8px
+            );
+            min-height: 30px;
+        }
+
+        .route-points {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .route-point {
+            font-size: 0.8125rem;
+            color: var(--gray-700);
+            line-height: 1.3;
+        }
+
+        .route-point-label {
+            font-size: 0.625rem;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+        .order-meta {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .order-meta-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            font-size: 0.75rem;
+            color: var(--gray-600);
+        }
+
+        .order-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .order-actions .btn {
+            flex: 1;
+        }
+
+        /* Courier Bottom Nav */
+        .courier-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
+            height: calc(var(--bottom-nav-height) + var(--safe-area-bottom));
+            padding-bottom: var(--safe-area-bottom);
+            background: var(--white);
+            border-top: 1px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            z-index: 1001;
+        }
+
+        .courier-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: var(--spacing-sm);
+            color: var(--gray-500);
+            min-width: 64px;
+        }
+
+        .courier-nav-item i {
+            font-size: 1.25rem;
+        }
+
+        .courier-nav-item span {
+            font-size: 0.625rem;
+            font-weight: 500;
+        }
+
+        .courier-nav-item.active {
+            color: var(--primary);
+        }
+
+        /* Map marker custom styles */
+        .custom-marker {
+            background: var(--primary);
+            border: 3px solid var(--white);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="courier-app">
+        <!-- Header -->
+        <header class="courier-header">
+            <div class="courier-header-top">
+                <div class="courier-logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-motorcycle"></i>
+                    </div>
+                    iRent Курьер
+                </div>
+                <button class="status-toggle online" onclick="toggleStatus()">
+                    <span class="status-dot"></span>
+                    <span id="status-text">На линии</span>
+                </button>
+            </div>
+            <div class="stats-row">
+                <div class="stat-badge">
+                    <i class="fas fa-box"></i>
+                    <div>
+                        <div class="stat-badge-value">5</div>
+                        <div class="stat-badge-label">заказов</div>
+                    </div>
+                </div>
+                <div class="stat-badge">
+                    <i class="fas fa-route"></i>
+                    <div>
+                        <div class="stat-badge-value">23.4 км</div>
+                        <div class="stat-badge-label">пройдено</div>
+                    </div>
+                </div>
+                <div class="stat-badge">
+                    <i class="fas fa-tenge-sign"></i>
+                    <div>
+                        <div class="stat-badge-value">8 500</div>
+                        <div class="stat-badge-label">сегодня</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Map -->
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+
+        <!-- Orders Panel -->
+        <div class="orders-panel">
+            <div class="panel-handle"></div>
+            <div class="panel-header">
+                <span class="panel-title">Доступные заказы</span>
+                <span class="panel-badge">3</span>
+            </div>
+
+            <!-- New Order -->
+            <div class="order-card-courier new">
+                <div class="order-card-header">
+                    <div class="order-type">
+                        <div class="order-type-icon delivery">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <div>
+                            <div class="order-type-text">Доставка #1249</div>
+                            <div class="order-type-time">Новый • 2 мин назад</div>
+                        </div>
+                    </div>
+                    <div class="order-price">1 200 ₸</div>
+                </div>
+
+                <div class="order-route">
+                    <div class="route-line">
+                        <div class="route-dot"></div>
+                        <div class="route-dash"></div>
+                        <div class="route-dot end"></div>
+                    </div>
+                    <div class="route-points">
+                        <div class="route-point">
+                            <div class="route-point-label">Забрать</div>
+                            Склад iRent, ул. Тимирязева 42
+                        </div>
+                        <div class="route-point">
+                            <div class="route-point-label">Доставить</div>
+                            ул. Абая 150, кв. 42
+                        </div>
+                    </div>
+                </div>
+
+                <div class="order-meta">
+                    <div class="order-meta-item">
+                        <i class="fas fa-route"></i>
+                        4.2 км
+                    </div>
+                    <div class="order-meta-item">
+                        <i class="fas fa-clock"></i>
+                        ~15 мин
+                    </div>
+                    <div class="order-meta-item">
+                        <i class="fas fa-box"></i>
+                        2 инструмента
+                    </div>
+                </div>
+
+                <div class="order-actions">
+                    <button class="btn btn-ghost btn-sm">Отклонить</button>
+                    <a href="order-detail.html" class="btn btn-primary btn-sm">Принять</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="courier-nav">
+            <a href="index.html" class="courier-nav-item active">
+                <i class="fas fa-home"></i>
+                <span>Главная</span>
+            </a>
+            <a href="orders.html" class="courier-nav-item">
+                <i class="fas fa-list-alt"></i>
+                <span>Заказы</span>
+            </a>
+            <a href="earnings.html" class="courier-nav-item">
+                <i class="fas fa-wallet"></i>
+                <span>Заработок</span>
+            </a>
+            <a href="profile.html" class="courier-nav-item">
+                <i class="fas fa-user"></i>
+                <span>Профиль</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Initialize map centered on Almaty
+        const map = L.map('map').setView([43.2567, 76.9286], 13);
+
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Custom icon for current location
+        const courierIcon = L.divIcon({
+            className: 'custom-marker',
+            iconSize: [20, 20],
+            iconAnchor: [10, 10]
+        });
+
+        // Add courier marker (current location)
+        const courierMarker = L.marker([43.2567, 76.9286], {icon: courierIcon}).addTo(map);
+        courierMarker.bindPopup('Вы здесь').openPopup();
+
+        // Add some order markers
+        const orderIcon = L.icon({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
+
+        L.marker([43.2620, 76.9450], {icon: orderIcon}).addTo(map)
+            .bindPopup('Заказ #1249<br>ул. Абая 150');
+
+        L.marker([43.2480, 76.9150], {icon: orderIcon}).addTo(map)
+            .bindPopup('Заказ #1250<br>пр. Достык 89');
+
+        // Toggle status
+        function toggleStatus() {
+            const toggle = document.querySelector('.status-toggle');
+            const statusText = document.getElementById('status-text');
+
+            if (toggle.classList.contains('online')) {
+                toggle.classList.remove('online');
+                toggle.classList.add('offline');
+                statusText.textContent = 'Не на линии';
+            } else {
+                toggle.classList.remove('offline');
+                toggle.classList.add('online');
+                statusText.textContent = 'На линии';
+            }
+        }
+    </script>
+</body>
+
+</html>

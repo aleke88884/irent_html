@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#0077FF">
+    <title>Профиль - iRent</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app">
+        <div class="app-content">
+            <!-- Profile Header -->
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h1 class="profile-name">Алексей Иванов</h1>
+                <p class="profile-email">+7 700 123 45 67</p>
+                <div class="profile-stats">
+                    <div class="profile-stat">
+                        <div class="profile-stat-value">12</div>
+                        <div class="profile-stat-label">Заказов</div>
+                    </div>
+                    <div class="profile-stat">
+                        <div class="profile-stat-value">4.9</div>
+                        <div class="profile-stat-label">Рейтинг</div>
+                    </div>
+                    <div class="profile-stat">
+                        <div class="profile-stat-value">15%</div>
+                        <div class="profile-stat-label">Скидка</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Menu -->
+            <div class="profile-menu">
+                <a href="my-rentals.html" class="profile-menu-item">
+                    <div class="profile-menu-icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <div class="profile-menu-text">
+                        <h4>Мои заказы</h4>
+                        <p>История и текущие аренды</p>
+                    </div>
+                    <i class="fas fa-chevron-right profile-menu-arrow"></i>
+                </a>
+
+                <a href="favorites.html" class="profile-menu-item">
+                    <div class="profile-menu-icon" style="background: var(--danger-light); color: var(--danger);">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="profile-menu-text">
+                        <h4>Избранное</h4>
+                        <p>Сохранённые инструменты</p>
+                    </div>
+                    <i class="fas fa-chevron-right profile-menu-arrow"></i>
+                </a>
+
+                <a href="addresses.html" class="profile-menu-item">
+                    <div class="profile-menu-icon" style="background: var(--success-light); color: var(--success);">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="profile-menu-text">
+                        <h4>Адреса доставки</h4>
+                        <p>Управление адресами</p>
+                    </div>
+                    <i class="fas fa-chevron-right profile-menu-arrow"></i>
+                </a>
+
+                <a href="payment-methods.html" class="profile-menu-item">
+                    <div class="profile-menu-icon" style="background: var(--warning-light); color: var(--warning);">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <div class="profile-menu-text">
+                        <h4>Способы оплаты</h4>
+                        <p>Карты и Kaspi</p>
+                    </div>
+                    <i class="fas fa-chevron-right profile-menu-arrow"></i>
+                </a>
+
+                <a href="notifications-settings.html" class="profile-menu-item">
+                    <div class="profile-menu-icon" style="background: var(--info-light); color: var(--info);">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <div class="profile-menu-text">
+                        <h4>Уведомления</h4>
+                        <p>Настройки уведомлений</p>
+                    </div>
+                    <i class="fas fa-chevron-right profile-menu-arrow"></i>
+                </a>
+
+                <a href="support.html" class="profile-menu-item">
+                    <div class="profile-menu-icon" style="background: #E8F5E9; color: #4CAF50;">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div class="profile-menu-text">
+                        <h4>Поддержка</h4>
+                        <p>Помощь и FAQ</p>
+                    </div>
+                    <i class="fas fa-chevron-right profile-menu-arrow"></i>
+                </a>
+
+                <a href="settings.html" class="profile-menu-item">
+                    <div class="profile-menu-icon" style="background: var(--gray-100); color: var(--gray-600);">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <div class="profile-menu-text">
+                        <h4>Настройки</h4>
+                        <p>Язык, тема и прочее</p>
+                    </div>
+                    <i class="fas fa-chevron-right profile-menu-arrow"></i>
+                </a>
+
+                <a href="login.html" class="profile-menu-item" style="margin-top: var(--spacing-md);">
+                    <div class="profile-menu-icon" style="background: var(--danger-light); color: var(--danger);">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </div>
+                    <div class="profile-menu-text">
+                        <h4 style="color: var(--danger);">Выйти</h4>
+                        <p>Выход из аккаунта</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="../index.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Главная</span>
+            </a>
+            <a href="catalog.html" class="nav-item">
+                <i class="fas fa-th-large"></i>
+                <span>Каталог</span>
+            </a>
+            <a href="my-rentals.html" class="nav-item">
+                <i class="fas fa-box"></i>
+                <span>Заказы</span>
+            </a>
+            <a href="favorites.html" class="nav-item">
+                <i class="fas fa-heart"></i>
+                <span>Избранное</span>
+            </a>
+            <a href="profile.html" class="nav-item active">
+                <i class="fas fa-user"></i>
+                <span>Профиль</span>
+            </a>
+        </nav>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+
+</html>
