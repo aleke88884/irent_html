@@ -4,61 +4,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Админ панель - iRent</title>
-    <link rel="stylesheet" href="../css/styles.css">
+    <title>Панель управления - iRent Admin</title>
+    <link rel="stylesheet" href="../css/admin.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
-<body>
-    <div class="admin-layout">
+<body class="admin-panel">
+    <div class="admin-wrapper">
         <!-- Sidebar -->
         <aside class="admin-sidebar">
-            <div class="admin-sidebar-logo">
-                <div class="logo-icon">
-                    <i class="fas fa-tools"></i>
+            <div class="admin-sidebar-header">
+                <div class="admin-logo">
+                    <div class="admin-logo-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div class="admin-logo-text">
+                        <span class="admin-logo-name">iRent</span>
+                        <span class="admin-logo-label">Admin Panel</span>
+                    </div>
                 </div>
-                iRent Admin
             </div>
 
             <nav class="admin-nav">
-                <a href="index.html" class="admin-nav-item active">
-                    <i class="fas fa-chart-line"></i>
-                    Дашборд
-                </a>
-                <a href="orders.html" class="admin-nav-item">
-                    <i class="fas fa-shopping-cart"></i>
-                    Заказы
-                </a>
-                <a href="tools.html" class="admin-nav-item">
-                    <i class="fas fa-tools"></i>
-                    Инструменты
-                </a>
-                <a href="users.html" class="admin-nav-item">
-                    <i class="fas fa-users"></i>
-                    Пользователи
-                </a>
-                <a href="categories.html" class="admin-nav-item">
-                    <i class="fas fa-th-large"></i>
-                    Категории
-                </a>
-                <a href="reports.html" class="admin-nav-item">
-                    <i class="fas fa-chart-bar"></i>
-                    Отчёты
-                </a>
-                <a href="settings.html" class="admin-nav-item">
-                    <i class="fas fa-cog"></i>
-                    Настройки
-                </a>
+                <div class="admin-nav-section">
+                    <div class="admin-nav-title">Главное</div>
+                    <a href="index.html" class="admin-nav-link active">
+                        <i class="fas fa-chart-pie"></i>
+                        Дашборд
+                    </a>
+                    <a href="orders.html" class="admin-nav-link">
+                        <i class="fas fa-shopping-bag"></i>
+                        Заказы
+                        <span class="badge">12</span>
+                    </a>
+                    <a href="tools.html" class="admin-nav-link">
+                        <i class="fas fa-tools"></i>
+                        Инструменты
+                    </a>
+                    <a href="categories.html" class="admin-nav-link">
+                        <i class="fas fa-th-large"></i>
+                        Категории
+                    </a>
+                </div>
+
+                <div class="admin-nav-section">
+                    <div class="admin-nav-title">Управление</div>
+                    <a href="users.html" class="admin-nav-link">
+                        <i class="fas fa-users"></i>
+                        Пользователи
+                    </a>
+                    <a href="couriers.html" class="admin-nav-link">
+                        <i class="fas fa-motorcycle"></i>
+                        Курьеры
+                    </a>
+                    <a href="reports.html" class="admin-nav-link">
+                        <i class="fas fa-chart-bar"></i>
+                        Отчёты
+                    </a>
+                </div>
+
+                <div class="admin-nav-section">
+                    <div class="admin-nav-title">Система</div>
+                    <a href="settings.html" class="admin-nav-link">
+                        <i class="fas fa-cog"></i>
+                        Настройки
+                    </a>
+                </div>
             </nav>
 
-            <div style="margin-top: auto; padding: var(--spacing-md);">
-                <a href="../pages/login.html" class="admin-nav-item" style="color: var(--danger);">
-                    <i class="fas fa-sign-out-alt"></i>
-                    Выход
-                </a>
+            <div class="admin-sidebar-footer">
+                <div class="admin-user">
+                    <div class="admin-user-avatar">АК</div>
+                    <div class="admin-user-info">
+                        <div class="admin-user-name">Алексей К.</div>
+                        <div class="admin-user-role">Администратор</div>
+                    </div>
+                    <button class="admin-logout-btn" title="Выйти">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
             </div>
         </aside>
 
@@ -66,183 +93,527 @@
         <main class="admin-main">
             <!-- Header -->
             <header class="admin-header">
-                <h1 class="admin-header-title">Дашборд</h1>
-                <div style="display: flex; align-items: center; gap: var(--spacing-md);">
-                    <button class="header-btn">
-                        <i class="fas fa-bell"></i>
-                    </button>
-                    <div style="display: flex; align-items: center; gap: var(--spacing-sm);">
-                        <div style="width: 36px; height: 36px; background: var(--primary); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; color: white;">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <span style="font-weight: 500;">Админ</span>
+                <div class="admin-header-left">
+                    <h1 class="admin-page-title">Панель управления</h1>
+                </div>
+                <div class="admin-header-right">
+                    <div class="admin-header-search">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Поиск...">
                     </div>
+                    <button class="admin-header-btn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-dot"></span>
+                    </button>
+                    <button class="admin-header-btn">
+                        <i class="fas fa-cog"></i>
+                    </button>
                 </div>
             </header>
 
             <!-- Content -->
             <div class="admin-content">
-                <!-- Stats -->
-                <div class="stats-grid">
+                <!-- Welcome Alert -->
+                <div class="admin-alert admin-alert-info" style="margin-bottom: 24px;">
+                    <i class="fas fa-info-circle"></i>
+                    <div class="admin-alert-content">
+                        <div class="admin-alert-title">Добро пожаловать в панель управления!</div>
+                        <div class="admin-alert-text">У вас 12 новых заказов, требующих обработки. 3 инструмента нуждаются в проверке.</div>
+                    </div>
+                </div>
+
+                <!-- Stats Row -->
+                <div class="stats-row">
                     <div class="stat-card">
                         <div class="stat-card-header">
-                            <div class="stat-card-icon primary">
-                                <i class="fas fa-shopping-cart"></i>
+                            <div class="stat-card-icon orange">
+                                <i class="fas fa-shopping-bag"></i>
+                            </div>
+                            <div class="stat-card-trend up">
+                                <i class="fas fa-arrow-up"></i>
+                                +12%
                             </div>
                         </div>
                         <div class="stat-card-value">156</div>
                         <div class="stat-card-label">Активных заказов</div>
+                        <div class="stat-card-subtitle">За последние 30 дней</div>
                     </div>
+
                     <div class="stat-card">
                         <div class="stat-card-header">
-                            <div class="stat-card-icon success">
+                            <div class="stat-card-icon green">
                                 <i class="fas fa-tenge-sign"></i>
+                            </div>
+                            <div class="stat-card-trend up">
+                                <i class="fas fa-arrow-up"></i>
+                                +23%
                             </div>
                         </div>
                         <div class="stat-card-value">2.4М ₸</div>
                         <div class="stat-card-label">Доход за месяц</div>
+                        <div class="stat-card-subtitle">+450K ₸ к прошлому</div>
                     </div>
+
                     <div class="stat-card">
                         <div class="stat-card-header">
-                            <div class="stat-card-icon warning">
+                            <div class="stat-card-icon blue">
                                 <i class="fas fa-tools"></i>
+                            </div>
+                            <div class="stat-card-trend up">
+                                <i class="fas fa-arrow-up"></i>
+                                +5
                             </div>
                         </div>
                         <div class="stat-card-value">487</div>
                         <div class="stat-card-label">Инструментов</div>
+                        <div class="stat-card-subtitle">412 доступно</div>
                     </div>
+
                     <div class="stat-card">
                         <div class="stat-card-header">
-                            <div class="stat-card-icon info">
+                            <div class="stat-card-icon purple">
                                 <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-card-trend up">
+                                <i class="fas fa-arrow-up"></i>
+                                +89
                             </div>
                         </div>
                         <div class="stat-card-value">2,341</div>
                         <div class="stat-card-label">Пользователей</div>
+                        <div class="stat-card-subtitle">156 новых за месяц</div>
                     </div>
                 </div>
 
-                <!-- Recent Orders -->
-                <div class="admin-table-container">
-                    <div class="admin-table-header">
-                        <h3 style="font-size: 1rem; font-weight: 600;">Последние заказы</h3>
-                        <a href="orders.html" class="btn btn-outline btn-sm">Все заказы</a>
+                <!-- Secondary Stats -->
+                <div class="stats-row" style="margin-bottom: 32px;">
+                    <div class="stat-card">
+                        <div class="stat-card-header">
+                            <div class="stat-card-icon yellow">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                        </div>
+                        <div class="stat-card-value">12</div>
+                        <div class="stat-card-label">Ожидают обработки</div>
                     </div>
-                    <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Клиент</th>
-                                <th>Инструменты</th>
-                                <th>Дата</th>
-                                <th>Сумма</th>
-                                <th>Статус</th>
-                                <th>Действия</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>#1249</td>
-                                <td>
-                                    <div style="display: flex; align-items: center; gap: var(--spacing-sm);">
-                                        <div style="width: 32px; height: 32px; background: var(--gray-200); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center;">
-                                            <i class="fas fa-user" style="font-size: 0.75rem; color: var(--gray-500);"></i>
-                                        </div>
-                                        <div>
-                                            <div style="font-weight: 500;">Алексей И.</div>
-                                            <div style="font-size: 0.75rem; color: var(--gray-500);">+7 700 ***</div>
-                                        </div>
+
+                    <div class="stat-card">
+                        <div class="stat-card-header">
+                            <div class="stat-card-icon green">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                        </div>
+                        <div class="stat-card-value">847</div>
+                        <div class="stat-card-label">Завершённых заказов</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-card-header">
+                            <div class="stat-card-icon red">
+                                <i class="fas fa-wrench"></i>
+                            </div>
+                        </div>
+                        <div class="stat-card-value">8</div>
+                        <div class="stat-card-label">На обслуживании</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-card-header">
+                            <div class="stat-card-icon blue">
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="stat-card-value">4.8</div>
+                        <div class="stat-card-label">Средний рейтинг</div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Grid -->
+                <div class="dashboard-grid">
+                    <!-- Revenue Chart -->
+                    <div class="admin-card">
+                        <div class="admin-card-header">
+                            <div>
+                                <div class="admin-card-title">Доходы за неделю</div>
+                                <div class="admin-card-subtitle">Динамика поступлений</div>
+                            </div>
+                            <select class="admin-filter-select" style="width: auto;">
+                                <option>Последние 7 дней</option>
+                                <option>Последние 30 дней</option>
+                                <option>Последние 3 месяца</option>
+                            </select>
+                        </div>
+                        <div class="admin-card-body">
+                            <div class="chart-container">
+                                <div class="chart-placeholder">
+                                    <div class="chart-bar" style="height: 45%;"></div>
+                                    <div class="chart-bar" style="height: 65%;"></div>
+                                    <div class="chart-bar" style="height: 55%;"></div>
+                                    <div class="chart-bar" style="height: 80%;"></div>
+                                    <div class="chart-bar" style="height: 70%;"></div>
+                                    <div class="chart-bar" style="height: 90%;"></div>
+                                    <div class="chart-bar" style="height: 75%;"></div>
+                                </div>
+                                <div class="chart-legend">
+                                    <div class="chart-legend-item">
+                                        <div class="chart-legend-dot orange"></div>
+                                        Доход
                                     </div>
-                                </td>
-                                <td>Перфоратор, Болгарка</td>
-                                <td>10 дек 2024</td>
-                                <td style="font-weight: 600;">8 400 ₸</td>
-                                <td><span class="order-status pending">Новый</span></td>
-                                <td>
-                                    <div class="admin-table-actions">
-                                        <button title="Просмотр"><i class="fas fa-eye"></i></button>
-                                        <button title="Редактировать"><i class="fas fa-edit"></i></button>
+                                    <div class="chart-legend-item">
+                                        <div class="chart-legend-dot gray"></div>
+                                        Прошлый период
                                     </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>#1248</td>
-                                <td>
-                                    <div style="display: flex; align-items: center; gap: var(--spacing-sm);">
-                                        <div style="width: 32px; height: 32px; background: var(--gray-200); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center;">
-                                            <i class="fas fa-user" style="font-size: 0.75rem; color: var(--gray-500);"></i>
-                                        </div>
-                                        <div>
-                                            <div style="font-weight: 500;">Марат К.</div>
-                                            <div style="font-size: 0.75rem; color: var(--gray-500);">+7 701 ***</div>
-                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Top Products -->
+                    <div class="admin-card">
+                        <div class="admin-card-header">
+                            <div>
+                                <div class="admin-card-title">Топ инструменты</div>
+                                <div class="admin-card-subtitle">По количеству аренд</div>
+                            </div>
+                            <a href="tools.html" class="admin-btn admin-btn-ghost admin-btn-sm">
+                                Все <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        <div class="admin-card-body">
+                            <div class="top-products-list">
+                                <div class="top-product-item">
+                                    <div class="top-product-rank">1</div>
+                                    <div class="top-product-img">
+                                        <img src="https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=100&h=100&fit=crop" alt="">
                                     </div>
-                                </td>
-                                <td>Шуруповёрт</td>
-                                <td>10 дек 2024</td>
-                                <td style="font-weight: 600;">3 600 ₸</td>
-                                <td><span class="order-status active">Активен</span></td>
-                                <td>
-                                    <div class="admin-table-actions">
-                                        <button title="Просмотр"><i class="fas fa-eye"></i></button>
-                                        <button title="Редактировать"><i class="fas fa-edit"></i></button>
+                                    <div class="top-product-info">
+                                        <div class="top-product-name">Перфоратор Bosch GBH 2-26</div>
+                                        <div class="top-product-stats">89 аренд</div>
                                     </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>#1247</td>
-                                <td>
-                                    <div style="display: flex; align-items: center; gap: var(--spacing-sm);">
-                                        <div style="width: 32px; height: 32px; background: var(--gray-200); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center;">
-                                            <i class="fas fa-user" style="font-size: 0.75rem; color: var(--gray-500);"></i>
-                                        </div>
-                                        <div>
-                                            <div style="font-weight: 500;">Сергей П.</div>
-                                            <div style="font-size: 0.75rem; color: var(--gray-500);">+7 702 ***</div>
-                                        </div>
+                                    <div class="top-product-revenue">133,500 ₸</div>
+                                </div>
+                                <div class="top-product-item">
+                                    <div class="top-product-rank">2</div>
+                                    <div class="top-product-img">
+                                        <img src="https://images.unsplash.com/photo-1504148455328-c376907d081c?w=100&h=100&fit=crop" alt="">
                                     </div>
-                                </td>
-                                <td>Генератор</td>
-                                <td>9 дек 2024</td>
-                                <td style="font-weight: 600;">15 000 ₸</td>
-                                <td><span class="order-status active">Активен</span></td>
-                                <td>
-                                    <div class="admin-table-actions">
-                                        <button title="Просмотр"><i class="fas fa-eye"></i></button>
-                                        <button title="Редактировать"><i class="fas fa-edit"></i></button>
+                                    <div class="top-product-info">
+                                        <div class="top-product-name">Болгарка Makita GA5030</div>
+                                        <div class="top-product-stats">76 аренд</div>
                                     </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>#1246</td>
-                                <td>
-                                    <div style="display: flex; align-items: center; gap: var(--spacing-sm);">
-                                        <div style="width: 32px; height: 32px; background: var(--gray-200); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center;">
-                                            <i class="fas fa-user" style="font-size: 0.75rem; color: var(--gray-500);"></i>
-                                        </div>
-                                        <div>
-                                            <div style="font-weight: 500;">Дмитрий В.</div>
-                                            <div style="font-size: 0.75rem; color: var(--gray-500);">+7 705 ***</div>
-                                        </div>
+                                    <div class="top-product-revenue">60,800 ₸</div>
+                                </div>
+                                <div class="top-product-item">
+                                    <div class="top-product-rank">3</div>
+                                    <div class="top-product-img">
+                                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=100&h=100&fit=crop" alt="">
                                     </div>
-                                </td>
-                                <td>Пила циркулярная</td>
-                                <td>8 дек 2024</td>
-                                <td style="font-weight: 600;">5 400 ₸</td>
-                                <td><span class="order-status completed">Завершён</span></td>
-                                <td>
-                                    <div class="admin-table-actions">
-                                        <button title="Просмотр"><i class="fas fa-eye"></i></button>
-                                        <button title="Редактировать"><i class="fas fa-edit"></i></button>
+                                    <div class="top-product-info">
+                                        <div class="top-product-name">Шуруповёрт DeWalt DCD791</div>
+                                        <div class="top-product-stats">68 аренд</div>
                                     </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                    <div class="top-product-revenue">81,600 ₸</div>
+                                </div>
+                                <div class="top-product-item">
+                                    <div class="top-product-rank">4</div>
+                                    <div class="top-product-img">
+                                        <img src="https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=100&h=100&fit=crop" alt="">
+                                    </div>
+                                    <div class="top-product-info">
+                                        <div class="top-product-name">Циркулярная пила Bosch</div>
+                                        <div class="top-product-stats">54 аренды</div>
+                                    </div>
+                                    <div class="top-product-revenue">97,200 ₸</div>
+                                </div>
+                                <div class="top-product-item">
+                                    <div class="top-product-rank">5</div>
+                                    <div class="top-product-img">
+                                        <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=100&h=100&fit=crop" alt="">
+                                    </div>
+                                    <div class="top-product-info">
+                                        <div class="top-product-name">Сварочный аппарат Ресанта</div>
+                                        <div class="top-product-stats">45 аренд</div>
+                                    </div>
+                                    <div class="top-product-revenue">112,500 ₸</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Orders & Activity -->
+                <div class="dashboard-grid">
+                    <!-- Recent Orders Table -->
+                    <div class="admin-card">
+                        <div class="admin-card-header">
+                            <div>
+                                <div class="admin-card-title">Последние заказы</div>
+                                <div class="admin-card-subtitle">Требуют внимания</div>
+                            </div>
+                            <a href="orders.html" class="admin-btn admin-btn-outline admin-btn-sm">
+                                Все заказы
+                            </a>
+                        </div>
+                        <div class="admin-card-body no-padding">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Заказ</th>
+                                        <th>Клиент</th>
+                                        <th>Инструменты</th>
+                                        <th>Сумма</th>
+                                        <th>Статус</th>
+                                        <th>Действия</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <strong>#1249</strong>
+                                            <div style="font-size: 0.75rem; color: var(--admin-gray-500);">10 дек, 14:32</div>
+                                        </td>
+                                        <td>
+                                            <div class="table-user">
+                                                <div class="table-user-avatar">
+                                                    <i class="fas fa-user"></i>
+                                                </div>
+                                                <div class="table-user-info">
+                                                    <div class="table-user-name">Алексей И.</div>
+                                                    <div class="table-user-email">+7 700 ***-**-45</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Перфоратор, Болгарка</td>
+                                        <td><strong>8,400 ₸</strong></td>
+                                        <td><span class="status-badge pending">Новый</span></td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button class="table-action-btn view" title="Просмотр">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="table-action-btn edit" title="Редактировать">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>#1248</strong>
+                                            <div style="font-size: 0.75rem; color: var(--admin-gray-500);">10 дек, 12:15</div>
+                                        </td>
+                                        <td>
+                                            <div class="table-user">
+                                                <div class="table-user-avatar">
+                                                    <i class="fas fa-user"></i>
+                                                </div>
+                                                <div class="table-user-info">
+                                                    <div class="table-user-name">Марат К.</div>
+                                                    <div class="table-user-email">+7 701 ***-**-78</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Шуруповёрт</td>
+                                        <td><strong>3,600 ₸</strong></td>
+                                        <td><span class="status-badge active">Активен</span></td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button class="table-action-btn view" title="Просмотр">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="table-action-btn edit" title="Редактировать">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>#1247</strong>
+                                            <div style="font-size: 0.75rem; color: var(--admin-gray-500);">9 дек, 18:45</div>
+                                        </td>
+                                        <td>
+                                            <div class="table-user">
+                                                <div class="table-user-avatar">
+                                                    <i class="fas fa-user"></i>
+                                                </div>
+                                                <div class="table-user-info">
+                                                    <div class="table-user-name">Сергей П.</div>
+                                                    <div class="table-user-email">+7 702 ***-**-12</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Генератор</td>
+                                        <td><strong>15,000 ₸</strong></td>
+                                        <td><span class="status-badge active">Активен</span></td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button class="table-action-btn view" title="Просмотр">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="table-action-btn edit" title="Редактировать">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>#1246</strong>
+                                            <div style="font-size: 0.75rem; color: var(--admin-gray-500);">8 дек, 10:20</div>
+                                        </td>
+                                        <td>
+                                            <div class="table-user">
+                                                <div class="table-user-avatar">
+                                                    <i class="fas fa-user"></i>
+                                                </div>
+                                                <div class="table-user-info">
+                                                    <div class="table-user-name">Дмитрий В.</div>
+                                                    <div class="table-user-email">+7 705 ***-**-34</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Пила циркулярная</td>
+                                        <td><strong>5,400 ₸</strong></td>
+                                        <td><span class="status-badge completed">Завершён</span></td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button class="table-action-btn view" title="Просмотр">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="table-action-btn edit" title="Редактировать">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Activity Feed -->
+                    <div class="admin-card">
+                        <div class="admin-card-header">
+                            <div>
+                                <div class="admin-card-title">Активность</div>
+                                <div class="admin-card-subtitle">Последние события</div>
+                            </div>
+                        </div>
+                        <div class="admin-card-body">
+                            <div class="activity-list">
+                                <div class="activity-item">
+                                    <div class="activity-icon order">
+                                        <i class="fas fa-shopping-bag"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <div class="activity-text">Новый заказ <strong>#1249</strong> от Алексей И.</div>
+                                        <div class="activity-time">2 минуты назад</div>
+                                    </div>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-icon user">
+                                        <i class="fas fa-user-plus"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <div class="activity-text">Новый пользователь <strong>Анна С.</strong> зарегистрировался</div>
+                                        <div class="activity-time">15 минут назад</div>
+                                    </div>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-icon tool">
+                                        <i class="fas fa-undo"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <div class="activity-text">Возврат инструмента по заказу <strong>#1245</strong></div>
+                                        <div class="activity-time">1 час назад</div>
+                                    </div>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-icon alert">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <div class="activity-text">Инструмент <strong>Болгарка Makita</strong> требует ТО</div>
+                                        <div class="activity-time">2 часа назад</div>
+                                    </div>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-icon order">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <div class="activity-text">Заказ <strong>#1244</strong> успешно завершён</div>
+                                        <div class="activity-time">3 часа назад</div>
+                                    </div>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-icon tool">
+                                        <i class="fas fa-plus"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <div class="activity-text">Добавлен новый инструмент <strong>Лобзик Bosch</strong></div>
+                                        <div class="activity-time">5 часов назад</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Stats Grid -->
+                <div class="dashboard-grid dashboard-grid-full" style="margin-top: 0;">
+                    <div class="admin-card">
+                        <div class="admin-card-header">
+                            <div>
+                                <div class="admin-card-title">Статистика по категориям</div>
+                                <div class="admin-card-subtitle">Распределение инструментов</div>
+                            </div>
+                        </div>
+                        <div class="admin-card-body">
+                            <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 16px;">
+                                <div class="quick-stat">
+                                    <div class="quick-stat-value">87</div>
+                                    <div class="quick-stat-label">Перфораторы</div>
+                                </div>
+                                <div class="quick-stat">
+                                    <div class="quick-stat-value">65</div>
+                                    <div class="quick-stat-label">Дрели</div>
+                                </div>
+                                <div class="quick-stat">
+                                    <div class="quick-stat-value">54</div>
+                                    <div class="quick-stat-label">Болгарки</div>
+                                </div>
+                                <div class="quick-stat">
+                                    <div class="quick-stat-value">43</div>
+                                    <div class="quick-stat-label">Пилы</div>
+                                </div>
+                                <div class="quick-stat">
+                                    <div class="quick-stat-value">38</div>
+                                    <div class="quick-stat-label">Сварка</div>
+                                </div>
+                                <div class="quick-stat">
+                                    <div class="quick-stat-value">25</div>
+                                    <div class="quick-stat-label">Генераторы</div>
+                                </div>
+                                <div class="quick-stat">
+                                    <div class="quick-stat-value">175</div>
+                                    <div class="quick-stat-label">Другое</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
     </div>
+
+    <script>
+        // Mobile sidebar toggle
+        function toggleSidebar() {
+            document.querySelector('.admin-sidebar').classList.toggle('open');
+        }
+    </script>
 </body>
 
 </html>

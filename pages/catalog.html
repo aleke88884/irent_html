@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="theme-color" content="#0077FF">
+    <meta name="theme-color" content="#F97316">
     <title>Каталог - iRent</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -283,7 +283,166 @@
         </nav>
     </div>
 
+        <!-- Filter Modal -->
+        <div class="modal-overlay" id="filterModal">
+            <div class="modal" style="padding: 0; max-height: 85vh; overflow-y: auto;">
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--spacing-md); border-bottom: 1px solid var(--gray-100); position: sticky; top: 0; background: var(--white); z-index: 1;">
+                    <h3 style="font-size: 1.125rem; font-weight: 700; margin: 0;">Фильтры</h3>
+                    <button onclick="closeFilter()" style="background: none; border: none; color: var(--gray-500); font-size: 1.25rem;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div style="padding: var(--spacing-lg);">
+                    <!-- Category Filter -->
+                    <div style="margin-bottom: var(--spacing-xl);">
+                        <label style="display: block; font-weight: 600; color: var(--gray-900); margin-bottom: var(--spacing-sm);">Категория</label>
+                        <div style="display: flex; flex-wrap: wrap; gap: var(--spacing-sm);">
+                            <button class="filter-pill active">Все</button>
+                            <button class="filter-pill">Дрели</button>
+                            <button class="filter-pill">Пилы</button>
+                            <button class="filter-pill">Болгарки</button>
+                            <button class="filter-pill">Перфораторы</button>
+                            <button class="filter-pill">Сварка</button>
+                            <button class="filter-pill">Компрессоры</button>
+                            <button class="filter-pill">Генераторы</button>
+                        </div>
+                    </div>
+
+                    <!-- Price Range -->
+                    <div style="margin-bottom: var(--spacing-xl);">
+                        <label style="display: block; font-weight: 600; color: var(--gray-900); margin-bottom: var(--spacing-sm);">Цена за день</label>
+                        <div style="display: flex; gap: var(--spacing-sm); align-items: center;">
+                            <input type="number" class="form-input" placeholder="От" style="flex: 1;">
+                            <span style="color: var(--gray-400);">—</span>
+                            <input type="number" class="form-input" placeholder="До" style="flex: 1;">
+                            <span style="color: var(--gray-500); font-size: 0.875rem;">₸</span>
+                        </div>
+                        <div style="display: flex; flex-wrap: wrap; gap: var(--spacing-xs); margin-top: var(--spacing-sm);">
+                            <button class="filter-pill" style="font-size: 0.75rem; padding: 6px 12px;">до 1000 ₸</button>
+                            <button class="filter-pill" style="font-size: 0.75rem; padding: 6px 12px;">1000 - 2000 ₸</button>
+                            <button class="filter-pill" style="font-size: 0.75rem; padding: 6px 12px;">2000 - 5000 ₸</button>
+                            <button class="filter-pill" style="font-size: 0.75rem; padding: 6px 12px;">от 5000 ₸</button>
+                        </div>
+                    </div>
+
+                    <!-- Brand Filter -->
+                    <div style="margin-bottom: var(--spacing-xl);">
+                        <label style="display: block; font-weight: 600; color: var(--gray-900); margin-bottom: var(--spacing-sm);">Бренд</label>
+                        <div style="display: flex; flex-wrap: wrap; gap: var(--spacing-sm);">
+                            <button class="filter-pill">Bosch</button>
+                            <button class="filter-pill">Makita</button>
+                            <button class="filter-pill">DeWalt</button>
+                            <button class="filter-pill">Metabo</button>
+                            <button class="filter-pill">Hitachi</button>
+                            <button class="filter-pill">Ресанта</button>
+                        </div>
+                    </div>
+
+                    <!-- Rating Filter -->
+                    <div style="margin-bottom: var(--spacing-xl);">
+                        <label style="display: block; font-weight: 600; color: var(--gray-900); margin-bottom: var(--spacing-sm);">Рейтинг</label>
+                        <div style="display: flex; flex-direction: column; gap: var(--spacing-sm);">
+                            <label style="display: flex; align-items: center; gap: var(--spacing-sm); cursor: pointer;">
+                                <input type="checkbox" style="width: 20px; height: 20px; accent-color: var(--primary);">
+                                <span style="display: flex; gap: 2px; color: var(--accent);">
+                                    <i class="fas fa-star" style="font-size: 0.875rem;"></i>
+                                    <i class="fas fa-star" style="font-size: 0.875rem;"></i>
+                                    <i class="fas fa-star" style="font-size: 0.875rem;"></i>
+                                    <i class="fas fa-star" style="font-size: 0.875rem;"></i>
+                                    <i class="fas fa-star" style="font-size: 0.875rem;"></i>
+                                </span>
+                                <span style="color: var(--gray-600); font-size: 0.875rem;">5 звёзд</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: var(--spacing-sm); cursor: pointer;">
+                                <input type="checkbox" style="width: 20px; height: 20px; accent-color: var(--primary);">
+                                <span style="display: flex; gap: 2px; color: var(--accent);">
+                                    <i class="fas fa-star" style="font-size: 0.875rem;"></i>
+                                    <i class="fas fa-star" style="font-size: 0.875rem;"></i>
+                                    <i class="fas fa-star" style="font-size: 0.875rem;"></i>
+                                    <i class="fas fa-star" style="font-size: 0.875rem;"></i>
+                                    <i class="far fa-star" style="font-size: 0.875rem;"></i>
+                                </span>
+                                <span style="color: var(--gray-600); font-size: 0.875rem;">от 4 звёзд</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: var(--spacing-sm); cursor: pointer;">
+                                <input type="checkbox" style="width: 20px; height: 20px; accent-color: var(--primary);">
+                                <span style="display: flex; gap: 2px; color: var(--accent);">
+                                    <i class="fas fa-star" style="font-size: 0.875rem;"></i>
+                                    <i class="fas fa-star" style="font-size: 0.875rem;"></i>
+                                    <i class="fas fa-star" style="font-size: 0.875rem;"></i>
+                                    <i class="far fa-star" style="font-size: 0.875rem;"></i>
+                                    <i class="far fa-star" style="font-size: 0.875rem;"></i>
+                                </span>
+                                <span style="color: var(--gray-600); font-size: 0.875rem;">от 3 звёзд</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Availability Filter -->
+                    <div style="margin-bottom: var(--spacing-xl);">
+                        <label style="display: block; font-weight: 600; color: var(--gray-900); margin-bottom: var(--spacing-sm);">Наличие</label>
+                        <div style="display: flex; flex-direction: column; gap: var(--spacing-sm);">
+                            <label style="display: flex; align-items: center; gap: var(--spacing-sm); cursor: pointer;">
+                                <input type="checkbox" checked style="width: 20px; height: 20px; accent-color: var(--primary);">
+                                <span style="color: var(--gray-700);">Только в наличии</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: var(--spacing-sm); cursor: pointer;">
+                                <input type="checkbox" style="width: 20px; height: 20px; accent-color: var(--primary);">
+                                <span style="color: var(--gray-700);">Со скидкой</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: var(--spacing-sm); cursor: pointer;">
+                                <input type="checkbox" style="width: 20px; height: 20px; accent-color: var(--primary);">
+                                <span style="color: var(--gray-700);">Новинки</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Sort -->
+                    <div style="margin-bottom: var(--spacing-lg);">
+                        <label style="display: block; font-weight: 600; color: var(--gray-900); margin-bottom: var(--spacing-sm);">Сортировка</label>
+                        <select class="form-input">
+                            <option>По популярности</option>
+                            <option>Сначала дешёвые</option>
+                            <option>Сначала дорогие</option>
+                            <option>По рейтингу</option>
+                            <option>Новинки</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div style="display: flex; gap: var(--spacing-sm); padding: var(--spacing-md); border-top: 1px solid var(--gray-100); position: sticky; bottom: 0; background: var(--white);">
+                    <button class="btn btn-outline" style="flex: 1;" onclick="resetFilters()">
+                        Сбросить
+                    </button>
+                    <button class="btn btn-primary" style="flex: 2;" onclick="applyFilters()">
+                        Показать 48 товаров
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="../js/main.js"></script>
+    <script>
+        function openFilter() {
+            document.getElementById('filterModal').classList.add('active');
+        }
+
+        function closeFilter() {
+            document.getElementById('filterModal').classList.remove('active');
+        }
+
+        function resetFilters() {
+            // Reset filter logic here
+            closeFilter();
+        }
+
+        function applyFilters() {
+            // Apply filter logic here
+            closeFilter();
+        }
+    </script>
 </body>
 
 </html>

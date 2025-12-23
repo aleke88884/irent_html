@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#F97316">
+    <title>Отслеживание заказа - iRent</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app">
+        <div class="app-content">
+            <!-- Header -->
+            <header class="app-header">
+                <a href="javascript:history.back()" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <h1 class="app-header-title">Отслеживание</h1>
+                <button class="header-btn">
+                    <i class="fas fa-phone"></i>
+                </button>
+            </header>
+
+            <!-- Map Placeholder -->
+            <div style="height: 280px; background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%); position: relative; overflow: hidden;">
+                <!-- Fake map grid -->
+                <div style="position: absolute; inset: 0; opacity: 0.3;">
+                    <div style="display: grid; grid-template-columns: repeat(10, 1fr); grid-template-rows: repeat(8, 1fr); height: 100%;">
+                        <div style="border: 1px solid #94a3b8;"></div>
+                        <div style="border: 1px solid #94a3b8;"></div>
+                        <div style="border: 1px solid #94a3b8;"></div>
+                        <div style="border: 1px solid #94a3b8;"></div>
+                        <div style="border: 1px solid #94a3b8;"></div>
+                        <div style="border: 1px solid #94a3b8;"></div>
+                        <div style="border: 1px solid #94a3b8;"></div>
+                        <div style="border: 1px solid #94a3b8;"></div>
+                        <div style="border: 1px solid #94a3b8;"></div>
+                        <div style="border: 1px solid #94a3b8;"></div>
+                    </div>
+                </div>
+                <!-- Route line -->
+                <svg style="position: absolute; inset: 0; width: 100%; height: 100%;" viewBox="0 0 400 280">
+                    <path d="M50 250 Q100 200 150 180 Q200 160 250 140 Q300 120 350 80" stroke="#F97316" stroke-width="4" fill="none" stroke-dasharray="8,4"/>
+                </svg>
+                <!-- Courier marker -->
+                <div style="position: absolute; top: 45%; left: 55%; transform: translate(-50%, -50%);">
+                    <div style="width: 48px; height: 48px; background: var(--primary); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.25rem; box-shadow: 0 4px 20px rgba(249, 115, 22, 0.4); animation: pulse 2s infinite;">
+                        <i class="fas fa-motorcycle"></i>
+                    </div>
+                </div>
+                <!-- Destination marker -->
+                <div style="position: absolute; top: 85%; left: 15%; transform: translate(-50%, -50%);">
+                    <div style="width: 40px; height: 40px; background: var(--success); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; color: white; font-size: 1rem; box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);">
+                        <i class="fas fa-flag-checkered"></i>
+                    </div>
+                </div>
+                <!-- Origin marker -->
+                <div style="position: absolute; top: 25%; left: 85%; transform: translate(-50%, -50%);">
+                    <div style="width: 32px; height: 32px; background: var(--gray-600); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem;">
+                        <i class="fas fa-warehouse"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-md">
+                <!-- ETA Card -->
+                <div style="background: linear-gradient(135deg, var(--primary) 0%, #FB923C 100%); border-radius: var(--radius-xl); padding: var(--spacing-lg); color: white; margin-bottom: var(--spacing-lg); margin-top: calc(-1 * var(--spacing-xl)); position: relative; box-shadow: var(--shadow-lg);">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div>
+                            <div style="font-size: 0.8125rem; opacity: 0.9; margin-bottom: 4px;">Ожидаемое время доставки</div>
+                            <div style="font-size: 1.75rem; font-weight: 800;">14:25 - 14:45</div>
+                            <div style="font-size: 0.875rem; opacity: 0.9; margin-top: var(--spacing-xs);">
+                                <i class="fas fa-clock"></i> Примерно 15 минут
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 0.75rem; opacity: 0.8;">Заказ</div>
+                            <div style="font-size: 1.125rem; font-weight: 700;">#1249</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Courier Info -->
+                <div style="background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--spacing-md); margin-bottom: var(--spacing-lg);">
+                    <div style="display: flex; align-items: center; gap: var(--spacing-md);">
+                        <div style="width: 56px; height: 56px; background: var(--gray-100); border-radius: var(--radius-full); overflow: hidden;">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=112&h=112&fit=crop&crop=face" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 700; color: var(--gray-900); margin-bottom: 2px;">Асхат М.</div>
+                            <div style="font-size: 0.8125rem; color: var(--gray-500);">Ваш курьер</div>
+                            <div style="display: flex; align-items: center; gap: 4px; margin-top: 4px;">
+                                <i class="fas fa-star" style="color: var(--accent); font-size: 0.75rem;"></i>
+                                <span style="font-size: 0.8125rem; font-weight: 600; color: var(--gray-700);">4.9</span>
+                                <span style="font-size: 0.75rem; color: var(--gray-400);">(156 доставок)</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: var(--spacing-sm);">
+                            <a href="tel:+77001234567" style="width: 44px; height: 44px; background: var(--success-light); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; color: var(--success);">
+                                <i class="fas fa-phone"></i>
+                            </a>
+                            <a href="#" style="width: 44px; height: 44px; background: var(--primary-light); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; color: var(--primary);">
+                                <i class="fas fa-comment"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Delivery Status Timeline -->
+                <div style="margin-bottom: var(--spacing-lg);">
+                    <h3 style="font-size: 1rem; font-weight: 700; color: var(--gray-900); margin-bottom: var(--spacing-md);">Статус доставки</h3>
+                    <div style="display: flex; flex-direction: column; gap: 0;">
+                        <!-- Step 1 - Completed -->
+                        <div style="display: flex; gap: var(--spacing-md);">
+                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                <div style="width: 32px; height: 32px; background: var(--success); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; color: white;">
+                                    <i class="fas fa-check" style="font-size: 0.75rem;"></i>
+                                </div>
+                                <div style="width: 2px; height: 40px; background: var(--success);"></div>
+                            </div>
+                            <div style="flex: 1; padding-bottom: var(--spacing-md);">
+                                <div style="font-weight: 600; color: var(--gray-900);">Заказ подтверждён</div>
+                                <div style="font-size: 0.8125rem; color: var(--gray-500);">13:45</div>
+                            </div>
+                        </div>
+                        <!-- Step 2 - Completed -->
+                        <div style="display: flex; gap: var(--spacing-md);">
+                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                <div style="width: 32px; height: 32px; background: var(--success); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; color: white;">
+                                    <i class="fas fa-check" style="font-size: 0.75rem;"></i>
+                                </div>
+                                <div style="width: 2px; height: 40px; background: var(--success);"></div>
+                            </div>
+                            <div style="flex: 1; padding-bottom: var(--spacing-md);">
+                                <div style="font-weight: 600; color: var(--gray-900);">Курьер забрал заказ</div>
+                                <div style="font-size: 0.8125rem; color: var(--gray-500);">14:10</div>
+                            </div>
+                        </div>
+                        <!-- Step 3 - In Progress -->
+                        <div style="display: flex; gap: var(--spacing-md);">
+                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                <div style="width: 32px; height: 32px; background: var(--primary); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; color: white; animation: pulse 2s infinite;">
+                                    <i class="fas fa-motorcycle" style="font-size: 0.75rem;"></i>
+                                </div>
+                                <div style="width: 2px; height: 40px; background: var(--gray-200);"></div>
+                            </div>
+                            <div style="flex: 1; padding-bottom: var(--spacing-md);">
+                                <div style="font-weight: 600; color: var(--primary);">В пути к вам</div>
+                                <div style="font-size: 0.8125rem; color: var(--gray-500);">Осталось ~15 минут</div>
+                            </div>
+                        </div>
+                        <!-- Step 4 - Pending -->
+                        <div style="display: flex; gap: var(--spacing-md);">
+                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                <div style="width: 32px; height: 32px; background: var(--gray-200); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; color: var(--gray-400);">
+                                    <i class="fas fa-flag-checkered" style="font-size: 0.75rem;"></i>
+                                </div>
+                            </div>
+                            <div style="flex: 1;">
+                                <div style="font-weight: 600; color: var(--gray-400);">Доставлено</div>
+                                <div style="font-size: 0.8125rem; color: var(--gray-400);">Ожидается</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Delivery Address -->
+                <div style="background: var(--gray-50); border-radius: var(--radius-lg); padding: var(--spacing-md); margin-bottom: var(--spacing-lg);">
+                    <div style="display: flex; align-items: flex-start; gap: var(--spacing-md);">
+                        <div style="width: 40px; height: 40px; background: var(--white); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; color: var(--primary);">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; color: var(--gray-900); margin-bottom: 2px;">Адрес доставки</div>
+                            <div style="font-size: 0.875rem; color: var(--gray-600);">г. Алматы, ул. Абая 150, кв. 25</div>
+                            <div style="font-size: 0.8125rem; color: var(--gray-500); margin-top: 4px;">Подъезд 2, домофон 25</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Items Preview -->
+                <div style="margin-bottom: var(--spacing-lg);">
+                    <h3 style="font-size: 1rem; font-weight: 700; color: var(--gray-900); margin-bottom: var(--spacing-md);">В заказе</h3>
+                    <div style="display: flex; gap: var(--spacing-sm);">
+                        <div style="width: 64px; height: 64px; border-radius: var(--radius-md); overflow: hidden; background: var(--gray-100);">
+                            <img src="https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=128&h=128&fit=crop" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div style="width: 64px; height: 64px; border-radius: var(--radius-md); overflow: hidden; background: var(--gray-100);">
+                            <img src="https://images.unsplash.com/photo-1504148455328-c376907d081c?w=128&h=128&fit=crop" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <a href="order-detail.html" style="width: 64px; height: 64px; border-radius: var(--radius-md); background: var(--gray-100); display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 0.8125rem; font-weight: 600; text-decoration: none;">
+                            Детали
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div style="display: flex; gap: var(--spacing-sm);">
+                    <button class="btn btn-outline" style="flex: 1;">
+                        <i class="fas fa-share-alt"></i>
+                        Поделиться
+                    </button>
+                    <a href="support.html" class="btn btn-ghost" style="flex: 1;">
+                        <i class="fas fa-question-circle"></i>
+                        Помощь
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+    </style>
+</body>
+
+</html>

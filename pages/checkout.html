@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="theme-color" content="#0077FF">
+    <meta name="theme-color" content="#F97316">
     <title>Оформление заказа - iRent</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -104,6 +104,29 @@
                     </div>
                 </div>
 
+                <!-- Promo Code -->
+                <div style="margin-bottom: var(--spacing-lg);">
+                    <h3 style="font-size: 1.125rem; font-weight: 700; color: var(--gray-900); margin-bottom: var(--spacing-md);">Промокод</h3>
+                    <div id="promoInput" style="display: flex; gap: var(--spacing-sm);">
+                        <input type="text" class="form-input" placeholder="Введите промокод" style="flex: 1;" id="promoCodeInput">
+                        <button class="btn btn-outline" onclick="applyPromo()">Применить</button>
+                    </div>
+                    <div id="promoApplied" style="display: none; background: var(--success-light); padding: var(--spacing-md); border-radius: var(--radius-md); margin-top: var(--spacing-sm);">
+                        <div style="display: flex; align-items: center; justify-content: space-between;">
+                            <div style="display: flex; align-items: center; gap: var(--spacing-sm);">
+                                <i class="fas fa-check-circle" style="color: var(--success);"></i>
+                                <div>
+                                    <div style="font-weight: 600; color: var(--success); font-size: 0.875rem;">FIRST15</div>
+                                    <div style="font-size: 0.75rem; color: var(--gray-600);">Скидка 15% применена</div>
+                                </div>
+                            </div>
+                            <button onclick="removePromo()" style="background: none; border: none; color: var(--gray-500);">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Cart Summary -->
                 <div class="cart-summary" style="margin: 0;">
                     <div class="cart-summary-row">
@@ -114,13 +137,17 @@
                         <span>Доставка</span>
                         <span>1 500 ₸</span>
                     </div>
+                    <div class="cart-summary-row" id="discountRow" style="display: none; color: var(--success);">
+                        <span>Скидка (15%)</span>
+                        <span>-1 035 ₸</span>
+                    </div>
                     <div class="cart-summary-row">
                         <span>Залог (при получении)</span>
                         <span style="color: var(--gray-500);">40 000 ₸</span>
                     </div>
                     <div class="cart-summary-row total">
                         <span>Итого к оплате</span>
-                        <span class="value">8 400 ₸</span>
+                        <span class="value" id="totalPrice">8 400 ₸</span>
                     </div>
                 </div>
             </div>
@@ -160,6 +187,28 @@
     <script>
         function showSuccess() {
             document.getElementById('successModal').classList.add('active');
+        }
+
+        function applyPromo() {
+            const promoCode = document.getElementById('promoCodeInput').value.toUpperCase();
+            if (promoCode === 'FIRST15') {
+                document.getElementById('promoInput').style.display = 'none';
+                document.getElementById('promoApplied').style.display = 'block';
+                document.getElementById('discountRow').style.display = 'flex';
+                document.getElementById('totalPrice').textContent = '7 365 ₸';
+                document.querySelector('.price-value').textContent = '7 365 ₸';
+            } else {
+                alert('Промокод не найден');
+            }
+        }
+
+        function removePromo() {
+            document.getElementById('promoInput').style.display = 'flex';
+            document.getElementById('promoApplied').style.display = 'none';
+            document.getElementById('discountRow').style.display = 'none';
+            document.getElementById('totalPrice').textContent = '8 400 ₸';
+            document.querySelector('.price-value').textContent = '8 400 ₸';
+            document.getElementById('promoCodeInput').value = '';
         }
     </script>
 </body>

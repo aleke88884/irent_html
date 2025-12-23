@@ -4,15 +4,15 @@
 
 /* ==================== CSS Variables ==================== */
 :root {
-    /* Brand Colors - Modern & Clean with Kazakh-inspired accent */
-    --primary: #0077FF;
-    --primary-dark: #0059CC;
-    --primary-light: #E8F4FF;
-    --primary-gradient: linear-gradient(135deg, #0077FF 0%, #00C6FF 100%);
+    /* Brand Colors - Modern Orange Theme */
+    --primary: #F97316;
+    --primary-dark: #EA580C;
+    --primary-light: #FFF7ED;
+    --primary-gradient: linear-gradient(135deg, #F97316 0%, #FB923C 100%);
 
     /* Accent - Gold inspired by Kazakh heritage */
-    --accent: #FFB800;
-    --accent-light: #FFF8E6;
+    --accent: #F59E0B;
+    --accent-light: #FEF3C7;
 
     /* Secondary */
     --secondary: #1A1A2E;
@@ -66,7 +66,7 @@
     --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
     --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
     --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.16);
-    --shadow-glow: 0 4px 20px rgba(0, 119, 255, 0.25);
+    --shadow-glow: 0 4px 20px rgba(249, 115, 22, 0.25);
 
     /* Layout */
     --bottom-nav-height: 70px;

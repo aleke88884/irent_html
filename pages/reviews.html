@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#F97316">
+    <title>Отзывы - iRent</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app">
+        <div class="app-content">
+            <!-- Header -->
+            <header class="app-header">
+                <a href="javascript:history.back()" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <h1 class="app-header-title">Отзывы</h1>
+                <div style="width: 40px;"></div>
+            </header>
+
+            <div class="p-md">
+                <!-- Overall Rating -->
+                <div style="background: var(--gray-50); border-radius: var(--radius-xl); padding: var(--spacing-lg); margin-bottom: var(--spacing-lg); text-align: center;">
+                    <div style="font-size: 3rem; font-weight: 800; color: var(--gray-900); line-height: 1;">4.8</div>
+                    <div style="display: flex; justify-content: center; gap: 4px; margin: var(--spacing-sm) 0;">
+                        <i class="fas fa-star" style="color: var(--accent);"></i>
+                        <i class="fas fa-star" style="color: var(--accent);"></i>
+                        <i class="fas fa-star" style="color: var(--accent);"></i>
+                        <i class="fas fa-star" style="color: var(--accent);"></i>
+                        <i class="fas fa-star-half-alt" style="color: var(--accent);"></i>
+                    </div>
+                    <div style="color: var(--gray-500); font-size: 0.875rem;">на основе 48 отзывов</div>
+
+                    <!-- Rating Breakdown -->
+                    <div style="margin-top: var(--spacing-lg); text-align: left;">
+                        <div style="display: flex; align-items: center; gap: var(--spacing-sm); margin-bottom: var(--spacing-xs);">
+                            <span style="font-size: 0.75rem; color: var(--gray-600); width: 50px;">5 звёзд</span>
+                            <div style="flex: 1; height: 8px; background: var(--gray-200); border-radius: 4px; overflow: hidden;">
+                                <div style="width: 75%; height: 100%; background: var(--accent); border-radius: 4px;"></div>
+                            </div>
+                            <span style="font-size: 0.75rem; color: var(--gray-500); width: 24px;">36</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: var(--spacing-sm); margin-bottom: var(--spacing-xs);">
+                            <span style="font-size: 0.75rem; color: var(--gray-600); width: 50px;">4 звезды</span>
+                            <div style="flex: 1; height: 8px; background: var(--gray-200); border-radius: 4px; overflow: hidden;">
+                                <div style="width: 20%; height: 100%; background: var(--accent); border-radius: 4px;"></div>
+                            </div>
+                            <span style="font-size: 0.75rem; color: var(--gray-500); width: 24px;">9</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: var(--spacing-sm); margin-bottom: var(--spacing-xs);">
+                            <span style="font-size: 0.75rem; color: var(--gray-600); width: 50px;">3 звезды</span>
+                            <div style="flex: 1; height: 8px; background: var(--gray-200); border-radius: 4px; overflow: hidden;">
+                                <div style="width: 5%; height: 100%; background: var(--accent); border-radius: 4px;"></div>
+                            </div>
+                            <span style="font-size: 0.75rem; color: var(--gray-500); width: 24px;">2</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: var(--spacing-sm); margin-bottom: var(--spacing-xs);">
+                            <span style="font-size: 0.75rem; color: var(--gray-600); width: 50px;">2 звезды</span>
+                            <div style="flex: 1; height: 8px; background: var(--gray-200); border-radius: 4px; overflow: hidden;">
+                                <div style="width: 2%; height: 100%; background: var(--accent); border-radius: 4px;"></div>
+                            </div>
+                            <span style="font-size: 0.75rem; color: var(--gray-500); width: 24px;">1</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: var(--spacing-sm);">
+                            <span style="font-size: 0.75rem; color: var(--gray-600); width: 50px;">1 звезда</span>
+                            <div style="flex: 1; height: 8px; background: var(--gray-200); border-radius: 4px; overflow: hidden;">
+                                <div style="width: 0%; height: 100%; background: var(--accent); border-radius: 4px;"></div>
+                            </div>
+                            <span style="font-size: 0.75rem; color: var(--gray-500); width: 24px;">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Write Review Button -->
+                <button class="btn btn-primary btn-block" onclick="openReviewModal()" style="margin-bottom: var(--spacing-lg);">
+                    <i class="fas fa-pen"></i>
+                    Написать отзыв
+                </button>
+
+                <!-- Filter Tabs -->
+                <div style="display: flex; gap: var(--spacing-sm); margin-bottom: var(--spacing-lg); overflow-x: auto; padding-bottom: var(--spacing-xs);">
+                    <button class="filter-pill active">Все</button>
+                    <button class="filter-pill">С фото</button>
+                    <button class="filter-pill">5 <i class="fas fa-star" style="font-size: 0.625rem;"></i></button>
+                    <button class="filter-pill">4 <i class="fas fa-star" style="font-size: 0.625rem;"></i></button>
+                    <button class="filter-pill">3 <i class="fas fa-star" style="font-size: 0.625rem;"></i></button>
+                </div>
+
+                <!-- Reviews List -->
+                <div style="display: flex; flex-direction: column; gap: var(--spacing-md);">
+                    <!-- Review 1 -->
+                    <div style="background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--spacing-md);">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--spacing-sm);">
+                            <div style="display: flex; align-items: center; gap: var(--spacing-sm);">
+                                <div style="width: 44px; height: 44px; background: var(--primary-light); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; color: var(--primary); font-weight: 700;">АК</div>
+                                <div>
+                                    <div style="font-weight: 600; color: var(--gray-900);">Алексей К.</div>
+                                    <div style="font-size: 0.75rem; color: var(--gray-500);">3 дня назад</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 2px; color: var(--accent);">
+                                <i class="fas fa-star" style="font-size: 0.75rem;"></i>
+                                <i class="fas fa-star" style="font-size: 0.75rem;"></i>
+                                <i class="fas fa-star" style="font-size: 0.75rem;"></i>
+                                <i class="fas fa-star" style="font-size: 0.75rem;"></i>
+                                <i class="fas fa-star" style="font-size: 0.75rem;"></i>
+                            </div>
+                        </div>
+                        <p style="font-size: 0.9375rem; color: var(--gray-700); margin: 0 0 var(--spacing-sm); line-height: 1.6;">
+                            Отличный перфоратор, брал на неделю для ремонта. Работает как часы, мощности хватает для любых задач. Рекомендую!
+                        </p>
+                        <div style="display: flex; gap: var(--spacing-sm);">
+                            <div style="width: 64px; height: 64px; border-radius: var(--radius-md); overflow: hidden; background: var(--gray-100);">
+                                <img src="https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=128&h=128&fit=crop" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: var(--spacing-md); margin-top: var(--spacing-md); padding-top: var(--spacing-sm); border-top: 1px solid var(--gray-100);">
+                            <button style="background: none; border: none; color: var(--gray-500); font-size: 0.8125rem; display: flex; align-items: center; gap: 4px;">
+                                <i class="far fa-thumbs-up"></i> Полезно (5)
+                            </button>
+                            <button style="background: none; border: none; color: var(--gray-500); font-size: 0.8125rem; display: flex; align-items: center; gap: 4px;">
+                                <i class="far fa-comment"></i> Ответить
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Review 2 -->
+                    <div style="background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--spacing-md);">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--spacing-sm);">
+                            <div style="display: flex; align-items: center; gap: var(--spacing-sm);">
+                                <div style="width: 44px; height: 44px; background: var(--success-light); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; color: var(--success); font-weight: 700;">МК</div>
+                                <div>
+                                    <div style="font-weight: 600; color: var(--gray-900);">Марат К.</div>
+                                    <div style="font-size: 0.75rem; color: var(--gray-500);">1 неделю назад</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 2px; color: var(--accent);">
+                                <i class="fas fa-star" style="font-size: 0.75rem;"></i>
+                                <i class="fas fa-star" style="font-size: 0.75rem;"></i>
+                                <i class="fas fa-star" style="font-size: 0.75rem;"></i>
+                                <i class="fas fa-star" style="font-size: 0.75rem;"></i>
+                                <i class="fas fa-star" style="font-size: 0.75rem;"></i>
+                            </div>
+                        </div>
+                        <p style="font-size: 0.9375rem; color: var(--gray-700); margin: 0; line-height: 1.6;">
+                            Доставили вовремя, инструмент в отличном состоянии. Использовал для установки кондиционера - справился на отлично. Буду брать ещё!
+                        </p>
+                        <div style="display: flex; gap: var(--spacing-md); margin-top: var(--spacing-md); padding-top: var(--spacing-sm); border-top: 1px solid var(--gray-100);">
+                            <button style="background: none; border: none; color: var(--gray-500); font-size: 0.8125rem; display: flex; align-items: center; gap: 4px;">
+                                <i class="far fa-thumbs-up"></i> Полезно (3)
+                            </button>
+                            <button style="background: none; border: none; color: var(--gray-500); font-size: 0.8125rem; display: flex; align-items: center; gap: 4px;">
+                                <i class="far fa-comment"></i> Ответить
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Review 3 -->
+                    <div style="background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--spacing-md);">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--spacing-sm);">
+                            <div style="display: flex; align-items: center; gap: var(--spacing-sm);">
+                                <div style="width: 44px; height: 44px; background: var(--warning-light); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; color: var(--warning); font-weight: 700;">СП</div>
+                                <div>
+                                    <div style="font-weight: 600; color: var(--gray-900);">Сергей П.</div>
+                                    <div style="font-size: 0.75rem; color: var(--gray-500);">2 недели назад</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 2px; color: var(--accent);">
+                                <i class="fas fa-star" style="font-size: 0.75rem;"></i>
+                                <i class="fas fa-star" style="font-size: 0.75rem;"></i>
+                                <i class="fas fa-star" style="font-size: 0.75rem;"></i>
+                                <i class="fas fa-star" style="font-size: 0.75rem;"></i>
+                                <i class="far fa-star" style="font-size: 0.75rem;"></i>
+                            </div>
+                        </div>
+                        <p style="font-size: 0.9375rem; color: var(--gray-700); margin: 0; line-height: 1.6;">
+                            Хороший инструмент, но буры в комплекте уже немного изношены. В целом рекомендую, для домашнего ремонта - идеально.
+                        </p>
+                        <div style="display: flex; gap: var(--spacing-md); margin-top: var(--spacing-md); padding-top: var(--spacing-sm); border-top: 1px solid var(--gray-100);">
+                            <button style="background: none; border: none; color: var(--gray-500); font-size: 0.8125rem; display: flex; align-items: center; gap: 4px;">
+                                <i class="far fa-thumbs-up"></i> Полезно (1)
+                            </button>
+                            <button style="background: none; border: none; color: var(--gray-500); font-size: 0.8125rem; display: flex; align-items: center; gap: 4px;">
+                                <i class="far fa-comment"></i> Ответить
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Review 4 -->
+                    <div style="background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--spacing-md);">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--spacing-sm);">
+                            <div style="display: flex; align-items: center; gap: var(--spacing-sm);">
+                                <div style="width: 44px; height: 44px; background: var(--info-light); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; color: var(--info); font-weight: 700;">ДВ</div>
+                                <div>
+                                    <div style="font-weight: 600; color: var(--gray-900);">Дмитрий В.</div>
+                                    <div style="font-size: 0.75rem; color: var(--gray-500);">3 недели назад</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 2px; color: var(--accent);">
+                                <i class="fas fa-star" style="font-size: 0.75rem;"></i>
+                                <i class="fas fa-star" style="font-size: 0.75rem;"></i>
+                                <i class="fas fa-star" style="font-size: 0.75rem;"></i>
+                                <i class="fas fa-star" style="font-size: 0.75rem;"></i>
+                                <i class="fas fa-star" style="font-size: 0.75rem;"></i>
+                            </div>
+                        </div>
+                        <p style="font-size: 0.9375rem; color: var(--gray-700); margin: 0 0 var(--spacing-sm); line-height: 1.6;">
+                            Профессиональный инструмент по доступной цене аренды. Делал отверстия в несущей стене - прошёл как нож сквозь масло. Отличный сервис!
+                        </p>
+                        <div style="display: flex; gap: var(--spacing-sm);">
+                            <div style="width: 64px; height: 64px; border-radius: var(--radius-md); overflow: hidden; background: var(--gray-100);">
+                                <img src="https://images.unsplash.com/photo-1504148455328-c376907d081c?w=128&h=128&fit=crop" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                            <div style="width: 64px; height: 64px; border-radius: var(--radius-md); overflow: hidden; background: var(--gray-100);">
+                                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=128&h=128&fit=crop" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: var(--spacing-md); margin-top: var(--spacing-md); padding-top: var(--spacing-sm); border-top: 1px solid var(--gray-100);">
+                            <button style="background: none; border: none; color: var(--gray-500); font-size: 0.8125rem; display: flex; align-items: center; gap: 4px;">
+                                <i class="far fa-thumbs-up"></i> Полезно (8)
+                            </button>
+                            <button style="background: none; border: none; color: var(--gray-500); font-size: 0.8125rem; display: flex; align-items: center; gap: 4px;">
+                                <i class="far fa-comment"></i> Ответить
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Load More -->
+                    <button class="btn btn-outline btn-block" style="margin-top: var(--spacing-sm);">
+                        Загрузить ещё
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Write Review Modal -->
+        <div class="modal-overlay" id="reviewModal">
+            <div class="modal" style="padding: 0; max-height: 90vh; overflow-y: auto;">
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--spacing-md); border-bottom: 1px solid var(--gray-100); position: sticky; top: 0; background: var(--white); z-index: 1;">
+                    <h3 style="font-size: 1.125rem; font-weight: 700; margin: 0;">Написать отзыв</h3>
+                    <button onclick="closeReviewModal()" style="background: none; border: none; color: var(--gray-500); font-size: 1.25rem;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div style="padding: var(--spacing-lg);">
+                    <!-- Product Info -->
+                    <div style="display: flex; gap: var(--spacing-md); margin-bottom: var(--spacing-lg); padding-bottom: var(--spacing-md); border-bottom: 1px solid var(--gray-100);">
+                        <div style="width: 64px; height: 64px; border-radius: var(--radius-md); overflow: hidden; background: var(--gray-100);">
+                            <img src="https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=128&h=128&fit=crop" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: var(--gray-900); margin-bottom: 4px;">Перфоратор Bosch GBH 2-26</div>
+                            <div style="font-size: 0.8125rem; color: var(--gray-500);">Заказ #1245 от 10 дек</div>
+                        </div>
+                    </div>
+
+                    <!-- Star Rating -->
+                    <div style="margin-bottom: var(--spacing-lg);">
+                        <label style="display: block; font-weight: 600; color: var(--gray-900); margin-bottom: var(--spacing-sm);">Ваша оценка</label>
+                        <div id="starRating" style="display: flex; gap: var(--spacing-sm);">
+                            <button onclick="setRating(1)" class="star-btn" data-rating="1" style="background: none; border: none; font-size: 2rem; color: var(--gray-300); transition: color 0.15s;">
+                                <i class="fas fa-star"></i>
+                            </button>
+                            <button onclick="setRating(2)" class="star-btn" data-rating="2" style="background: none; border: none; font-size: 2rem; color: var(--gray-300); transition: color 0.15s;">
+                                <i class="fas fa-star"></i>
+                            </button>
+                            <button onclick="setRating(3)" class="star-btn" data-rating="3" style="background: none; border: none; font-size: 2rem; color: var(--gray-300); transition: color 0.15s;">
+                                <i class="fas fa-star"></i>
+                            </button>
+                            <button onclick="setRating(4)" class="star-btn" data-rating="4" style="background: none; border: none; font-size: 2rem; color: var(--gray-300); transition: color 0.15s;">
+                                <i class="fas fa-star"></i>
+                            </button>
+                            <button onclick="setRating(5)" class="star-btn" data-rating="5" style="background: none; border: none; font-size: 2rem; color: var(--gray-300); transition: color 0.15s;">
+                                <i class="fas fa-star"></i>
+                            </button>
+                        </div>
+                        <div id="ratingText" style="font-size: 0.8125rem; color: var(--gray-500); margin-top: var(--spacing-xs);"></div>
+                    </div>
+
+                    <!-- Review Text -->
+                    <div style="margin-bottom: var(--spacing-lg);">
+                        <label style="display: block; font-weight: 600; color: var(--gray-900); margin-bottom: var(--spacing-sm);">Ваш отзыв</label>
+                        <textarea class="form-input" rows="4" placeholder="Расскажите о вашем опыте использования инструмента..." style="resize: none;"></textarea>
+                        <div style="font-size: 0.75rem; color: var(--gray-400); margin-top: var(--spacing-xs);">Минимум 20 символов</div>
+                    </div>
+
+                    <!-- Photo Upload -->
+                    <div style="margin-bottom: var(--spacing-lg);">
+                        <label style="display: block; font-weight: 600; color: var(--gray-900); margin-bottom: var(--spacing-sm);">Добавить фото</label>
+                        <div style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap;">
+                            <div style="width: 80px; height: 80px; border: 2px dashed var(--gray-300); border-radius: var(--radius-md); display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--gray-400); cursor: pointer;">
+                                <i class="fas fa-camera" style="font-size: 1.25rem; margin-bottom: 4px;"></i>
+                                <span style="font-size: 0.625rem;">Добавить</span>
+                            </div>
+                        </div>
+                        <div style="font-size: 0.75rem; color: var(--gray-400); margin-top: var(--spacing-xs);">До 5 фото, макс. 5 МБ каждое</div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button class="btn btn-primary btn-block btn-lg">
+                        Отправить отзыв
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentRating = 0;
+        const ratingTexts = ['', 'Ужасно', 'Плохо', 'Нормально', 'Хорошо', 'Отлично'];
+
+        function setRating(rating) {
+            currentRating = rating;
+            const stars = document.querySelectorAll('.star-btn');
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.style.color = 'var(--accent)';
+                } else {
+                    star.style.color = 'var(--gray-300)';
+                }
+            });
+            document.getElementById('ratingText').textContent = ratingTexts[rating];
+        }
+
+        function openReviewModal() {
+            document.getElementById('reviewModal').classList.add('active');
+        }
+
+        function closeReviewModal() {
+            document.getElementById('reviewModal').classList.remove('active');
+        }
+
+        // Filter pills interaction
+        document.querySelectorAll('.filter-pill').forEach(pill => {
+            pill.addEventListener('click', function() {
+                document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+
+</html>
